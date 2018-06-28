@@ -1,0 +1,2259 @@
+\documentclass[a4paper,openright,12pt]{book}
+\usepackage[spanish, es-tabla]{babel}
+\usepackage[utf8]{inputenc} 
+\usepackage{listings} %para poner codigos 
+\usepackage{multirow} % para las tablas
+\usepackage{amssymb, amsmath, amsbsy} % simbolitos
+\usepackage{upgreek} % para poner letras griegas sin cursiva
+\usepackage{cancel} % para tachar
+\usepackage{mathdots} % para el comando \iddots
+\usepackage{mathrsfs} % para formato de letra
+\usepackage{stackrel} % para el comando \stackbin
+\usepackage{graphicx} %para meter figuritas chavo
+\usepackage{subfigure} %para más figuritas
+\usepackage{float} % para que las imágenes me obedezcan. Como sirve este pedo
+\usepackage{enumerate} %para enumerar ps es obvio OBVIO
+\setcounter{secnumdepth}{3} %para que ponga 1.1.1.1 en subsubsecciones
+\setcounter{tocdepth}{3} % para que ponga subsubsecciones en el indice
+
+
+\begin{document}
+
+%\begin{titlepage}
+%\begin{center}
+%\begin{Huge}
+%\textsc{Modelos de Materia Oscura: Una Perspectiva Numérica}
+%\end{Huge}
+%\end{center}
+%\end{titlepage}
+
+% para crear una cara en blanco
+%\newpage
+%$\ $
+%\thispagestyle{empty} % para que no se numere esta página
+
+\thispagestyle{empty}
+
+    \begin{titlepage}
+        \thispagestyle{empty}
+        \begin{minipage}[c][0.17\textheight][c]{0.25\textwidth}
+            \begin{center}
+                \includegraphics[width=3.5cm, height=4.5cm]{./Figuras/IPN}
+            \end{center}
+        \end{minipage}
+        \begin{minipage}[c][0.17\textheight][t]{0.65\textwidth}
+            \begin{center}
+                \vspace{.3cm}
+                \textsc{\large Instituto Politécnico Nacional}\\[0.5cm]
+                \vspace{.3cm}
+                \hrule height2.5pt
+                \vspace{.1cm}
+                \hrule height1pt
+                \vspace{.8cm}
+                \textsc{\LARGE Escuela Superior de Física y Matemáticas}\\[0.5cm] %
+            \end{center}
+        \end{minipage}
+
+        \begin{minipage}[c][0.81\textheight][t]{0.25\textwidth}
+            \vspace*{5mm}
+            \begin{center}
+                \hskip2pt
+                \vrule width2.5pt height13cm
+                \hskip1mm
+                \vrule width1pt height13cm \\
+                \includegraphics[height=4.5cm]{./Figuras/ESFM}
+            \end{center}
+        \end{minipage}
+        \begin{minipage}[c][0.81\textheight][t]{0.65\textwidth}
+            \begin{center}
+                \vspace{1cm}
+
+                {\Huge\scshape Modelos de Materia Oscura: Una Perspectiva Numérica}\\[.2in]
+
+                \vspace{2cm}            
+
+                \textsc{\LARGE TESIS}\\[0.5cm]
+                \textsc{\large que para obtener el t\'itulo de}\\[0.5cm]
+                \textsc{\large Licenciatura en Física y Matemáticas}\\[0.5cm]
+                \textsc{\large presenta}\\[0.5cm]
+                \textsc{\large \textbf{Jazhiel Chacón Lavanderos}}\\[2cm]          
+
+                \vspace{0.5cm}
+
+                {\large\scshape Directores de Tesis:\\[0.2cm] {Dr. Tonatiuh Matos Chassin \\ Dr. Francisco Javier Turrubiates Saldívar}}\\[.2in]
+
+                \vspace{0.5cm}
+
+                {Ciudad de México,} {Agosto} {2018}
+            \end{center}
+        \end{minipage}
+    \end{titlepage}
+
+
+
+\chapter*{}
+\pagenumbering{Roman} % para comenzar la numeración de paginas en números romanos
+\begin{flushright}
+\textit{A Dios, creador del Universo \\\
+Y a mis padres, que me dieron la vida para observarlo}
+\end{flushright}
+
+\chapter*{Agradecimientos} % si no queremos que añada la palabra "Capitulo"
+\addcontentsline{toc}{chapter}{Agradecimientos} % si queremos que aparezca en el índice
+\markboth{AGRADECIMIENTOS}{AGRADECIMIENTOS} % encabezado
+
+Agradezco primeramente 
+
+\chapter*{Resumen} % si no queremos que añada la palabra "Capitulo"
+\addcontentsline{toc}{chapter}{Resumen} % si queremos que aparezca en el índice
+\markboth{RESUMEN}{RESUMEN} % encabezado
+
+\tableofcontents % indice de contenidos
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Lista de figuras} % para que aparezca en el indice de contenidos
+\listoffigures % indice de figuras
+
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Lista de tablas} % para que aparezca en el indice de contenidos
+\listoftables % indice de tablas
+
+
+
+
+\chapter{Introducción a la Cosmología}
+\pagenumbering{arabic}
+La cosmología es la ciencia que estudia y busca explicar el origen y la evolución del Universo como un todo, la física fundamental detrás de esos procesos y por lo tanto obtener un entendimiento más profundo de las leyes de la física que se supone que gobiernan a todo el Universo. Sin embargo existe solo un Universo que se puede estudiar y no se puede  experimentar con el, sólo hacer observaciones. Esto conlleva bastantes limitantes sobre lo que se puede conocer acerca de su origen \cite{1.01}. 
+
+\textbf{El Universo es homogéneo e isótropo en un espacio tridimensional a gran escala}. Esta pequeña pero poderosa frase es lo que se conoce como el \textit{Principio cosmológico}. Que sea homogéneo se refiere a que la materia está uniformemente distribuida en todo el espacio, mientras que isótropo hace referencia a que tiene las mismas propiedades en todas las direcciones espaciales. Así, en un Universo homogéneo e isótropo la distribución de materia sería la misma para cualquier observador en cualquier ubicación del espacio, es decir, ningún lugar sería preferencial de acuerdo a este principio.
+
+Suponer que el principio cosmológico implica un Universo infinito es un poco ingenuo. La teoría de la relatividad nos dice que el espacio puede ser curvo y que, por tanto, es imaginable un Universo finito que no tenga bordes. Una imagen intuitiva utilizada por Einstein y Hubble, que permite la captación de la posibilidad de un Universo finito compatible con el principio cosmológico es la de un Universo bidimensional formando una superficie esférica. Sobre ella, un observador bidimensional podría recorrer todo el Universo, por ser finito, y nunca encontrarse con el borde. Esta imagen, llevada a las tres dimensiones espaciales de nuestro Universo real, nos permite comprender el Universo finito y sin bordes.
+
+Pero la concepción de un Universo finito y cerrado conlleva a un problema de \textit{coalescencia}. Esto es, la gravedad haría que, con tiempo suficiente, todas las galaxias se atrajeran, amontonando toda la masa del Universo en un solo punto. ¿Hay alguna forma de evitar la coalescencia? La relatividad nos enseña que todo movimiento es siempre en referencia de algo; no hay movimiento absoluto. Si se introduce un Universo en expansión, ciertamente se evitaría la coalescencia. Las galaxias no se abalanzarían unas sobre otras si inicialmente hubo una ``explosión'' y estuvieran alejándose por su efecto. La autogravitación del Universo iría frenando la expansión y podría llegar a detenerla, o no podría, dependiendo de la violencia de la expansión inicial y de la densidad de galaxias.
+
+Estas ideas están muy cercanas a la modelación del Big Bang, modelo del Universo aceptado hoy día. La idea intuitiva, aunque básica y simple, debe ajustarse a unas bases físicas más firmes. Por ejemplo, la homogeneidad del principio cosmológico anula los gradientes de parámetros termodinámicos, lo que reduce la expresión de las ecuaciones que gobiernan el Universo.
+
+Se requieren algunas precisiones más para entender el principio cosmológico. Si un observador ve el Universo isótropo, otro que se mueva a gran velocidad con respecto a él ya no podrá verlo isótropo. Este segundo observador vería un \textit{desplazamiento Doppler} hacia el azul de las galaxias en la dirección de su movimiento, y verá desplazadas hacia el rojo las galaxias que se alejan de él. Por lo tanto si el principio cosmológico se cumple para el primer observador, no lo haría para el segundo.
+
+La teoría de la relatividad general nos resuelve el problema. Esta teoría establece que en todo punto del espacio, en un sistema cualquiera (no forzosamente el Universo) existe un observador que ve su microentorno plano, en el sentido de que para él no hay gravedad, de que para él se cumplen las leyes de la relatividad restringida. ¿Quién es ese individuo que goza de tan grande privilegio? Es muy sencillo: cualquiera puede adquirir ese título de observador inimaginable dejando de lado a la gravedad.
+
+En uno de los experimentos mentales de Einstein, un observador en un ascensor que cayera libremente no pesaría sobre el suelo del ascensor ni notaría ningún efecto gravitatorio. Por eso, a dichos observadores privilegiados se les puede llamar \textit{observadores cayentes}. Para ellos se cumple el principio cosmológico. En cuanto al Universo, estos observadores cayentes se les llama \textit{observadores fundamentales}.
+
+Otra precisión importante para entender el principio cosmológico es la de \textit{tiempo cósmico}. La teoría de la relatividad nos dice que cada observador tiene su tiempo. Por tanto, podría pensarse que no todos los observadores fundamentales tienen el mismo tiempo. El principio cosmológico equivale a decir que sí, que todos los observadores fundamentales pueden tener el mismo tiempo. Todos los observadores ven el mismo Universo si lo hacen en ese tiempo común a todos ellos. Este tiempo común se le conoce como \textit{tiempo cósmico}. El principio cosmológico, para atenerse a las premisas relativistas, debe entenderse así: \textit{todos los observadores fundamentales ven lo mismo cuando utilizan ese tiempo cósmico común a todos ellos} \cite{1.02}.
+
+%-----------------------------------------------------------------------------%
+
+\section{La Expansión del Universo}
+La \textit{ley de Hubble} \cite{1.1} estblece que la velocidad ``aparente'' $\vec{v}$ de alejamiento entre galaxias es porporcional a su distancia $\vec{r}$, esto es
+\begin{equation}
+\vec{v} = H\vec{r}.\label{eqn 1.1}
+\end{equation}
+Las tres cantidades de la ecuación cambian con el tiempo, por lo que se escriben como funciones $\vec{v}(t), H(t), \vec{r}(t)$. Para ser precisos $\vec{r}(t)$ es la \textit{distancia propia}, esto es, la distancia que sería medida entre una galaxia y nosotros en un tiempo $t$. La velocidad de recesión $\vec{v}$ es el ritmo al cual $\vec{r}$ incrementa, y $H$, el \textit{parámetro de Hubble}, es constante en todo el espacio debido a la homogeneidad. Muchas teorías predicen que cambia con el tiempo, $H = H(t)$. En cosmología se le da al valor de la época actual el subíndice cero. Así el parámetro de Hubble al día de hoy, a un tiempo $t= t_{0}$ es $H(t_{0})= H_{0}$. Esta es la \textit{constante de Hubble}.
+
+Para un poco más de claridad, es de gran utilidad introducir las llamadas \textit{coordenadas comóviles}. Un sistema de referencia comóvil de una partícula es un sistema de referencia que se mueve junto con una partícula, y por tanto, respecto a un sistema de referencia comóvil una partícula siempre está en reposo. Las coordenadas comóviles se expanden junto con el Universo. Si nuestra galaxia tiene una coordenada comóvil $\vec{x}=0$ y otra galaxia tiene una coordenada comóvil $\vec{x}$, entonces, la distancia propia hasta ella es
+\begin{equation}
+\vec{r} = a(t)\vec{x},\label{eqn 1.2}
+\end{equation}
+donde $a(t)$ es llamado el \textit{factor de escala} que depende del tiempo, no de la posición. Puede definirse ahora la velocidad $\vec{v}$ como 
+\begin{equation}
+\vec{v} = \dot{\vec{r}} = H\vec{r},\label{eqn 1.3}
+\end{equation}
+\begin{equation}
+\frac{d}{dt}(a\vec{x})= Ha\vec{x}.\label{eqn 1.4}
+\end{equation} 
+Por definición, la coordenada comóvil no depende del tiempo, por lo que todo el cambio en $(a\vec{x})$ se debe solo al factor de escala $a$. Esto lleva a cancelar $\vec{x}$ de nuestra ecuación (\ref{eqn 1.4}) y se tiene así la siguiente expresión para el parámetro de Hubble
+\begin{equation}
+H(t) = \frac{\dot{a}(t)}{a(t)}.\label{eqn 1.5}
+\end{equation}
+Por otro lado, la luz de las galaxias y estrellas distantes no es monótona, sino que tiene diferentes características espectrales propias de los átomos de los gases de alrededor de las estrellas. Cuando se examinan las líneas de emisión, se encuentra que están desplazadas hacia el extremo rojo del espectro. Este cambio es por un desplazamiento Doppler o se debe a la expansi\'on del Universo, e indica que esencialmente todas las galaxias se están alejando del observador. Así, el redshift se define entonces como 
+\begin{equation}
+ z \equiv \frac{\lambda - \lambda_{0}}{\lambda_{0}}\label{eqn 1.6}
+\end{equation}
+siendo $\lambda_{0}$ la longitud de onda de una línea espectral de la galaxia y $\lambda$, la longitud de onda de esa misma línea espectral medida en la Tierra. Las velocidades se infieren con una fórmula aproximada tal que
+\begin{equation*}
+z \approx \frac{v}{c}.
+\end{equation*}
+En la actualidad, se observan galaxias con corrimiento al rojo mucho mayor que el indicado en la ecuación anterior. Para entender esto, se requiere un análisis más profundo sobre la naturaleza del mismo. Considerando un fotón emitido desde una galaxia hacia una galaxia cercana con una distancia propia $dr$, por cercana entiéndase lo bastante próxima para suponer que la diferencia de velocidades entre las galaxias $dv$ está dada por la fórmula $dv = cz$. El fotón hace su viaje en un tiempo $dt = dr/c$, durante este período, el factor de escala incrementa una pequeña cantidad $da = \dot{a} dt$. La velocidad relativa entre las galaxias es entonces
+\begin{equation}
+d\vec{v}=Hd\vec{r}=\frac{\dot{a}}{a}cdt=c\frac{da}{a}.\label{eqn 1.7}
+\end{equation}
+El pequeño cambio en la longitud de onda se escribe como $ \lambda - \lambda_{0} = d\lambda$; sustituyendo esto y la fórmula de velocidad-redshift, se obtiene
+\begin{equation}
+c\frac{da}{a}=d\vec{v}=cz=c\frac{d\lambda}{\lambda}.\label{eqn 1.8}
+\end{equation}
+Esto es, en el pequeño intervalo de tiempo $dt$, el cambio fraccional en la longitud de onda es la misma que el crecimiento fraccional en el Universo. Ahora, suponga que el fotón rebasa a la segunda galaxia y viaja un largo camino a través del Universo antes de ser detectado en una tercera galaxia (la Vía Láctea, por ejemplo). La misma formulación de las ecuaciones (\ref{eqn 1.7}) y (\ref{eqn 1.8}) puede hacerse para cualquier segmento pequeño de su camino, la longitud de onda y el factor de escala seguirán siendo proporcionales $\lambda \propto a$, es decir
+\begin{equation}
+\frac{\lambda}{\lambda_{0}}= \frac{t_{0}}{t_{em}}.\label{eqn 1.9}
+\end{equation}
+¡El fotón se expande en la misma proporción que lo hace el Universo! El significado profundo del corrimiento al rojo cosmológico escrito como
+\begin{equation}
+z = \frac{\lambda}{\lambda_{0}} - 1\label{eqn 1.10}
+\end{equation} 
+es que $(1+z)$ indica cuánto se ha expandido el Universo desde que la luz fue emitida. Aunque se usó el efecto Doppler en el argumento, el resultado de añadir todos los efectos infinitesimales es muy diferente al de uno muy grande. Por ejemplo, el corrimiento al rojo no depende de la velocidad $v(t)$, ni en el presente $t_{0}$ ni en la época de emisión $(t_{em})$. Para comprobarlo, suponga que el Universo no estuvo expandiéndose cuando el fotón fue emitido, i.e. $H(t_{em}=0)$, así $\vec{v}(t_{em})=0$. El Universo empieza su expansión, pero se detiene nuevamente antes de que el fotón llegue a su destino, es decir $\vec{v}(t_{0})=0$. El fotón aún tendría un corrimiento al rojo porque la expansión ocurrió mientras estaba en movimiento.
+
+Todo esto indica que altos corrimientos de galaxias distantes no necesariamente implica que las velocidades de recesión son mayores a la velocidad de la luz. Como se esperaría, la ecuación $cz = H\vec{r}$ es sólo válida para corrimientos pequeños. Examinando nuevamente la ecuación (\ref{eqn 1.1}), que como se puntualizó, siempre es cierta para \textit{cualquier} separación, entonces si un observador fuese suficientemente lejos, $\vec{v}$ sería más rápida que la velocidad de la luz. Los fotones emitidos desde esa distancia no lo alcazarían, a menos que el Universo empezara a desacelerar en algún tiempo en el futuro. Esto supone un problema, ya que el observador no podría ser capaz de observar los fotones emitidos desde la galaxia hace miles de millones de años.
+
+Algunos cosmólogos tratan de evitar esta conclusión diciendo que el valor del incremento en la distancia propia no es una velocidad ``real''; argumentan que es el espacio entre las galaxias el que se está expandiendo, mientras las galaxias están más o menos en reposo. En efecto, esta aproximación prefiere distancia comóvil a distancia propia. A veces es útil pensar de esta manera, pero no hay diferencia, almenos físicamente entre dos galaxias ``realmente'' separándose unas de otras y dos galaxias estacionarias con la intervención de la expansión del espacio. Ambas son descripciones equivalentes de la relatividad general.\\\\\\\\
+
+
+%---------------------------------------------------------------------------------%
+\subsection*{Ecuaciones de Einstein}
+
+La Relatividad General, está conformada esencialmente por 10 ecuaciones diferenciales parciales no lineales yacopladas, la cual rige la física de los sistemas gravitacionales. Para trabajar en el marco de la relatividad general, se inicia introduciendo un espacio-tiempo descrito mediante la ecuación de la métrica
+\begin{equation}
+ds^{2}=g_{\alpha \beta}dx^{\alpha}dx^{\beta}\label{eqn 1.11}
+\end{equation}
+Se definen los símbolos de Christoffel $\Gamma^{\alpha}_{\mu \nu}$, los cuales describen la variación de los vectores de una base $e_{\mu}$. Es decir, la derivada covariante del vector de la base $e_{\mu}$ a lo largo del vector de la base $e_{\nu}$, es un nuevo vector de componentes $\nabla_{e_{\nu}}e_{\mu}$ = $\Gamma^{\alpha}_{\mu \nu} e_{\alpha}$. En una variedad con una métrica definida, los símbolos de Christoffel se determinan completamente a partir de la métrica $g_{\alpha \beta}$
+
+\begin{equation*}
+\Gamma^{\alpha}_{\mu \nu} = 
+\frac{1}{2}g^{\alpha \beta}\left(\partial_{\mu}g_{\nu \beta} +
+\partial_{\nu}g_{\mu \beta} - \partial_{\beta}g_{\mu \nu}\right), 
+\end{equation*}
+
+de los cuales se define el tensor de Riemann $R^{\alpha}_{\beta \mu \nu}$
+
+\begin{equation*}
+R^{\alpha}_{\beta \mu \nu}
+=
+\partial_{\mu}\Gamma^{\alpha}_{\beta \nu}
+-
+\partial_{\nu}\Gamma^{\alpha}_{\beta \mu}
++
+\Gamma^{\rho}_{\beta \nu}\Gamma^{\alpha}_{\rho \mu}
+-
+\Gamma^{\rho}_{\beta \mu}\Gamma^{\alpha}_{\rho \nu},
+\end{equation*}
+y el tensor y escalar de Ricci son contracciones del tensor de Riemann
+\begin{equation*}
+R_{\mu \nu} = \sum_{\alpha}R^{\alpha}_{\mu \alpha \nu},
+\end{equation*}
+\begin{equation*}
+R = \sum_{\mu \nu}g^{\mu \nu}R_{\mu \nu}.
+\end{equation*}
+Las ecuaciones de Einstein determinan las características del espacio--tiempo definido por la métrica
+\begin{equation}
+R_{\alpha \beta} - \frac{1}{2} R g_{\alpha \beta} + \Lambda g_{\alpha \beta} = 0,\label{eqn 1.12}
+\end{equation}
+donde $R_{\alpha \beta}$ es el tensor de Ricci, $R$ es el escalar de curvatura de Ricci, $g_{\alpha \beta}$ es el tensor métrico y $\Lambda$ es la constante cosmológica. En presencia de materia y energía, las ecuaciones de campo de Einstein se convierten en \cite{1.4}
+\begin{equation}
+R_{\alpha \beta} - \frac{1}{2} R g_{\alpha \beta} + \Lambda g_{\alpha \beta} = \kappa T_{\alpha \beta}\label{eqn 1.13}
+\end{equation}
+donde $T_{\alpha \beta}$ es el tensor de energía-momento y $\kappa$ es una constante, cuyo valor es $\kappa = 8 \pi G / c^{4}$.
+
+%-------------------------------------------------------------------------------%
+
+\subsection*{Métrica de Friedmann-Lemaître-Robertson-Walker}
+Basados en la suposición de homogeneidad e isotropía, las ecuaciones de movimiento del Universo se pueden deducir de la siguiente forma. Sean dos eventos en el espacio--tiempo, uno ocurriendo en el punto localizado en $(t,r,\theta , \phi)$ y otro ocurriendo en el punto localizado en $(t +dt, r + dr, \theta + d\theta, \phi + d\phi)$. La separación espacio-temporal entre estos dos eventos es
+\begin{equation}
+ds^{2}=-c^{2}dt^{2} + dr^{2} +r^{2}d\Omega^{2},\label{eqn 1.14}
+\end{equation}
+donde
+\begin{equation*}
+d\Omega^{2} \equiv d\theta^{2} + \sin^{2}\theta d\phi^{2}.
+\end{equation*}
+La métrica descrita por la ecuación (\ref{eqn 1.14}) es llamada \textit{métrica de Minkowski}, y el espacio--tiempo que ella describe es el de Minkowski. De la teoría de la relatividad general se sabe que el camino que describe un fotón en un espacio-tiempo es una \textit{geodésica} y que para cualquier espacio--tiempo, ésta debe ser \textit{nula}, es decir $ds=0$. En un espacio--tiempo de Minkowski, la trayectoria de un fotón obedece la relación
+\begin{equation}
+ds^{2}=0 = -c^{2}dt^{2} + dr^{2} +r^{2}\Omega^{2}.\label{eqn 1.15}
+\end{equation}
+Si el fotón se mueve de forma radial alejándose del origen, lo que significa que $\theta$ y $\phi$ son constantes, entonces
+\begin{equation}
+c^{2}dt^{2}=dr^{2},\label{eqn 1.16}
+\end{equation}
+es decir
+\begin{equation}
+\frac{dr}{dt}=\pm c. \label{eqn 1.17}
+\end{equation}
+La métrica de Minkowski de la ecuación (\ref{eqn 1.14}) aplica solamente dentro del contexto de la relatividad especial, sin efectos gravitacionales, el resultado será una  métrica que es plana. Al añadir la gravedad, sin embargo, el espacio--tiempo toma una forma más interesante. En la década de 1930 los físicos Howard Robertson y Arthur Walker llegaron a un resultado, de manera independiente, que se conoció como la \textit{métrica de Robertson--Walker} y cuya forma es generalmente conocida como
+\begin{equation}
+ds^{2}
+=
+-c^{2}dt^{2} + a^{2}(t)
+\left[
+\frac{dr^{2}}{1-k r^{2}} + r^{2}d\Omega^{2}
+\right],\label{eqn 1.18}
+\end{equation}
+donde $k > 0$, $k = 0$ o $k < 0$. Todos los modelos homogéneos e isotrópicos tienen esta forma. Para $k > 0$ se tiene un espacio--tiempo con curvatura positiva y se llaman modelos \textit{cerrados}. Para $k = 0$ se tiene un espacio--tiempo Euclideano o \textit{plano}. Por último, para $k < 0$ se tiene un espacio--tiempo con curvatura negativa y a estos modelos se les llama \textit{abiertos}.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{./Figuras/geometry}
+\caption{Geometría del espacio--tiempo según el tipo de curvatura.}
+\end{figure}
+
+A escalas pequeñas, sin embargo, se ha observado que el Universo \textit{no} es homogéneo. Por lo que la métrica de Robertson--Walker es sólo una aproximación que es buena para escalas mayores. En un sentido cosmológico, las ecuaciones de Einstein pueden usarse para encontrar una relación entre el factor de escala $a(t)$, la curvatura $\kappa$, y los contenidos de densidad de energía $\epsilon(t)$ y presión $p(t)$ del Universo. Las ecuaciones que hacen esto posible son las \textit{Ecuaciones de Friedmann}, encontradas por Alexander Alexandrovich Friedmann en 1922, sorprendentemente 7 años antes de los trabajos publicados por Hubble y en ellas ya consideraba que un Universo homogéneo e isotrópico se expandía como función del tiempo. 
+
+Recordando la ley de Hubble (\ref{eqn 1.1}) la ecuación de Friedmann puede escribirse de la siguiente manera
+\begin{equation}
+H^{2}(t) = \frac{8 \pi G}{3}\rho(t) 
+-\frac{k c^{2}}{a^{2}(t)}.\label{eqn 1.19}
+\end{equation}
+Con $H(t) \equiv \dot{a}/a$.
+
+En la época actual, el valor del parámetro de Hubble es
+\begin{equation}
+H_{0} = H(t_{0}) = \left(\frac{\dot{a}}{a}\right) 
+_{t=t_{0}} = 70 \pm 7 \textup{km s}^{-1} \textup{Mpc}^{-1},\label{eqn 1.20}
+\end{equation}
+a esta cantidad $H_{0}$ se le conoce como constante de Hubble. Así, la ecuación de Friedmann en la época actual es $(a(t) = 1)$ 
+\begin{equation}
+H_{0}^{2} = \frac{8 \pi G}{3}\rho_{0} 
+-k c^{2}. \label{eqn 1.21}
+\end{equation}
+La expresión anterior ofrece una relación entre $H_{0}$, la cual dice la rapidez de expansión, $\epsilon_{0}$, la densidad de energía actual, y $\kappa$, que indica la curvatura actual. Esta ecuación es válida para todo Universo con una métrica de Robertson--Walker gobernada por las reglas de la relatividad general. En un Universo plano $(k = 0)$ la ecuación de Friedmann se reduce a
+\begin{equation}
+H^{2}(t)=\frac{8 \pi G}{3}\rho(t).\label{eqn 1.22}
+\end{equation}
+Así, para un valor dado del parámetro de Hubble, existe una \textit{densidad de energía crítica}
+\begin{equation}
+\epsilon_{c}(t) \equiv \frac{3 c^{2}}{8 \pi G} H^{2}(t).\label{eqn 1.23}
+\end{equation}
+Si la densidad de energía $\epsilon(t)$ es mayor a este valor, el Universo tiene curvatura positiva $(k = +1)$. Si $\epsilon(t)$ es menor a este valor, el Universo tiene curvatura negativa. Dado que se tiene un valor actual del parámetro de Hubble, se puede calcular la densidad crítica directamente de (\ref{eqn 1.23})
+\begin{equation}
+\epsilon_{c,0} = \frac{3 c^{2}}{8 \pi G}H_{0}^{2}
+=
+(8.3 \pm 1.7) \times 10^{-10} \textup{J m} ^{-3}
+=
+5200 \pm 1000 \textup{MeV m} ^{-3},\label{eqn 1.24}
+\end{equation}
+que suele escribirse de manera más común en términos de la \textit{densidad de masa crítica}
+\begin{equation}
+\rho_{c,0} \equiv \epsilon_{c,0}/c^{2}
+=
+(9.2 \pm 1.8) \times 10^{-27} \textup{kg m}^{-3}
+=
+(1.4 \pm 0.3) \times 10^{11} \textup{M}_{\odot} \textup{Mpc}^{-3},\label{eqn 1.25}
+\end{equation}
+
+donde $M_{\odot}$ denota una cantidad conocida como \textit{Masa solar} y su valor es $M_{\odot} = 1.989 \times 10^{30}$kg. Se ha supuesto, basados en el principio cosmológico, que el Universo es homogéneo e isótropo. Para resolver las ecuaciones de campo de Einstein bajo esa suposición se requiere un tensor de energía--momento que sea también homogéneo e isótropo. La forma más general para tal tensor es la de un tensor para un fluido perfecto, que se escribe como \cite{1.2, 1.3}
+\begin{equation}
+T_{\mu \nu} =
+(\rho + p)u_{\mu}u_{\nu} + pg_{\mu \nu},\label{eqn 1.26}
+\end{equation}
+donde $\rho$ es la densidad de masa propia del fluido, $u_{\mu}$ es la cuadrivelocidad y $p$ es la presión $(p > 0)$ o la tensión $(p < 0)$. La homogeneidad implica que la presión y la densidad deberían ser independientes de la posición y sólo deberían depender del tiempo. Para la métrica descrita en la ecuación (\ref{eqn 1.18}), este tensor es diagonal 
+\begin{equation}
+T_{\mu \nu} = \textup{diag}(\rho, p, p, p).\label{eqn 1.27}
+\end{equation}
+Insertando este resultado en las ecuaciones de campo de Einstein (\ref{eqn 1.13}), tomando además $\Lambda = 0$ y normalizando $(c = 1)$ se tiene que\\\\
+\begin{equation*}
+ 3\frac{\dot{a}^{2} + k}{a^{2}}  = 8 \pi G \rho
+ \end{equation*}
+\begin{equation} 
+-2\frac{\ddot{a}}{a} - \frac{\dot{a}^{2} + k}{a^{2}}= 8 \pi G p.\label{eqn 1.28}
+\end{equation}\\\\
+Esta es otra forma de escribir las ecuaciones de Friedmann, sin la constante cosmológica. Al combinar ambas ecuaciones se tiene
+\begin{equation}
+\frac{\ddot{a}}{a} = -\frac{4 \pi G}{3}(\rho + 3p), \label{eqn 1.29}
+\end{equation}
+donde la energía gravitacional efectiva viene dada por $(\rho + 3p)$, de donde se observa que la presión también contribuye a la gravitación. Se puede deducir también una ecuación que relacione a la energía, la presión y el factor de escala. Usando la conservación de la energía, al diferenciar la ecuación (\ref{eqn 1.28}) conduce a una expresión como la siguiente
+\begin{equation}
+\dot{\rho} + 3\frac{\dot{a}}{a}(\rho + p) = 0,\label{eqn 1.30}
+\end{equation}
+que puede reescribirse como
+\begin{equation}
+\frac{d}{dt} (\rho a^{3}) + p\frac{d}{dt}a^{3} = 0.\label{eqn 1.31}
+\end{equation}
+Considerando un volumen comóvil $V = a^{3}$ e interpretando $\rho a^{3} = U$ como la energía en el volumen comóvil, se obtiene lo siguiente
+\begin{equation}
+dU + pdV = 0. \label{eqn 1.32}
+\end{equation}
+Recordando que la primera ley de la termodinámica, establece que para un fluido en equilibrio se cumple que 
+\begin{equation}
+TdS = dU +pdV, \label{eqn 1.33}
+\end{equation}
+donde $T$ es la temperatura y $S$ es la entropía del fluido. Un proceso en el cual el cambio en la entropía es $dS = 0$ es llamado \textit{adiabático}. La ecuación (\ref{eqn 1.32}) muestra que el modelo homogéneo e isotrópico se expande de forma adiabática. Esto no es extraño ya que la propia homogeneidad e isotropía implican que no haya gradientes de temperatura y no haya flujo de calor.
+
+Si además se asume que el fluido perfecto obedece la ecuación de estado barotrópica, es decir, que la presión sea proporcional a la densidad
+\begin{equation}
+p = w\rho, \label{eqn 1.34}
+\end{equation}
+la ecuación (\ref{eqn 1.31}) se reescribe como sigue
+\begin{equation}
+\frac{d}{dt}(\rho a^{3}) + w p \frac{d}{dt} a^{3} = 0,\label{eqn 1.35}
+\end{equation}
+cuya solución es
+\begin{equation}
+\rho a^{3(w + 1)} = \rho _{0}, \label{eqn 1.36}
+\end{equation}
+donde $\rho _{0}$ es el valor de la densidad en la época presente. De esta forma, $w$ puede tomar diferentes valores que dependen de la época en la cual se esté considerando, esto es, existe una única presión para cada densidad dependiendo de la época:
+\begin{itemize}
+\item Época actual (polvo) $\rightarrow$ $p=0$.
+\item Época dominada por la radiación $\rightarrow$ $p = 1/3 \rho$.
+\end{itemize}
+
+Las ecuaciones de Friedmann (\ref{eqn 1.28}) para un Universo dominado por un fluido perfecto con ecuación de estado dada por (\ref{eqn 1.34}) pueden escribirse entonces como
+\begin{equation}
+\left(\frac{\dot{a}}{a}\right)^{2}
+=
+\frac{8 \pi G}{3} \frac{\rho _{0}}{a^{3(w + 1)}} - \frac{k}{a^{2}}.\label{eqn 1.37}
+\end{equation}
+
+Si $w > -1/3$ esta última ecuación indica que la evolución y posible destino del Universo dependerá de la curvatura espacial. Un Universo plano y uno con curvatura negativa se expanderá indefinidamente, mientras que un Universo con curvatura positiva detendrá su expansión y empezará a contraerse en algún punto. Si $w < -1/3$ la expansión seguirá para cualquier tiempo independientemente de la curvatura. Y el caso límite $w = - 1/3$, representa un Universo con velocidad de expansión $\dot{a}$ constante (Figura \ref{fig 1.1}).
+\begin{figure}
+\centering
+    \includegraphics[width=0.6\textwidth]{./Figuras/ScaleFactor}
+  \caption{\footnotesize{El factor de escala cosmológico $a(t)$ para modelos de Universo abierto $(k = -1)$, plano $(k = 0)$ y cerrado $(k = 1)$.}}
+  \label{fig 1.1}
+\end{figure}
+
+Las ecuaciones de Friedmann  (\ref{eqn 1.28}) se pueden expresar de una forma más general en términos de la densidad relativa a la densidad crítica. La densidad crítica se denota $\Omega$ y se le llama \textit{parámetro de densidad} o \textit{densidad relativa}, es decir
+\begin{equation}
+\Omega \equiv \frac{\rho}{\rho_{c}},\label{eqn 1.38}
+\end{equation}
+además de definir un parámetro de curvatura espacial
+\begin{equation}
+\Omega_{k} \equiv -\frac{k}{H^{2}a^{2}}.\label{eqn 1.39}
+\end{equation}
+Insertando estos valores en la ecuación de Friedmann (\ref{eqn 1.28}) se tiene lo siguiente
+\begin{equation}
+\Omega + \Omega_{k} = 1\label{eqn 1.40}
+\end{equation}
+donde $\Omega$ es la densidad total relativa de energía y materia. Dado que para un modelo de Universo abierto, $\Omega_{k} < 0$, un modelo plano $\Omega_{k} = 0 $ y un modelo cerrado $\Omega_{k} > 0$, se tienen entonces los siguientes valores para $\Omega$
+\begin{equation}
+\Omega  \left\lbrace
+\begin{array}{ll}
+> 1, & \textup{para} \; k > 0, \\
+= 1, & \textup{para} \; k = 0, \\
+< 1, & \textup{para} \; k < 0. \\ \label{eqn 1.41}
+\end{array}
+\right.
+\end{equation}
+Las ecuaciones de Friedmann describen la cantidad de materia contenida en el Universo y determinan su geometría. En las siguientes secciones se describirán un par de modelos que utilizan estos parámetros para estudiar estas propiedades.
+%---------------------------------------------------------------------------------%
+\section{Modelos de Evolución Cosmológica}
+El primer intento de aplicar la relatividad al Universo se debió al propio Einstein. Aunque con este primer intento se llegaba a la ``absurda'' conclusión de que el Universo estaba en expansión (o bien en contracción, que es una expansión negativa). Para conseguir un Universo estático, Einstein admitió el llamado \textit{término cosmológico} o \textit{constante cosmológica}, lo que hoy se interpretaría como una forma de energía oscura. Este término le daba al Universo una facultad expansiva que contrarrestaba la autogravitación de todo el Universo, evitando la coalescencia y consiguiendo una situación estática. Lo más novedoso de aquella deducción era que, al contrario de la gravitación newtoniana, que era generada por la masa, esta fuerza expansiva del término cosmológico era generada por el vacío, y quizá como consecuencia, constante en el tiempo.
+
+La necesidad de crear estos modelos de evolución fue precisamente la detección de un tipo de materia ``faltante'' en el Universo. Para la década de 1930, el astrofísico Fritz Zwicky \cite{1.1.1} examinó la dinámica interna del cúmmulo de galaxias Coma Berenice. En dicha publicación, Zwicky proporciona evidencia de que la masa luminosa en el cúmulo era mucho menor que el total de masa  necesaria para mantener a estas galaxias unidas gravitacionalmente. Debía existir otro tipo de materia que permitiera que este conjunto de galaxias se mantuviese unido. En esa época ya se tenían los primeros indicios de la \textit{materia oscura}.
+
+A pesar de numerosas contribuciones de la comunidad científica, el tema de la materia oscura no fue considerado seriamente hasta la época de 1970, cuando la astrónoma Vera Cooper Rubin \cite{1.1.2} indicó que la estabilidad gravitacional de las galaxias es por una cantidad de masa mayor a la observada. En su trabajo, calcula las curvas de rotación de distintas galaxias espirales, las cuales miden la velocidad radial de las estrellas dentro de las galaxias en función de su distancia hacia el centro de las mismas, como se observa en la siguiente ecuación
+\begin{equation}
+v (r)
+=
+\sqrt{\frac{G M (r)}{r}}.\label{eqn 1.42}
+\end{equation} 
+\begin{figure}
+\centering
+    \includegraphics[width=0.6\textwidth]{./Figuras/M33Rotation}
+  \caption{\footnotesize{Curva de rotación de la galaxia M33 (Triangulum). Se observa una discrepancia entre la medición real y el cálculo usando las leyes newtonianas.}}
+  \label{fig 1.2}
+\end{figure}
+De acuerdo a las leyes de Newton, se esperaría que dicho movimiento tuviese un comportamiento Kepleriano, es decir, que la velocidad de las estrellas fuese decayendo conforme la distancia era mayor hacia el centro. La gran sorpresa sobre estas observaciones fue que esta curva no obedecía el comportamiento Kepleriano, si no que la velocidad de las estrellas permanecía casi constante e incluso, en algunos casos, aumentaba (Figura \ref{fig 1.2}). Si la teoría de Newton era correcta, entonces lo que hacía falta era materia para poder explicar este extraño comportamiento. Esto fue un gran impacto para la física y la astronomía, ya que esta evidencia conlleva a crear modelos que incluyan esta \textit{materia oscura} en las galaxias y, por tanto también en el Universo.
+
+%---------------------------------------------------------------------------------%
+\subsection*{Radiación del Fondo Cósmico de Microondas}
+Otro fenómeno importante para el desarrollo de los modelos de evolución es la \textit{Radiación del Fondo Cósmico de Microondas} o por sus siglas en inglés \textit{Cosmic Microwave Background} (CMB). El CMB es un tipo de radiación de alrededor de 400,000 años después del comienzo del Universo. Antes de este tiempo, el Universo era tan caliente y denso que era opaco para toda la radiación. Ni siquiera los átomos simples podrían formarse sin ser instantáneamente desgarrados en sus protones y electrones constituyentes por la radiación intensa. El Universo estaba hecho de un "plasma", o gas ionizado, que es de lo que está hecha la superficie del Sol.
+
+Esta radiación fue detectada por primera vez por Arno Penzias y Robert Wilson en 1965 y es una de las pruebas más contundentes a favor del Big Bang. En particular, la teoría del Big Bang predice ciertas características para la radiación en épocas primitivas que han sido confirmadas por el CMB:
+
+\begin{enumerate}
+\item La dispersión múltiple de fotones por un plasma caliente en el Universo temprano debería dar como resultado un espectro de cuerpo negro para los fotones una vez que han escapado en la época de reionización. Esto es exactamente lo que se observa para el CMB.
+\item Los fotones del CMB se emitieron en la época de recombinación cuando el Universo tenía una temperatura de aproximadamente 3.000 Kelvin. Sin embargo, han sido desplazados cosmológicamente hacia el rojo a longitudes de onda más largas durante su viaje en un Universo en expansión, y ahora se detectan en la región de microondas del espectro electromagnético a una temperatura promedio de 2.725 Kelvin. Esto está de acuerdo con lo que predice la teoría del Big Bang. 
+\end{enumerate}
+\begin{figure}
+\centering
+  \includegraphics[width=0.5\textwidth]{./Figuras/SpectrumCMB}
+  \caption{\footnotesize{Espectro de radiación del CMB medido por el satélite COBE.}}
+  \label{fig 1.3}
+\end{figure}
+En la década de 1990, el satélite COBE midió el CMB  y ayudó a establecer varias cosas. En primer lugar, el CMB es casi completamente uniforme, con una temperatura casi constante. El que no sea constante es debido a que hubo pequeñas fluctuaciones en la temperatura, al nivel de una sola parte en 100,000. 
+
+En las últimas dos décadas, muchos experimentos han medido las pequeñas fluctuaciones de CMB, tales como WMAP en 2007 \cite{1.1.3} . Estas pequeñas fluctuaciones están ahí debido a pequeñas variaciones en la densidad del Universo inmediatamente después del Big Bang. Cualquier región que sea ligeramente más densa tiende a atraer más materia, y se vuelve aún más densa y atrae más material. Este proceso fuera de control es lo que llevó a la formación de las primeras estrellas y galaxias. Las propiedades de las fluctuaciones se han utilizado para ayudar a determinar la edad del Universo, de qué está hecho e incluso cómo podría terminar. En el año 2013 la misión Planck \cite{1.1.4} ha proporcionado la imagen más detallada hasta ahora del Universo tal como apareció a solo 380,000 años después del Big Bang.
+\begin{figure}
+\centering
+  \includegraphics[width=0.5\textwidth]{./Figuras/cmb1}
+  \caption{\footnotesize{Comparación del CMB medido por las misiones COBE (1992), WMAP (2003) y Planck (2013).}}
+  \label{fig 1.4}
+\end{figure}
+
+
+%---------------------------------------------------------------------------------%
+
+
+
+\subsection{Lambda Cold Dark Matter ($\Lambda$CDM)}
+Aunque la primera evidencia de materia oscura fue descubierta en la década de 1930, no fue hasta la década de 1980 que los astrónomos se convencieron de que esta es el componente responsable que mantiene unidas a las galaxias y los cúmulos de galaxias de manera gravitacional.
+
+El modelo \textit{Lambda Cold Dark Matter} ($\Lambda$CDM) es una parametrización del modelo del Big Bang Cosmológico. Su aceptación ha sido tal que ha llegado a ser denominado  el ``modelo estándar de la cosmología'' se  fundamenta,  principalmente, sobre las siguientes bases teóricas y experimentales. 
+\begin{enumerate}
+\item Un marco teórico basado en la teoría general de la relatividad, que proporciona la teoría del campo gravitatorio en escalas cosmológicas.
+\item El principio cosmológico. Requisito indispensable para cualquier modelo cosmológico.
+\item El modelo de fluidos, que considera a las galaxias como constituyentes básicos del Universo, las incluye en la teoría mediante la ecuación de fluido (ecuación \ref{eqn 1.31}).
+\item La Ley de Hubble, que establece la expansión del Universo con una velocidad de recesión de las galaxias proporcional a su distancia.
+\item La Radiación del Fondo Cósmico de Microondas. Los resultados del CMB ayudan a resolver paradigmas sin resolver del modelo del Big Bang cosmológico.
+\item La concordancia de los distintos métodos de estimación de la edad del Universo \cite{1.1.5}. 
+\item La determinación de la abundancia relativa de elementos primigenios $^{1}$H, $^{2}$D, $^{3}$He, $^{4}$He y $^{7}$Li formados en las reacciones nucleares en la época de Big Bang Nucleosíntesis (BBN)\cite{1.1.6, 1.1.7, 1.1.8}.
+\item El análisis de la estructura a gran escala del Universo, mediante experimentos como el SDSS \cite{1.1.9} , que atestiguan la homogeneidad y ayudan a la determinación de los distintos parámetros del modelo estándar.
+
+\end{enumerate}
+
+\begin{figure}
+\centering
+  \includegraphics[width=0.6\textwidth]{./Figuras/sdss}
+  \caption{\footnotesize{Mapa tridimensional captado por SDSS de la distribución de galaxias, con la Tierra en el centro. Cada punto indica una galaxia mientras que el color representa la edad de las estrellas en las galaxias, siendo las rojas las estrellas más viejas.}}
+  \label{fig 1.5}
+\end{figure}
+
+\subsubsection*{Otras características del modelo estándar}
+Además de basarse en los anteriores pilares básicos, incorpora algunas características especiales a fin de explicar la evolución y la estructura actual del Universo:
+\begin{itemize}
+\item Perturbaciones a la densidad. También conocidas como fluctuaciones de densidad o fluctuaciones cuánticas, son las responsables de la formación de las grandes estructuras del Universo \cite{1.2.3}.
+
+\item La \textit{Inflación} \cite{1.2.1}, una expansión acelerada, propuesta originalmente por Alan Guth, y que explica la planitud y la homogeneidad actuales del Universo.
+
+\item El Hot Big Bang, origen extremadamente caliente que da lugar a BBN.
+
+\item La \textit{constante cosmológica} $\Lambda$, que Einstein introdujo en las ecuaciones de la relatividad general, originalmente para forzar un Universo estático. Hoy, al saber que el Universo está expandiéndose y de forma acelerada, se le denomina \textit{energía del vacío} o \textit{energía oscura} \cite{1.2.2}. Recordando la ecuación (\ref{eqn 1.18}) al introducir el parámetro $\Lambda$ se tiene lo siguiente:
+\begin{equation}
+H^{2}(t) = \left(\frac{\dot{a}}{a}\right)
+= 
+\frac{8 \pi G}{3} - \frac{k}{a^{2}} + \frac{\Lambda}{3}.\label{eqn 1.43}
+\end{equation}
+\item La \textit{materia oscura fría}, Cold Dark Matter (CDM). Un tipo de materia que debe actuar de forma exclusivamente gravitatoria, que es oscura o \textit{transparente} (no interactúa con ningún tipo de materia bariónica o radiación) y que no debe moverse a velocidades relativistas (es fría).
+
+
+\end{itemize}
+
+\begin{figure}
+\centering
+  \includegraphics[width=0.6\textwidth]{./Figuras/BBCosmology}
+  \caption{\footnotesize{Ilustración de la línea de tiempo que detalla el origen del Universo según la teoría del Big Bang. Se observan diferentes épocas, tales como inflación, formación de estructura y expansión acelerada.}}
+  \label{fig 1.6}
+\end{figure}
+
+
+
+\subsubsection*{Problemas con el modelo}
+El modelo $\Lambda$CDM describe satisfactoriamente la expansión acelerada del Universo, explica la radiación del Fondo Cósmico de Microondas y otorga un marco de referencia dentro del cual es posible entender la homogeneidad e isotropía en el Universo, también describe las características del origen, naturaleza y evolución de las fluctuaciones de densidad que se creen son las responsables de la formación de las galaxias o otras estructuras cósmicas, la distribución de materia a gran escala, y los aspectos principales de la formación y evolución de objetos cosmológicos virializados. Hasta ahora $\Lambda$CDM es consistente con la abundancia de cúmulos observados en $z \sim 0$, predice un cambio relativamente pequeño en la densidad de número de cúmulo como función del corrimiento al rojo pues, dada la baja densidad de materia, escaso crecimiento de estructuras se ha visto desde $z \sim 1$. El modelo $\Lambda$CDM puede ``forzarse'' a concordar de manera aproximada con la abundancia de cúmulos en escalas pequeñas y con las fluctuaciones del CMB a grandes escalas modificando el espectro de potencias de su forma habitual. Este cambio en el modelo tiene consistencia con las observaciones, el espectro de potencias de $\Lambda$CDM puede normalizarse para así coincidir con el CMB y las observaciones de cúmulos. Pero a medida que las estimaciones de la densidad de materia oscura se hacen más y más precisas, es necesario saber cuál es su composición.
+
+Existen, sin embargo, ciertos problemas con el modelo a escalas más pequeñas, tales como los perfiles cusp de densidades de halos galácticos, la sobrepoblación de subestructuras predicha por simulaciones de $N$-cuerpos, entre otras. Hasta hoy, la naturaleza de la materia oscura que mantiene unida a las galaxias y cúmulos de galaxias es una discusión abierta.
+
+\subsubsection*{El problema CUSP-CORE} 
+Una de las predicciones fundamentales del modelo $\Lambda$CDM es que la materia oscura debido a su naturaleza autogravitante, colapsa en halos que, en ausencia de efectos causados por materia bariónica, desarrollan un perfil de densidad que aumenta de manera abrupta. Este importante resultado surge de simulaciones de $N$-cuerpos, que serán descritas en el capítulo siguiente. Estas simulaciones mostraron que la distribución de densidad de un halo de materia oscura de cualquier masa es perfectamente descrita por el perfil de densidad Navarro-Frenk-White o $NFW$ (Navarro et al. 1996, 1997) \cite{b1}, independientemente de condiciones iniciales o de parámetros cosmológicos. Por ejemplo, la pendiente interna principal de un perfil NFW cumple que la densidad $\rho$ es proporcional al inverso de la distancia $r$ es decir $\rho \propto r^{-1}$, un resultado similar a la pendiente principal externa mostró que la densidad debía ser proporcional a $r^{-3}$. Navarro et al. (1997) llamaron a esto el ``perfil de densidad universal"  que viene dado por
+\begin{equation}
+\rho_{NFW}(r)= \frac{\rho_{i}}{(r/R_{s})(1 + r/R_{s})^{2}},\label{eqn 1.44}
+\end{equation}
+donde $\rho_{i}$ se relaciona a la densidad del Universo en la época del colapso del halo y $R_{s}$ es el radio característico del halo. Simulaciones hechas por Moore et al. (1999) \cite{Moore 1999} mostraron un perfil de densidad incluso más pronunciado, pues encontraron que los halos que ellos simularon pueden ser descritos mejor con el siguiente perfil de densidad
+\begin{equation}
+\rho_{M99}(r)= \frac{\rho_{i}}{(r/R_{s})^{1.5}(1 + r/R_{s})^{1.5}},\label{eqn 1.45}
+\end{equation} 
+es decir con una proporción interna de $r^{-1.5}$ y porporción externa de $r^{-3}$. La diferencia entre estos dos resultados indicaba que detalles como la convergencia numérica, condiciones iniciales, análisis o interpretación aún podían ser un reto al definir la pendiente interna. A medida que el poder de cómputo fue creciendo y las simulaciones tuvieron mejor resolución, el valor y comportamiento de la pendiente interna del los halos de CDM ha sido discutido de manera extendida en los últimos años.
+\begin{figure}
+\centering
+  \includegraphics[width=0.6\textwidth]{./Figuras/NFW}
+  \caption{\footnotesize{Perfiles de densidad de los halos más y menos masivos de una simulación hecha con los modelos $\Lambda$CDM y SCDM (Navarro et al.; 1997). En los paneles superiores, los radios están dados en kpc y las densidades en unidades de $10^{10} M\odot / kpc^{3}$. En el resto, las unidades son arbitrarias.}}
+  \label{fig 1.7}
+\end{figure}
+  
+Pero las mediciones hechas para las curvas de rotación y modelos de galaxias esferoidales enanas requieren una densidad más suave, casi superficial, que son consistentes con un núcleo de densidad constante en el centro (Moore, 1994)\cite{b2}. Esta discrepancia es conocida como el problema \textit{cusp-core}.  Para tener una idea de las muchas publicaciones que se han hecho al respecto Klypin et al. (2001) derivaron pendientes proporcionales a $r^{-1.5}$ en sus simulaciones. De argumentos de la densidad del espacio-fase, Taylor \& Navarro (2001) argumentaron que el perfil de densidad debe parecerse al del perfil NFW, pero con convergencia a $r^{-0.75}$ en lugar del valor de $r^{-1}$. Colín et al. (2004) investigaron halos de baja masa y encontraron que se describían mejor usando perfiles de densidad NFW. Diemand et al. (2005) encontraron que los halos de CDM tenían perfiles cusp con pendiente $r^{-1.2}$. 
+Muchos estudios suponen que el cusp central consiste de una región donde la densidad de masa se comporta como una ley de potencias con pendiente constante aunque se ha sugerido que este no tendría que ser el caso (Navarro et al. 2004; Hayashi et al. 2004) \cite{Navarro Hayashi} dado que no encuentran evidencia de una pendiente que se comporte como una ley de potencias, si no que esta pendiente sigue una línea que a medida que el radio se hacía más pequeño, ésta no converge a un solo valor asintótico.
+\begin{figure}
+\centering
+  \includegraphics[width=0.6\textwidth]{./Figuras/CUSP_CORE}
+  \caption{\footnotesize{Perfil de densidad parametrizado como $\rho(r) \sim r^{-\alpha}$. Las observaciones muestran que $\alpha \sim 0$ (núcleo de densidad constante). Las simulaciones predicen que $1 \leq \alpha \leq 1.5$ (perfil cusp o pico).}}
+  \label{fig 1.8}
+\end{figure}
+
+
+\subsubsection*{Satélites Faltantes}
+Otra serie de observaciones parece estar en contradicción con $\Lambda$CDM. Utilizando simulaciones de alta resolución, Moore et al. (1999) \cite{Moore 1999} y Klypin et al. (2001) \cite{1.2.4} hicieron notar que el número de subhalos masivos predichos por estas simulaciones excede el número observado de satélites luminosos de la Vía Láctea en al menos un orden de magnitud. Esto se le conoce como el problema de los \textit{satélites faltantes}. Este tipo de resultado sigue siendo una discrepancia considerable entre el número de satélites observados en la Vía Láctea y el número predicho por simulaciones de $\Lambda$CDM.
+
+Las simulaciones predicen que una galaxia, como la Vía Láctea debería tener alrededor de 10 veces más galaxias satélites que las que se observan. Lo mismo sucede para galaxias de mayor tamaño. Así que, ¿Cuáles son las posibles soluciones? Lo primero sería que la física utilizada en simulaciones esté fallando, es decir, no toman en cuenta física suficiente. Sin embargo, estas simulaciones han mostrado resultados bastante satisfactorios al explicar el resto del Universo \cite{1.2.5}, aunque es posible que la física utilizada necesite más detalle. Además, muchas de estas simulaciones solo utilizan modelos de materia oscura y no toman en cuenta materia bariónica, pero incluso al añadir estos componentes a las simulaciones, el problema persiste.
+
+Otra alternativa es que el poder de observación sea muy limitado, pero las sensibilidad de los instrumentos está mejorando década con década, se han encontrado más galaxias satélites \cite{1.2.6}, aún así, el orden de satélites observados es mucho menor al obtenido en simulaciones.
+
+Una tercera posibilidad es la existencia de ``galaxias oscuras''. Todas las galaxias tienen un halo de materia oscura. En simulaciones, estos halos representan a su galaxia y muchas de las galaxias satélites son sub-halos de materia oscura. Cada halo tiene muchos sub-halos. 
+
+Estas discrepancias dentro del modelo estándar pueden ser evidencia de la importancia de procesos físicos en la materia bariónica. Pero también pueden ser indicativos de un nuevo tipo de materia oscura, con propiedades diferentes a las propuestas por $\Lambda$CDM y con la posibilidad de resolver estas dificultades mencionadas.
+
+\begin{figure}
+\centering
+ \includegraphics[width=0.7\textwidth, height=0.4\textwidth]{./Figuras/Satellites}
+ \caption{\footnotesize{Comparación entre las galaxias del grupo local y una simulación de $\Lambda$CDM. (Klypin et al. 1999)}}
+\end{figure}
+
+
+
+
+
+\subsection{Scalar Field Dark Matter (SFDM)}
+Con los problemas que presenta el modelo $\Lambda$CDM parece necesario introducir alternativas al paradigma de la formación de estructura en el Universo. Estas son algunas razones por las que deben buscarse propuestas diferentes que puedan explicar las formación de estructura a un nivel cosmológico, la cantidad observada de galaxias enanas y los perfiles de densidad de materia oscura en los núcleos galácticos.
+Una propuesta es la de un campo escalar como materia oscura en el Universo. Este modelo supone que la materia oscura es un campo escalar real o complejo $\Phi$ mínimamente acoplado a la gravedad, dotado de un potencial escalar $V(\Phi)$ y que a cierta temperatura la interacción  del campo es puramente gravitacional junto con el resto de la materia. Este campo escalar puede agregarse al lagrangiano de las partículas del modelo estándar o al de la relatividad general, suponiendo que la constante de acoplamiento con el resto de la materia sea muy pequeña.
+
+\subsection*{Campo Escalar}
+Un campo escalar asocia una cantidad escalar a cualquier punto del espacio. Su valor puede ser un número matemático o una cantidad física. Físicamente un campo escalar representa la distribución espacial de una magnitud escalar. Matemáticamente un campo escalar es una función escalar de las coordenadas.
+
+En la teoría clásica de campos, la dinámica de procesos y fenómenos físicos macroscópicos se representa mediante un campo físico. El concepto de campo abarca los campos de fuerza clásicos, así como la mecánica de medios continuos, es decir, la de sólidos rígidos y deformables, además de líquidos y la propagación de ondas. Normalmente en la teoría clásica de campos se restringe al estudio de los campos de fuerzas clásicos en su tratamiento relativista, es decir: 
+\begin{itemize}
+\item Campo electromagnético
+\item Campo gravitacional
+\item Campos cuánticos tratados de manera clásica, que ayudan a formular la evolución de campos cuánticos sin interacción entre ellos.
+\end{itemize}
+
+Por otro lado la teoría cuántica de campos nació por la necesidad de cuantizar el campo electromagnético, para poder describir de forma adecuada los fenómenos cuánticos de la radiación, de lo cual surge la electrodinámica cuántica y la partícula asociada al campo electromagnético es el fotón. Hoy día todas las partículas elementales son descritas en principio por cuantos de un campo asociado a ellas.
+
+Para describir un campo escalar libre en la teoría cuántica de campos, se utiliza la ecuación de Klein-Gordon. Esta ecuación describe correctamente partículas bosónicas de spin cero. La ecuación se deduce de la siguiente forma utilizando operadores cuánticos y la ecuación de Schrödinger
+\begin{equation}
+i\hbar\frac{\partial \psi}{\partial t} = - \frac{\partial^{2}\psi}{\partial x^{2}}
++ V(x)\psi.\label{eqn 1.46}
+\end{equation}
+Esta ecuación puede derivarse del siguiente modo. Tomando la relación clásica de la energía
+\begin{equation}
+E = \frac{p^{2}}{2m} + V(x),\label{eqn 1.47}
+\end{equation}
+se utiliza la correspondencia entre cantidades clásicas y operadores cuánticos
+\begin{equation*}
+\hat{E}=i\hbar\frac{\partial}{\partial t},
+\end{equation*}
+\begin{equation*}
+\hat{p} = -i\hbar\frac{\partial}{\partial x},
+\end{equation*}
+\begin{equation*}
+\hat{\vec{v}}= -i\hbar\nabla,
+\end{equation*}
+\begin{equation*}
+\hat{p}^{2}=-\hbar^{2}\nabla^{2},
+\end{equation*}
+\begin{equation*}
+\hat{x}=x.
+\end{equation*}
+La ecuación de Schrödinger es de primer orden temporal y de segundo orden en las derivadas espaciales, lo cual es un problema en el estudio relativista, donde las coordenadas espaciales y temporales están relacionadas directamente unas con otras.
+
+Para ello, se se considera la relación relativista entre la masa, la energía y el momento
+\begin{equation}
+E^{2} = p^{2}c^{2} + m^{2}c^{4},\label{eqn 1.48}
+\end{equation}
+empleando las relaciones anteriores, se obtiene
+\begin{equation}
+-\hbar^{2}\frac{\partial^{2}}{\partial t^{2}} = -\hbar^{2}c^{2}\nabla^{2}
++m^{2}c^{4}.\label{eqn 1.49}
+\end{equation}
+Esta ecuación debe aplicarse a un campo que dependerá de las coordenadas espaciales y del tiempo
+\begin{equation}
+\Phi = \Phi(\vec{x},t),\label{eqn 1.50}
+\end{equation}
+entonces
+\begin{equation}
+-\hbar^{2}\frac{\partial^{2}\Phi}{\partial t^{2}} = -\hbar^{2}c^{2}\nabla^{2}\Phi
++m^{2}c^{4}\Phi.\label{eqn 1.51}
+\end{equation}
+Dividiendo por $\hbar^{2}c^{2}$ y definiendo $\mu^{2} = m^{2}c^{2}/\hbar^{2}$
+\begin{equation}
+\frac{\partial^{2}\Phi}{\partial t^{2}} -\nabla^{2}\Phi + \mu^{2}\Phi = 0\label{eqn 1.52}
+\end{equation}
+Se define $\Box = \frac{\partial^{2}}{\partial t^{2}} -\nabla^{2} $ como el operador D'Alambertiano y finalmente
+\begin{equation}
+(\Box +\mu^{2})\Phi = 0,\label{eqn 1.53}
+\end{equation}
+es la ecuación de Klein-Gordon, que describe, como ya se ha dicho, un campo de spin cero o de partículas bosónicas. La propuesta de que la materia oscura sea un campo escalar de spin cero es precisamente dada la simplicidad de la ecuación de Klein-Gordon.  
+
+Muchos autores han propuesto alternativas de interés en las cuales tratan de resolver las dificultades que $\Lambda$CDM no ha podido resolver hasta ahora. En el modelo de Campo Escalar (Guzmán \& Matos, 1999) \cite{Siddhartha Matos}, se propone que los halos galácticos se forman de condensados de Bose-Einstein de un campo escalar (SF) cuyo bosón tiene una masa ultra ligera del orden de $m \sim 10^{-22}$eV. De este valor se sigue que la temperatura crítica de condensación $T_{c} \sim 1/m^{5/3} \sim $ TeV, es muy alta, por lo tanto, se forman semillas de Condensados de Bose-Einstein (CBE) en épocas tempranas en el Universo. Además, la longitud de Compton $\lambda_{c} = 2\pi \hbar / m$ asociada a este bosón es del orden de kpc que corresponde al tamaño de los halos de materia oscura de las galaxias en el Universo. Por otra parte, las grandes estructuras del Universo se forman al igual que en el modelo $\Lambda$CDM, por lo que todas las predicciones correctas del modelo estándar se reproducen de buena manera por el modelo SFDM. En este modelo, las partículas escalares con esa masa ultra ligera son tales que sus propiedades ondulatorias evitan el problema del cusp y reducen el alto número de galaxias satélite por medio del principio de incertidumbre, predichas por $\Lambda$CDM.
+
+La idea del campo escalar fue considerada primero por Ji \& Sin (1994) \cite{1.3.01}, y de forma independiente por Guzmán \& Matos (1999)\cite{Siddhartha Matos} y Lee \& Koh (1996) \cite{1.3.02}. Matos \& Guzmán sugieren en un artículo del 2000 \cite{1.3.03} el modelo de materia oscura como campo escalar para formación de halos galácticos. En el modelo de BEC, los halos de materia oscura pueden describirse, en el límite no relativista, como potenciales Newtonianos, hechos de condensados de Bose-Einstein ultra ligeros y con una sola función de onda asociada. Los halos hechos de CBE pueden describirse como un campo escalar $\Phi$ coherente.
+
+
+\subsubsection{Descripción Física del Modelo}
+Para estudiar la dinámica de SFDM en el Universo se utiliza la métrica de Friedmann-Lemaître-Robertson-Walker (FLRW) con factor de escala $a(t)$. El \textit{background} o fondo del Universo se compone de un campo escalar SFDM ($\Phi_{0}(t)$) dotado de un potencial escalar $V \equiv V(\Phi_{0})$, radiación ($z$), neutrinos ($\nu$), bariones ($b$) y una constante cosmológica ($\Lambda$) (Magaña \& Matos, (2012)). Recordando las ecuaciones de FLRW, el tensor energía-momento \textbf{T} para un campo escalar, la densidad de energía escalar $T_{0}^{0}$ y la presión escalar $T_{j}^{i}$ estarán dadas por
+\begin{equation}
+T_{0}^{0}=-\rho_{\Phi_{0}}=-\left(\frac{1}{2}\dot{\Phi}_{0}^{2} + V \right),\label{eqn 1.54}
+\end{equation}
+y
+\begin{equation}
+T_{j}^{i}=P_{\Phi_{0}}=\left(\frac{1}{2} \dot{\Phi}_{0}^{2}-V \right)\delta_{j}^{i},\label{eqn 1.55}
+\end{equation}
+donde el punto se entiende como la derivada respecto al tiempo cosmológico y $\delta_{j}^{i}$ es la delta de Kronecker. Así, la Ecuación de Estado para el campo escalar es $p_{\Phi_{0}}=\omega_{\Phi_{0}}\rho_{\Phi_{0}}$ con
+\begin{equation}
+\omega_{\Phi_{0}} = \frac{\frac{1}{2}\dot{\Phi}_{0}^{2}-V}{\frac{1}{2}\dot{\Phi}_{0}^{2}+V}.\label{eqn 1.56}
+\end{equation}
+Se definen nuevas variables adimensionales
+\begin{equation}
+x\equiv \frac{\kappa}{\sqrt{6}}\frac{\Phi_{0}}{H}, \;\;\; u\equiv\frac{\kappa}{\sqrt{3}}\frac{\sqrt{V}}{H}\label{eqn 1.57}
+\end{equation}
+donde $\kappa^{2}\equiv 8\pi G$ y $H \equiv \dot{a}/a$ es el parámetro de Hubble. Se toma el potencial escalar como $V = m^{2}\Phi^{2}/2\hbar^{2} + \lambda\Phi^{4}/4$, si se toma $c = 1$, para un bosón ultra ligero se tendrá que $\mu_{\Phi} \sim 10^{-22} $eV. Con estas variables, el parámetro de densidad para el fondo $\Omega_{\Phi}$ se escribe como
+\begin{equation}
+\Omega_{\Phi_{0}}= x^{2}+u^{2},\label{eqn 1.58}
+\end{equation}
+además. la Ecuación de Estado del campo escalar toma la forma
+\begin{equation}
+\omega_{\Phi_{0}}= \frac{x^{2}-u ^{2}}{\Omega_{\Phi_{0}}}.\label{eqn 1.59}
+\end{equation}
+Dado que $\omega_{\Phi_{0}}$ es una función del tiempo, si su promedio temporal tiende a cero, implicaría que la materia oscura $\Phi^{2}$ se comporta de igual manera que la ecuación de estado para CDM.
+\subsection{Fondo del Universo: Aproximación Hidrodinámica}
+En esta aproximación, se hace una transformación para resolver las ecuaciones de Friedmann de manera analítica con la condición $H<<m$. Se toma el potencial escalar como $V = m^{2}\Phi^{2}/2\hbar^{2} + \lambda\Phi^{4}/4$. Así, para el bosón ultra ligero se tiene que $m \sim 10^{22}$ eV.
+
+El campo escalar, $\Phi_{0}$ se expresa en términos de nuevas variables $S$ y $\rho_{0}$, donde $S$ es constante en el fondo y $\rho_{0}$ será la densidad de energía del fluido también en esta región, así el campo en dicha región se expresa como
+\begin{equation}
+\Phi_{0} = (\psi_{0}e^{-imt/\hbar} + \psi_{0}^{*}e^{imt/\hbar}),\label{eqn 1.60}
+\end{equation}
+donde
+\begin{equation}
+\psi_{0}(t) = \sqrt{\rho_{0}(t)}e^{iS/\hbar},\label{eqn 1.61}
+\end{equation}
+con esto, el campo escalar en la región del fondo del Universo se puede expresar como 
+\begin{equation}
+\Phi_{0}=2\sqrt{\rho_{0}}\cos(S-mt/\hbar),\label{eqn 1.62}
+\end{equation}
+con esto se obtiene
+\begin{equation}
+\dot{\Phi}_{0}^{2} = \rho_{0} 
+\left[
+\frac{\dot{\rho}_{0}}{\rho_{0}}\cos(S-mt/\hbar) 
+- 2(\dot{S}-mt/\hbar)\sin(S-mt/\hbar)
+\right]^{2}.\label{eqn 1.63}
+\end{equation}
+Observe que el principio de incertidumbre implica que $m \Delta t \sim \hbar$, y que para el fondo en el caso no relativista se cumple la relación $\dot{S}/m \sim 0$. 
+\subsection{Perturbaciones de SFDM}
+Se sabe que el Universo no es exactamente isotrópico ni espacialmente homogéneo, tal como describe la métrica FLRW. El campo escalar tiene oscilaciones intensas desde el inicio, estas oscilaciones se transmiten a las fluctuaciones que crecen de manera rápida y son muy grandes. Este comportamiento no es físico, ya que se observan oscilaciones en los campos pero no se observa una evolución de su densidad. Para descartar estas oscilaciones se hacen dos transformaciones. La primera cambia la ecuación de Klein-Gordon perturbada en una ecuación tipo Schrödinger, la segunda transformación cambia esta ecuacón a un sistema hidrodinámico, para que pueda interpretarse de manera más sencilla las cantidades físicas observables.
+
+Una perturbación en cualquier cantidad es la diferencia entre su valor correspondiente en un evento en el espacio--tiempo real y su correspondiente valor de ``fondo'', así, para el campo escalar, por ejemplo, se tiene
+\begin{equation}
+\Phi = \Phi_{0}(t) + \delta\Phi(\vec{x},t),\label{eqn 1.64}
+\end{equation}
+que al insertar en la ecuación de Klein-Gordon, se tiene, con $\dot{\phi}=0$
+\begin{equation}
+\delta\ddot{\Phi} + 3H\delta\dot{\Phi}
+- \frac{1}{a^{2}}\vec{\nabla}^{2}\delta\Phi
++V_{,\Phi\Phi}\delta\Phi +2V_{,\Phi}\phi = 0.\label{eqn 1.65}
+\end{equation}
+Entonces el campo escalar perturbado $\delta\Phi$ en términos de $\Psi$ puede expresarse de la siguiente manera
+\begin{equation}
+\delta\Phi = \Psi e^{-imt/\hbar} +\Psi^{*}e^{imt/\hbar},\label{eqn 1.66}
+\end{equation}
+que oscila con una frecuencia proporcional a $m$ y $\Psi = \Psi(\vec{x},t)$, sería porporcional a una función de onda de un conjunto de partículas en el condensado. Con esta ecuación y la expresión del potencial del campo escalar, la ecuación (\ref{eqn 1.65}) se convierte en 
+\begin{equation}
+-i\hbar(\dot{\Psi}+\frac{3}{2}H\Psi) + \frac{\hbar^{2}}{2m}(\Box \Psi +9\lambda|\Psi|^{2}\Psi) + m\phi\Psi = 0,\label{eqn 1.67}
+\end{equation}
+donde $\Box$ se define como 
+\begin{equation}
+\Box = \frac{d^{2}}{d t^{2}} + 3H\frac{d}{d t} - \frac{1}{a^{2}}\vec{\nabla}^{2}\label{eqn 1.68}
+\end{equation}
+Para entender la naturaleza hidrodinámica de este modelo de materia oscura, se hace una aproximación utilizando una transformación de Madelung \cite{3.2, 3.3, 3.4}, la cual conecta la teoría de campos y las funciones de onda de los condensados, es decir, se considera 
+\begin{equation}
+\Psi=\sqrt{\hat{\rho}} e^{iS},\label{eqn 1.69}
+\end{equation}
+donde $\Psi$ será la función de onda del condensado, con $\hat{\rho}=\rho/m=\hat{\rho}(\vec{x},t)$ y $S=S(\vec{x},t)$. la función $\Psi$ se separa en una fase real $S$ y una amplitud real $\hat{\rho}$, mientras que se satisface la condición $|\Psi|^{2}=\Psi\Psi^{*}= \hat{\rho}$. sustituyendo en la ecuación (\ref{eqn 1.67}), se obtiene
+\begin{equation}
+\dot{\hat{\rho}} + 3H\hat{\rho}
+-\frac{\hbar}{m}\hat{\rho}\Box S 
++\frac{\hbar}{a^{2}m}\vec{\nabla}S\vec{\nabla}\hat{\rho}
+-\frac{\hbar}{m}\hat{\rho}\dot{S}=0,\label{eqn 1.70}
+\end{equation}
+y
+\begin{equation}
+\hbar \dot{S}/m + \omega\hat{\rho}
++ \phi
++ \frac{\hbar^{2}}{2m^{2}}\left(\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}}\right)
++ \frac{\hbar^{2}}{2a^{2}}[\vec{\nabla}(S/m)]^{2}
+- \frac{\hbar^{2}}{2}(\dot{S}/m)^{2} = 0.\label{eqn 1.71}
+\end{equation}
+Al tomar el gradiente de las ecuaciones (\ref{eqn 1.70}), (\ref{eqn 1.71}) dividiendo por $a$ y utilizando la definición 
+\begin{equation}
+\vec{v}\equiv \frac{\hbar}{ma}\vec{\nabla}S\label{eqn 1.72}
+\end{equation}
+se obtiene
+\begin{equation}
+\dot{\hat{\rho}} + 3H\hat{\rho} - \frac{\hbar}{m}\hat{\rho}\Box S 
++ \frac{1}{a}\vec{v}\vec{\nabla}\hat{\rho} - \frac{\hbar}{m}\hat{\rho}\dot{S} = 0,\label{eqn 1.73}
+\end{equation}
+\begin{equation*}
+\dot{\vec{v}} + H\vec{v} + \frac{1}{2a\hat{\rho}\vec{\nabla}}p 
++ \frac{1}{a}\vec{\nabla}\phi + \frac{\hbar^{2}}{2m^{2}a}\vec{\nabla}
+\left(\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}}\right) 
+\end{equation*}  
+\begin{equation}
++\frac{1}{a}(\vec{v}\cdot\vec{\nabla})\vec{v}-\hbar(\dot{\vec{v}}+H\vec{v})(\dot{S}/m) = 0\label{eqn 1.74}
+\end{equation}
+donde se ha definido $\omega = 9\hbar^{2}\lambda/2m^{2}$ y $p= \omega\hat{ \rho}^{2}$. 
+Ignorando los términos cuadráticos y las derivadas temporales de segundo orden en las ecuaciones (\ref{eqn 1.73}) y (\ref{eqn 1.74}) se obtiene
+\begin{equation}
+\frac{\partial \hat{\rho}}{\partial t} +
+\vec{\nabla}\cdot(\hat{\rho} \vec{v}) + 3H\hat{\rho}=0,\label{eqn 1.75}
+\end{equation}
+\begin{equation}
+\frac{\partial \vec{v}}{\partial t} + H \vec{v}
+-\frac{\hbar^{2}}{2m^{2}}\vec{\nabla}\left(\frac{1}{2\hat{\rho}}\vec{\nabla}^{2}\hat{\rho}\right) + \omega\vec{\nabla}\hat{\rho} +\vec{\nabla}^{2}\phi,\label{eqn 1.76}
+\end{equation}
+\begin{equation}
+\vec{\nabla}^{2}\phi = 4\pi G\hat{\rho},\label{eqn 1.77}
+\end{equation}
+donde la ecuación para el campo gravitacional está dado por la ecuación de Poisson. En la ecuación (\ref{eqn 1.72}) se observa una proporcionalidad entre el gradiente de la fase y la velocidad del fluido. Note que $\vec{v}$ puede representar el campo de velocidades para el fluido y $\hat{\rho}$ será la densidad de número de las partículas dentro del fluido. Note también la existencia de un término extra con derivadas de tercer orden en el espacio, que varía con el gradiente de 
+\begin{equation*}
+\frac{\hbar^{2}}{2m^{2}}\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}}.
+\end{equation*}
+Las ecuaciones (\ref{eqn 1.76}) y (\ref{eqn 1.77}) serían el análogo de las ecuaciones de Euler para fluidos clásicos, con la diferencia de la existencia de un término cuántico, llamado $Q$ y definido por
+\begin{equation}
+Q = \frac{\hbar^{2}}{2m^{2}}\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}},\label{eqn 1.78}
+\end{equation}
+este último término, puede describir una fuerza o algún tipo de presión negativa de naturaleza cuántica. $Q$ tendrá mejor significado en el Capítulo 3, cuando se explique de mejor forma la interacción entre partículas de materia oscura para este modelo.
+\subsection{Otros Candidatos a Materia Oscura}
+Con el paso de los años, las observaciones del Universo son cada vez más precisas y con éstas, la presencia de la materia oscura es más evidente \cite{1.3.2.1}. Se sabe que se agrupa formando halos galácticos y que es la responsable de la formación a gran escala del Cosmos. Descifrar la naturaleza de la materia oscura es una tarea para físicos de partículas y cosmólogos por igual, ya que las partículas elementales son los principales candidatos a materia oscura en el Universo. 
+
+En las secciones anteriores se han descrito dos modelos de materia oscura, el modelo estándar $\Lambda$CDM y el modelo de materia oscura escalar SFDM. Estos no son los únicos modelos que se han desarrollado. Existe una gran variedad de candidatos que no por ser menos conocidos, son menos interesantes. Se describirán, algunos de ellos, brevemente:
+
+\begin{itemize}
+\item Materia oscura auto-interactuante (SIDM): Las partículas de materia oscura fría tienen auto-interacción con poca disipación o aniquilación \cite{1.3.1}.
+\item Materia oscura tibia (WDM): Las partículas se mueven a velocidades altas pero no relativistas, los halos de materia oscura se forman en épocas similares a CDM pero se forma menos subestructura en simulaciones de $N$-cuerpos \cite{1.3.2}.
+\item Materia oscura repulsiva (RDM): la materia oscura se comporta como un condensado de bosones masivos que interactúan por un potencial repulsivo entre partículas además de la gravedad, lo cual conduce a un comportamiento de superfluidez \cite{1.3.3}.
+\item Materia oscura difusa (FDM): Las partículas están compuestas de partículas ultra-ligeras, similares a materia oscura escalar \cite{1.3.4}.
+\item Materia oscura auto-aniquilante (SADM): La aniquilación de materia oscura permite suavizar los perfiles cusp de halos galácticos \cite{1.3.5}.
+\item Materia oscura que decae (DDM):  La formación de estructura en $z \sim 2$ mejora para el modelo de DDM \cite{1.3.6}.
+\end{itemize}
+
+
+\subsubsection*{WIMP}
+Los \textit{Weak Interactive Massive Particles} (WIMP) son cadidatos a materia oscura fría. Estas partículas solo interactúan de manera gravitacional con la materia bariónica y están predichas por teorías de unificación. En la mayoría de los modelos de partículas, la partícula supersimétrica más conocida es el \textit{neutralino}, el cual posee  características que coinciden con las de un WIMP: Es estable, no tiene carga eléctrica, sus interacciones son solo de tipo débil, su masa está en un rango adecuado para que se produzca con abundancia necesaria y da lugar a materia oscura fría \cite{1.3.7}.
+
+\subsubsection*{Modificaciones a la teoría newtoniana}
+
+En 1983, Mordehai Milgrom propone que la teoría newtoniana debe modificarse para aceleraciones pequeñas ($a_{0} \approx 1.2 \pm 0.1 \times 10^{-10}$m/s$^{2}$), y que la física de Newton es sólo una buena aproximación para aceleraciones mayores a $a_{0}$ \cite{1.3.8}. Esta modificación conduce a que la segunda ley de Newton debe replantearse para pequeñas aceleraciones de la siguiente manera 
+\begin{equation}
+\vec{F} = m \mu (\frac{a}{a_{0}})\vec{a}.\label{eqn 1.79}
+\end{equation}
+Esta modificación permite explicar muchos datos observados sin recurrir a postular materia oscura no--bariónica. Su rango de aplicabilidad y éxito es muy amplio: desde galaxias enanas esferoidales hasta supercúmulos galácticos.
+
+\subsubsection*{Dimensiones extra}
+
+Entre las ideas propuestas por la comunidad científica, la de dimensiones extra es algo intrigante. Se postula que nuestro Universo está inmerso en un sub--espacio de (3+1) dimensiones, el cuál a su vez está inmerso en un espacio de mayor dimensión. La idea de postular esto es que la materia oscura no es visible, pero su presencia en las galaxias se detecta a través de efectos gravitacionales en estrellas visibles.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Simulaciones de $N$-cuerpos}\label{cap.nudo}
+En el capítulo anterior, se llega a la conclusión de que la naturaleza de la materia oscura es incierta. El crear teorías que expliquen esa naturaleza y además concuerden con las observaciones actuales del Universo no es tarea fácil. Al no conocer su composición, una de las soluciones que se proponen es el de emplear simulaciones que involucren toda la física desarrollada en la teoría y que a su vez permitan tener resultados comparables con observaciones. Las simulaciones de $N$-cuerpos son uno de los enfoques más amplios para comprender la formación a gran escala del Universo. En años recientes, el poder computacional ha permitido crear simulaciones de alta resolución y que muestran la evolución del Universo desde épocas extremadamente tempranas ($z \sim 1100$). Aproximadamente 13 Gyr, dependiendo del modelo que se esté simulando.
+
+La evolución de estructura se aproxima con aglomeramiento gravitacional  no lineal a partir de condiciones iniciales específicas de partículas de materia oscura y puede refinarse introduciendo efectos de dinámica de gases, procesos químicos, transferencia radiativa y otros procesos astrofísicos. La fiabilidad de una simulación se mide por su resolución en masa, longitud y tiempo. La resolución de masa es especificada por la masa de la partícula más pequeña considerada, siendo la escala por debajo de la cual las fluctuaciones son despreciables. La resolución en longitud está limitada por una escala de ``suavizado'' (softening), introducida para evitar infinitos en la fuerza gravitacional cuando las partículas colisionan.
+
+La formación de estructura en el Universo es originada por pequeñas perturbaciones en la densidad de materia, o fluctuaciones cuánticas que se expanden a escalas cosmológicas en la época de inflación. Al simular materia oscura se debe enfocar en su colapso gravitacional, al haber más colapso, las perturbaciones crecen. La teoría de perturbaciones lineal es una excelente primera aproximación a la evolución temprana del Universo. El resultado de este conjunto de consideraciones es una red de halos que se forman a lo largo de paredes y filamentos, creando un entramado cósmico. Este entramado es consistente con mediciones de aglomeraciones de galaxias en un amplio intervalo de escalas.
+
+Existe una gran variedad de códigos que involucran teoría de simulaciones de $N$-cuerpos, incluyendo dinámica de gases, conocida como Smoothed Particle Hydrodynamics (SPH) y que han sido utilizados en numeradas ocasiones para obtener resultados consistentes con observaciones. Por mencionar algunos: ART \cite{2.1.1}, ENZO \cite{2.1.2}, RAMSES \cite{2.1.3}, GADGET \cite{b4} etc.
+
+Este capítulo está dedicado a describir las bases teóricas para simulaciones de $N$-cuerpos e Hidrodinámica de Partículas Suavizadas (SPH) que utiliza el código GADGET.
+
+\section{Modelos de Fluidos Sin Colisión Autogravitantes}
+Para derivar las ecuaciones del problema cosmológico de $N$-cuerpos, se puede iniciar desde las ecuaciones de la relatividad general y deducir las ecuaciones de movimiento de partículas no relativistas autogravitantes en un Universo en expansión. Para el caso de materia no relativista en el límite de campo débil, se llega a las ecuaciones de Newton. Hay algunas limitaciones con esta aproximación: no se pueden estudiar partículas relativistas y se ignoran las perturbaciones a la gravedad, es decir, los cambios en el potencial gravitacional se consideran instantáneos.
+
+Iniciando con las definiciones de coordenadas comóviles del Capítulo 1, la distancia propia se define como  
+\begin{equation}
+\vec{r} = a(t)\vec{x},\label{eqn 2.1}
+\end{equation}
+donde $a(t)$ es el factor de escala. Al diferenciar la ecuación (\ref{eqn 2.1}) respecto del tiempo se obtienen las velocidades
+\begin{equation}
+\vec{v}(\vec{x},t)\equiv\dot{r}=a\vec{\dot{x}}+\dot{a}\vec{x}
+=H\vec{r}+\vec{v}_{pec}.\label{eqn 2.2}
+\end{equation}
+Aquí, $\vec{v}_{pec}=a\vec{x}$ es la velocidad peculiar y $H=\dot{a}/a$ es la constante de Hubble. El problema de $N$-cuerpos en cosmología es algo específico.  Los sistemas estudiados en cosmología tales como la evolución no lineal de la materia oscura pueden tratarse utilizando la ecuación de Boltzmann no colisional en coordenadas comóviles acoplada en conjunto con la ecuación de Poisson que describe el comportamiento y evolución de un fluido sujeto a fuerzas externas y que tiene la siguiente forma 
+\begin{equation}
+\frac{\partial f}{\partial t} + \vec{v}\cdot\vec\nabla_{r} + \frac{\vec{F}}{m}\cdot\vec\nabla_{v}=0,\label{eqn2.1}
+\end{equation}
+donde $f= f(\vec{r}, \vec{p}, t)$ es una función de distribución de la densidad, $\vec{v}$ es la velocidad, $\vec{r}$ es la posición, $\vec{F}$ es la fuerza y $m$ la masa que describen completamente al fluido \cite{b3}.
+
+En el caso de que esta fuerza $\vec{F}$ se derive de un potencial, tal que 
+\begin{equation}
+\vec{F} = -m\nabla\Phi,\label{eqn2.2}
+\end{equation}
+donde $m$ es la masa de la partícula del sistema. Sustituyendo (\ref{eqn2.2}) en (\ref{eqn2.1}) se encuentra
+\begin{equation}
+\frac{\partial f}{\partial t} + \vec{v}\cdot\vec\nabla_{r} - \vec\nabla\Phi\cdot\vec\nabla_{v}=0\label{eqn2.3}
+\end{equation} 
+Este potencial $\Phi$ debe satisfacer la ecuación de Poisson
+\begin{equation}
+\nabla^{2} \Phi (\vec{r},t) = 4\pi \int_{S} f(\vec{r},\vec{v},t)d^{3}v\label{eqn2.4}
+\end{equation}
+donde $S$ es todo el espacio y $f$ se define mediante la siguiente expresión
+\begin{equation}
+f = f(\vec{r},\vec{v},t)d^{3}v d^{3}r\label{eqn 2.5}
+\end{equation}
+que viene dada por la masa total de las partículas que se encuentran en un cubo de volumen $d^{3}r$ centrado en $\vec{r}$ y velocidad ubicada en un cubo de volumen $d^{3}v$ centrado en $\vec{v}$. Al integrar en el espacio, lo que se obtiene es la densidad de masa que puede depender del tiempo $\rho(t)$, con esto la ecuación de Poisson presentada en la ecuación (\ref{eqn2.4}) se reduce a la conocida.
+
+El problema que se intenta resolver numéricamente es el siguiente. Dadas las coordenadas iniciales $\vec{r}_{init}$ y velocidades $\vec{v}_{init}$ de $N$ partículas con masa en el momento $t = t_{init}$, encontrar sus velocidades $\vec{v}$ y coordenadas $\vec{r}$ en el siguiente instante $t = t_{next}$, suponiendo que las partículas interaccionan mediante la fuerza de gravedad, que se considera Newtoniana. Si $\vec{r}_{i}$ y $m_{i}$ es la coordenada y masa para cada partícula, entones las ecuaciones de movimiento son
+\begin{equation}
+\frac{d^{2}\vec{r}_{i}}{d t^{2}}=
+-G \sum_{j=1, i \not= j}^{N} \frac{m_{j}(\vec{r}_{i}-\vec{r}_{j})}{|\vec{r}_{i}-\vec{r}_{j}|^{3}}, \label{eqn 2.8}
+\end{equation}
+donde $G$ es la consante de gravitación universal. Se debe tomar la siguiente consideración antes de resolver estas ecuaciones de forma numérica.
+
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=0.45\textwidth]{./Figuras/nbody0}}
+\subfigure[]{\includegraphics[width=0.45\textwidth]{./Figuras/nbody4}}
+\subfigure[]{\includegraphics[width=0.6\textwidth]{./Figuras/nbody7}}
+\caption{\footnotesize{Colapso gravitacional en una simulación de $N$-cuerpos.}}
+\end{figure}
+
+Primero, se introduce un suavizante de fuerza: la fuerza se hace más débil (se suaviza) en distancias pequeñas para evitar aceleraciones grandes, es decir, si dos partículas se encuentran muy cercanas unas a otras, estas ecuaciones pueden indefinirse. Al suavizar, la integración numérica se estabiliza. Otra razón para realizar esta acción es que cuando se integran galaxias, cúmulos de galaxias, o la estructura a gran escala , los efectos de las colisiones cercanas entre partículas individuales puede ignorarse. En otras palabras, la fuerza que actúe en una partícula estpa dominada por la contribución acumulada de todas las partículas, no de pocas partículas cercanas.
+
+
+Para este propósito se agrega un parámetro $\epsilon$ conocido como “suavizante gravitacional” que permite evitar una divergencia repentina en el cálculo de la fuerza. Esto se soluciona si se agrega un parámetro $\epsilon^{2}$ de manera que 
+\begin{equation}
+\frac{d^{2}\vec{r}_{i}}{d t^{2}}=
+-G \sum_{j=1, i \not= j}^{N} \frac{m_{j}(\vec{r}_{i}-\vec{r}_{j})}{(\Delta\vec{r}_{ij}^{2} + \epsilon^{2})^{3/2}},\label{eqn2.7}
+\end{equation} 
+donde se ha definido $\Delta\vec{r}_{ij}^{2} = |\vec{r}_{i} - \vec{r}_{j}|$ y $\epsilon$ es el parámetro de suavización o “softening length” (Bodenheimer et al., 2007) \cite{b5}. Físicamente, se puede interpretar a este parámetro $\epsilon$ como la distancia entre los centros de dos partículas que están “unidas".
+
+En el caso descrito al comienzo de la sección, el potencial puede escribirse de la siguiente manera
+
+\begin{equation}
+  \Phi(\vec{r},t)
+  = -G
+  \int_{S}\int_{S}
+  \frac{f(\vec{r}, \vec{v}, t)d^{3}v'd^{3}r'}{||\vec{r}-\vec{r'}||},\label{eqn2.8}
+\end{equation}
+e introduciendo el parámetro $\epsilon$ se obtiene
+
+\begin{equation}
+ \Phi(\vec{r},t)
+  = -G
+  \int_{S}\int_{S}
+  \frac{f(\vec{r}, \vec{v}, t)d^{3}v'd^{3}r'}{||\epsilon^{2} + \vec{r}-\vec{r'}||}.\label{eqn2.9}
+\end{equation}
+Estos resultados son válidos para el caso de un Universo Newtoniano.
+
+Al considerar el modelo de Friedman--Lemaître--Robertson--Walker, es decir, el de un Universo homogéneo e isótropo en expansión, la dinámica de las partículas se describe mejor con el siguiente Hamiltoniano
+
+\begin{equation}
+  H 
+  = \sum_{i=1}^{N} \frac{\vec{p_{i}}^{2}}{2 m_{i} a^{2}(t)} 
+  +
+  \frac{1}{2} \sum_{i\not=1,i\not=j}^{N}\sum_{j=1,j\not=i}^{N}
+  \frac{m_{i}m_{j}\Phi(\vec{x_{i}}-\vec{x_{j}})}{a(t)},\label{eqn2.10}
+\end{equation}
+donde $\vec{p_{k}}$ y $\vec{x_{k}}$ son los vectores de momento y posición en el sistema de coordenadas comóviles, $a$ es el factor de escala de la métrica FLRW. El caso Newtoniano se recupera al tomar $a = 1$. El momento canónico viene dado por $\vec{p_{k}} = a^{2}(t)m_{k}\vec{x_{k}}$.
+
+Se suponen además condiciones periódicas a la frontera para una caja de volumen $L^{3}$. Así el potencial de interacción $\Phi(\vec{x})$ será solución de la ecuación
+
+\begin{equation}
+ \nabla^{2}\Phi(\vec{x})
+ =
+ 4\pi G
+ \left[
+ -\frac{1}{L^{3}}
+ +
+ \sum_{\vec{n}} \tilde{\delta}(\vec{x}-\vec{n}L)
+ \right],\label{eqn2.11}
+\end{equation}
+aquí $\vec{n}$ simboliza un vector de números naturales. Esta solución corresponde a un “potencial peculiar”
+\begin{equation}
+ \Phi
+ =
+ \sum_{i=1}^{N} m_{i} \phi(\vec{x}-\vec{x_{i}}),\label{eqn2.12}
+\end{equation}
+cuya dinámica la gobierna la ecuación
+
+\begin{equation}
+  \nabla^{2}\Phi(\vec{x})
+  =
+  4 \pi G
+  [\rho(\vec{x}-\bar{\rho})]\label{eqn2.13}
+\end{equation}
+
+la ecuación (\ref{eqn2.13}) es la ecuación de Poisson con un campo de fluctuaciones de densidad $\rho(\vec{x})$ y densidad media $\bar{\rho}$.
+El suavizamiento gravitacional es normalizado en forma de kernel con factor de escala comóvil $\epsilon$, para esto se aplica el kernel de Spline (Monaghan \& Lattanzio, 1985) \cite{b8.1} usado en SPH y se toma $\tilde{\delta} = W(\vec{x}-\vec{n}L,2.8\epsilon)$ (véase sección 2.2 Hidrodinámica de Partículas Suavizadas), la ecuación (\ref{eqn2.11}) se convierte en
+
+\begin{equation}
+ \nabla^{2}\Phi(\vec{x})
+ =
+ 4\pi G
+ \left[
+ -\frac{1}{L^{3}}
+ +
+ \sum_{\vec{n}}W(\vec{x}-\vec{n}L,2.8\epsilon)
+ \right].
+\end{equation}\label{eqn2.14}
+La dinámica descrita en esta sección es la que se utiliza para describir a las partículas de materia oscura fría (CDM). Se observa que se calcula solo la fuerza entre partículas de materia oscura. Si se utilizara un método tradicional de cálculo,  requeriría $N(N-1)$ fuerzas para $N$ partículas. Si $N$ es grande, la fuerza será de un orden de $\mathcal{O}(N^{2})$. La ventaja de el método descrito aquí es que reduce ese orden a un cálculo de $N \ln N$. 
+
+Esto es debido a que se considera un cubo mínimo que reúne a todas las partículas. Al calcular la expansión multipolar del potencial de las partículas, cosiderando el suavizamiento y el centro de masas, se ubica una partícula y se hace la pregunta : ¿Es la distancia del centro de masa del conjunto agrupado mayor que el tamaño del cubo inicial dividido por algún parámetro a escoger?
+
+Es decir, se pregunta si se cumple la relación 
+\begin{equation}
+r > \frac{l}{\theta}, \label{eqn 2.15}
+\end{equation}
+donde $r$ es la distancia de la partícula al centro de masa del agrupamiento, $l$ es el largo del cubo inicial y $\theta$ es un parámetro de precisión. Si la expresión (\ref{eqn 2.15}) resulta ser cierta para todas las partículas de la simulación, ésta sigue su evolución, si una o más de ellas no satisface esa condición, el cubo inicial se divide en un cubo pequeño de lado $l/2$ y se repite el proceso. Se calculan las expansiones multipolares y los centros de masa para cada cubo y la pregunta se vuelve a repetir para cada proceso. Lo anterior es lo que se conoce como un \textit{Tree algorithm}, algoritmo tipo árbol o algoritmo Barnes--Hut \cite{b8.2}.
+ 
+\begin{figure}
+\centering
+  \subfigure[BH]{\includegraphics[width=0.45\textwidth, height=0.4\textwidth]{./Figuras/BHAlgorithm}}
+  \subfigure[PM]{\includegraphics[width=0.4\textwidth]{./Figuras/PM}}
+  \caption{\footnotesize{(a) Algoritmo BH para 100 partículas y \textit{TreePM Algorithm} de una simulación cosmológica (b).}}
+  \label{fig 2.1}
+\end{figure}
+
+Las simulaciones de $N$--cuerpos requieren de gran poder computacional, pues cada cálculo de fuerza se efectúa para cada una de las partículas dentro de la simulación. Con el paso del tiempo han surgido nuevos métodos para calcular estas fuerzas. 
+
+Ejemplo de esto es el \textit{Particle Mesh algorithm}. El principio básico es que un sistema de partículas se convierte en una rejilla (o ``malla'') de valores de densidad. El potencial se resuelve luego para esta cuadrícula de densidad, y las fuerzas se aplican a cada partícula en función de en qué celda se encuentra y en qué parte de la celda se encuentra. Una vez que se encuentra la distribución de densidad, la energía potencial de cada punto en la malla se puede determinar a partir de la forma diferencial de la ley de Gauss, que después da lugar a una ecuación de Poisson que se resuelve fácilmente después de aplicar transformadas de Fourier (Klypin \& Shadarin 1983; White, Frenk \& Davis 1983) \cite{b5.1, b5.2}.
+
+
+
+
+\section{Hidrodinámica de Partículas Suavizadas (SPH)}
+
+La Hidrodinámica de Partículas Suavizadas o SPH por sus siglas en inglés (Smoothed Particle Hydrodynamics) fue creada para simular fenómenos astrofísicos que invloucran fluidos masivos moviéndose de forma arbitraria en tres dimensiones, utiliza la diferenciación analítica con fórmulas de interpolación para calcular derivadas espaciales. A diferencia del método de $N$-cuerpos, que dicide el espacio en celdas para calcular fuerzas entre partículas. Las ecuaciones de energía y momento se convierten en un conjunto de ecuaciones diferenciales ordinarias para describir la mecánica y termodinámica del fluido. SPH utiliza un conjunto de partículas discretas para describir el estado de un fluido con cantidades continuas asociadas a la dinámica de fluidos. Se hace la suposición de que, en cualquier momento, las posiciones de los elementos del fluido se  distribuyen de manera aleatoria conforme a su densidad. Recuperar la densidad conocida de su distribución inicial es equivalente a recuperar la probabilidad de distribucippon de una muestra del fliudo. Existen dos métodos para hacer esto posible. El primero de ellos es un metodo de suavizamiento de kernel o núcleo, para estimar la función de densidad de probabilidad de una función (Parzen, 1962) \cite{b5.3}, el otro método es la técnica de spline delta (Boneva, Kendall \& Stepanov, 1971) \cite{b5.4} para análisis de datos (Gingold \& Monaghan, 1977; Lucy, 1977; Monaghan 1997)\cite{b6,b7}. Estos métodos son utiliados para aproximar múltiples integrales y que utilizan menor cantidad de procedimeintos para llevar a cabo dichos cálculos.
+
+\subsection{Ecuaciones Fundamentales}
+La idea principal detrás de SPH es un método de interpolación que permite que cualquier función pueda expresarse en términos de sus valores en un conjunto de puntos desordenados, es decir, las partículas. Por ejemplo, para representar al medio intergaláctico, las partículas que representan al medio en forma de gas deben moverse como elementos de un fluido en un sentido Lagrangiano, este fluido se maneja como un fluido perfecto. Para que las partículas se muevan de manera correcta, es necesario construir las fuerzas que un elemento del fluido pudiese experimentar. 
+
+El modelo de SPH (Monaghan, 1992; Price, D., 2004) \cite{b8, b9} comienza definiendo la interpolación integral de cualquier función $A(r)$ como
+\begin{equation}
+ A_{I}(\vec{r})
+ =
+ \int_{S} 
+ A(\vec{r'})W(\vec{r}- \vec{r'}, h)d^{3}r',\label{eqn2.16}
+\end{equation} 
+donde la integración es sobre todo el espacio y W es un núcleo o kernel de interpolación quue debe satisfacer
+\begin{equation}
+ \int_{S}W(\vec{r}- \vec{r'},h)d^{3}r' = 1\label{eqn2.17}
+\end{equation}
+\begin{equation}
+\lim_{h \to 0} W(\vec{r}-\vec{r'},h) = \delta(\vec{r}-\vec{r'}),\label{eqn2.18}
+\end{equation}
+donde el límite se interpreta como el límite correspondiente interpolación de la integral y $h$ es un parámetro con dimensiones de longitud mientras que el espacio se considera tridimensional. 
+Al hacer cálculos numéricos, la interpolación integral se aproxima con una interpolación sumatoria
+\begin{equation}
+ A_{I}(\vec{r})
+ =
+ \sum_{j} m_{j} \frac{A_{j}}{\rho_{j}} W(\vec{r}- \vec{r_{j}},h),\label{eqn2.19}
+\end{equation}
+donde lon índices de sumatoria $j$ denotan la etiqueta para cada partícula, la suma se hace sobre todas las partículas. La partícula $j$ tiene una masa $m_{j}$, su posición es $\vec{r}_{j}$, su densidad es $\rho_{j}$ y su velocidad es $\vec{v}_{j}$. EL valor de cualquier otra cantidad $A$ en $\vec{r}_{j}$ se denota por $A_{j}$. El punto esencial de este método es que se puede construir un interpolador diferenciable de cualquier función a partir de sus valores particulares (puntos de interpolación) utilizando un kernel de interpolación que también es diferenciable. No hay necesidad de utilizar diferencias finitas o de separar el espacio el mallas tal como lo hace $N$-cuerpos. Por ejemplo, si se requiere calcular $\vec{\nabla}A$, simplemente se utiliza
+\begin{equation}
+\vec{\nabla}A(\vec{r}) = 
+\sum_{j} m_{j} \frac{A_{j}}{\rho_{j}} \vec{\nabla}W(\vec{r}-\vec{r}_{j}, h).\label{eqn 2.20}
+\end{equation}
+Los cálculos originales de Gingold \& Monaghan (1977) \cite{b9.1} utilizan un kernel Gaussiano unidimensional
+\begin{equation}
+  W(x,h)
+  =
+  \frac{1}{h \sqrt{\pi}} e^{-(x^{2}/h^{2})},\label{eqn2.21}
+\end{equation}
+y en tres dimensiones
+\begin{equation}
+W(\vec{r},h)
+  =
+  \frac{1}{h \pi^{3/2}} e^{-(\vec{r}^{2}/h^{2})}.\label{eqn 2.22}
+\end{equation}
+el cual es el ejemplo usual de una secuencia que imita a una función delta en el límite $h \rightarrow 0$. Si se quiere hallar una interpretación física de las ecuaciones de SPH, es mejor asumir siempre que el kernel es Gaussiano. Así, por ejemplo, la densidad en cualquier punto del espacio se estima como
+\begin{equation}
+\rho(\vec{r})
+=
+\sum_{j} m_{j} W (\vec{r}-\vec{r}_{j},h),\label{eqn 2.23}
+\end{equation}
+es decir, la densidad del fluido ya se está expresando de manera discreta al utilizar estas funciones de interpolación.
+\begin{figure}
+\centering
+\subfigure[]{\includegraphics[width=0.5\textwidth]{./Figuras/SPH1}}
+\subfigure[]{\includegraphics[width=0.5\textwidth]{./Figuras/SPH2}}
+\subfigure[]{\includegraphics[width=0.8\textwidth]{./Figuras/SPH3}}
+\caption{\footnotesize{Modelo de SPH. Se tiene la partícula de interés, que dependiendo del kernel crea un dominio para modelar el fluido. La figura (c) muestra el modelo SPH para simular una ola en un tanque de agua.}} \label{fig 2.2}
+\end{figure}
+
+
+\section{Ecuaciones de Movimiento}
+Al tratar el fluido perfecto, este debe obedecer las ecuaciones de Euler de dinámica de fluidos, es decir, la ecuación de continuidad
+
+\begin{equation}
+ \frac{\partial\rho}{\partial t}
+ +
+ \vec{\nabla}\cdot(\rho\vec{v})
+ = 0,\label{eqn2.24}
+\end{equation}
+y la ecuación de momento
+\begin{equation}
+ \frac{\partial\vec{v}}{\partial t}
+ +
+ (\vec{v}\cdot\vec{\nabla})\vec{v}
+ =
+ -\frac{1}{\rho} \vec{\nabla}\cdot\vec{P} - \vec{\nabla}\Phi,\label{eqn2.25}
+\end{equation}
+junto con la ecuación de Poisson
+\begin{equation}
+ \nabla^{2}\Phi = 4 \pi G \rho,\label{eqn2.26}
+\end{equation}
+donde $\rho, \vec{v}, P$, son la densidad, velocidad y presión del fluido en cualquier tiempo $t$ y $\Phi, G$ representan el potencial gravitacional y la constante universal de gravitación, respectivamente.
+Estas ecuaciones ofrecen una visión global del fluido. En la representación de Lagrange, se elige un punto del campo vectorial obtenido por el esquema de Euler en algún tiempo $t = t_{0}$ y se analiza su evolución temporal, lo que permite estudiar la dinámica de las partículas de manera individual que conforman al fluido. Expresando la derivada total como
+\begin{equation}
+ \frac{d}{dt}
+ =
+ \frac{\partial }{\partial t} 
+ +
+ \vec{v}\cdot\vec{\nabla},\label{eqn2.27}
+\end{equation}
+entonces la ecuación (\ref{eqn2.24}) será
+\begin{equation}
+ \frac{d \rho}{d t}
+ =
+ - \rho \vec{\nabla}\cdot\vec{v},\label{eqn2.28}
+\end{equation}
+y la ecuación (\ref{eqn2.25})
+\begin{equation}
+ \frac{d \vec{v}}{d t} 
+ =
+ -\frac{1}{\rho}\vec{\nabla}\cdot\vec{P} - \vec{\nabla}\Phi.\label{eqn2.29}
+\end{equation}.
+En la siguiente subsección se analizará este esquema desde el punto de vista de SPH y se deberá llegar a expresiones consistentes con las ecuaciones de movimiento de Euler de la hidrodinámica.
+
+\subsection{Ecuación de Momento}
+Utilizando las ideas de las secciones anteriores, se pueden obtener las ecuaciones de movimiento de la siguiente manera. El gradiente de la presión se calcula utilizando 
+\begin{equation}
+\rho_{i} \vec{\nabla} P_{i}
+=
+\sum_{j} m_{i} (P_{j}-P_{i})\vec{\nabla}_{i}W_{ij},\label{eqn 2.30}
+\end{equation}
+donde $W_{ij}$ denota $W(\vec{r}_{i}-\vec{r}_{j},h)$. Este particular resultado tiene la ventaja de que la fuerza se hace cero cuando la presión es constante. Aunque su desventaja es que el momento lineal y angular nos e conservan de forma exacta (un par aislado de partículas con diferentes presiones podría crear un \textit{loop} que resultaría en valores infinitos), y es difícil construir una ecuación de energía consistente. Monaghan apunta que es mejor simetrizar el término de gradiente de presión reescribiendo $\nabla P / \rho$ como 
+\begin{equation}
+\frac{\vec{\nabla} P}{\rho} 
+=
+\vec{\nabla} \left(\frac{P}{\rho}\right)
++ \frac{P}{\rho^{2}}\vec{\nabla}\rho.\label{eqn 2.31}
+\end{equation}
+La ecuación de momento para la partícula $i$ se escribe entonces de la forma siguiente
+\begin{equation}
+\frac{d \vec{v}_{i}}{d t}
+=
+- \sum_{j} m_{j} 
+\left(\frac{P_{j}}{\rho_{j}^{2}}+ \frac{P_{i}}{\rho_{i}^{2}}\right)
+\vec{\nabla}_{i}W_{ij}, \label{eqn 2.32}
+\end{equation}
+aquí la derivada $d/dt$ denota la derivada que acompaña al movimiento. El resultado de la ecuación (\ref{eqn 2.32}) se obtuvo de una forma discreta del principio de acción de un fluido adiabático. Existen otras formas simétricas de las ecuaciones de momento para SPH, aunque para este caso particular es suficiente con el obtenido en la ecuación (\ref{eqn 2.31}).
+
+\subsection{Ecuación de Continuidad}
+La ecuación de continuidad puede interpolarse de dos maneras
+\begin{equation}
+\rho_{i}=\sum_{j}m_{j}W_{ij}\label{eqn 2.33}
+\end{equation}
+o bien
+\begin{equation}
+\frac{d\rho_{i}}{d t}
+=
+\sum_{j}m_{j}\vec{v}_{ij}\vec{\nabla}W_{ij}\label{eqn 2.34}
+\end{equation}
+donde se usó la notación $\vec{v}_{ij} = \vec{v}_{i}-\vec{v}_{j}$. Con la ecuación (\ref{eqn 2.34}) la densidad de cada partícula se pede fijar y varía solamente cuando las partículas se mueven relativamente unas a otras.
+\subsection{Ecuación de Energía Térmica}
+la ecuación para el intercambio de energía térmica por unidad de masa en forma continua se escribe como
+\begin{equation}
+\frac{d u}{d t}
+=
+-\left(\frac{P}{\rho}\right)
+\vec{\nabla}\cdot\vec{v},\label{eqn 2.35}
+\end{equation}
+para la partícula $i$ puede escribirse de la forma
+\begin{equation}
+\frac{d u_{i}}{d t}
+=
+\left(\frac{P_{i}}{\rho_{i}^{2}}\right)
+\sum_{j}m_{j}\vec{v}_{ij}\cdot\vec{\nabla}_{i}W_{ij},\label{eqn 2.36}
+\end{equation}
+o, notando que 
+\begin{equation}
+\frac{d u}{d t}
+=
+-\vec{\nabla}
+\left(\frac{P\vec{v}}{\rho}\right)
++ 
+\vec{v}\cdot\vec{\nabla}\left(\frac{P}{\rho}\right),\label{eqn 2.37}
+\end{equation}
+la ecuación de energía para la partícula $i$ puede escribirse como
+\begin{equation}
+\frac{d u_{i}}{d t}
+=
+\sum_{j}m_{j}\left(\frac{P_{j}}{\rho_{j}^{2}}\right)
+\vec{v}_{ij}\cdot\vec{\nabla}W_{ij}.\label{eqn 2.38}
+\end{equation}
+Al tomar el promedio de las ecuaciones (\ref{eqn 2.36}) y (\ref{eqn 2.38}), se tiene
+\begin{equation}
+\frac{d u_{i}}{d t}
+=
+\frac{1}{2}\sum_{j}m_{j}\left(\frac{P_{j}}{\rho_{j}^{2}}
++\frac{P_{i}}{\rho_{i}^{2}}\right)
+\vec{v}_{ij}\cdot\vec{\nabla}_{i}W_{ij},\label{eqn 2.39}
+\end{equation}
+la cual tiene los mismos valores simétricos de la ecuación (\ref{eqn 2.32}). Cualquier forma de la ecuación de energía al ser interpretada utilizando un kernel Gaussiano muestra que la energía térmica de la partícula $i$ incrementa cuando la partícula $j$ se aproxima a ella.
+\subsection{Viscosidad}
+Para evitar una discontinuidad en el flujo de gases ideales, es necesario además introducir una viscosidad artificial (Monaghan \& Gingold, 1983) \cite{b9.2} denotada por $\Pi_{ij}$. La viscosidad artifical más utilizada se obtiene escribiendo la ecuación de momento como
+\begin{equation}
+\frac{d \vec{v}_{i}}{d t}
+=
+- \sum_{j} m_{j} 
+\left(\frac{P_{j}}{\rho_{j}^{2}}+ \frac{P_{i}}{\rho_{i}^{2}} + \Pi_{ij}\right)
+\vec{\nabla}_{i}W_{ij}, \label{eqn 2.40}
+\end{equation}
+donde $\Pi_{ij}$ está dada por
+\begin{equation}
+\Pi_{ij} = \left\lbrace
+\begin{array}{ll}
+\frac{-\alpha \bar{c}_{ij}\mu_{ij}+\beta\mu_{ij}^{2}}{\bar{\rho}_{ij}}  & \vec{v}_{ij}\cdot\vec{r}_{ij} < 0\\
+
+0  & \vec{v}_{ij}\cdot\vec{r}_{ij} > 0
+\end{array}
+\right.,\label{eqn 2.41}
+\end{equation}
+y 
+\begin{equation}
+\mu_{ij}=\frac{h\vec{v}_{ij}\cdot\vec{r}_{ij}}{\vec{r}_{ij}^{2}+\eta^{2}},\label{eqn 2.42}
+\end{equation}
+donde $c_{ij}$ es la velocidad media del sonido, $\alpha$ y $\beta$ son parámetros adimensionales Y según pruebas hechas en simulaciones, deben tener valores cercanos a $\alpha=1$ y $\beta=2$, el valor $\eta^{2}$ previene singularidades, es el equivalente de suavizado gravitacional para la viscosidad. Esta expresión tiene ciertas ventajas:
+\begin{enumerate}
+\item Es invariante ante transformaciones de Galileo;
+\item Desaparece para rotación de cuerpo rígido;
+\item Conserva momento lineal y angular.
+\end{enumerate}
+La expresión para $\Pi_{ij}$ contiene un término que es lineal con la diferencia de velocidades, que produce viscosidad de corte.
+
+\subsection{Kernels}
+Utilizar diferentes kernels en SPH es análogo a utilizar diversos esquemas en métodos de diferencias finitas. El kernel basado en las funciones delta spline (Monaghan \& Lattanzio, 1985) \cite{b8.1} es
+\begin{equation}
+W(\vec{r},h) = \frac{\sigma}{h^{\nu}} \left\lbrace
+\begin{array}{ll}
+1- \frac{3}{2}q^{2} +\frac{3}{4}q^{3} \;\;\;\textup{si} & 0 \leq \frac{r}{h} \leq 1\\
+
+\frac{1}{4}(2-q)^{3} \;\;\;\;\;\;\,\,\,\,\,\, \textup{si} & 1 \leq \frac{r}{h} \leq 2\\
+0 & \textup{otra forma}
+\end{array}
+\right.,\label{eqn 2.43}
+\end{equation}
+donde $ q\equiv \vec{r}/h$, $\vec{r}=\vec{r}_{i} - \vec{r}_{j}$ y $\nu$ es el número de dimensiones y $\sigma$ es una constante de normalización, con valores
+\begin{equation*}
+\frac{2}{3}, \; \frac{10}{7\pi}, \; \frac{1}{\pi},
+\end{equation*}
+en una, dos y tres dimensiones, respectivamente. Este kernel es de soporte compacto; la segunda derivada es continua y el error dominante de el interpolador de la integral es del orden $\mathcal{O}(h^{2})$. Que sea de soporte compacto significa que las interacciones se anulan exactamente para $r>2h$; la continuidad de la segunda derivada implica que el kernel no es sensible al desorden de las partículas y los errores de los interpoladores son pequeños dado que el desorden de las partículas no es muy grande. La diferencia al utilizar SPH para modelar fluidos, tales como agua o gas, es que sobre la partícula de interés de estudio, se crea un dominio dependiendo de la distancia $\vec{r}$ y de $h$, por lo que dentro de ese dominio existen partículas que influyen en la interacción de la partícula, lo cual eventualmente permite modelar la interacción (Figura \ref{fig 2.2}).
+
+
+El método SPH describe la dinámica de un gas de partículas, en este caso, materia visible o bariónica, junto con la dinámica de fluidos sin colisión autogravitantes, se tiene lo necesario para llevar a cabo una simulación cosmológica que pueda incluir ambos componentes. En el capítulo 3 se describe la función lógica, aunque de manera breve, del código GADGET-2.
+
+
+
+\chapter{GADGET}\label{GADGET}
+GAlaxies with Dark matter and Gas intEracT (GADGET) es un código libre que utiliza el método de $N$-cuerpos en conjunto con SPH para el cálculo de simulaciones cosmológicas y que ha tenido varias etapas y modificaciones desde su primer etapa pública en 2001. El código fue desarrollado en su mayoría por Volker Springel \cite{b4} como parte de su tesis de doctorado en el Max Planck Institute for Astrophysics. Puede utilizarse para analizar sistemas aislados o para simulaciones que involucren la expansión del espacio. En ambos casos con o sin condiciones periódicas a la frontera. En todas las simulaciones, GADGET sigue la evolución de un sistema de $N$-cuerpos sin colisión autogravitante, descrito en el capítulo 2 y permite la inclusión de dinámica de gases, descrita por el método SPH.
+GADGET es capaz de simular sistemas aislados, tales como la colisión y formación de galaxias hasta la formación a gran escala del Universo. La versión pública del código, GADGET-2 \cite{b10}, lanzada en 2005 es la que se utilizó para las diversas simulaciones de este trabajo.
+
+En la sección 2.1 del Capítulo 2, se comenta que GADGET hace uso de distintos algoritmos para calcular fuerzas entre partículas de materia oscura y la dinámica de gases para materia bariónica. Se describe de forma breve dos algoritmos para calcular la fuerza entre partículas, los algoritmos tree y PM. GADGET-2 utiliza una combinación de ambos algoritmos, el \textit{TreePM method} (Bode, Ostriker \& Xu 2000; Bagla 2002) \cite{3.0.1, 3.0.2}. Este método costruye un campo de densidades de masa en la malla, en la cual se efectúa una transformada de Fourier discreta. Se deja evolucionar en el tiempo y se aplica una transformada de Fourier inversa para obtener el potencial gravitacional de la malla.
+
+Una simulación cosmológica requiere de un poder computacional más allá del de un simple ordenador, se necesita un arreglo de computadoras que permitan el cálculo de manera paralela. Esto es un clúster computacional. Este es un conjunto de ordenadores unidos entre sí normalmente por una red de alta velocidad y que se comportan como si fuesen una única computadora. El clúster es un recurso vital para llevar a cabo una simulación de tal magnitud. GADGET-2 utiliza una serie de algoritmos de descomposición. Este arreglo permite distribuir la carga de memoria en procesadores individuales, reduciendo el tiempo de cálculo de manera jerárquica, es decir, se le da prioridad a los cálculos que requieran mayor memoria, por ejemplo en el método TreePM, que divide el espacio en celdas cada vez más pequeñas. Los cálculos que requieren mayor memoria son distribuidos a más procesadores, se les da más prioridad, un proceso como esto se observa mejor en la figura \ref{fig 3.1}.
+\begin{figure}
+\centering
+  \includegraphics[width=0.7\textwidth]{./Figuras/TreePM}
+  \caption{\footnotesize{Ilustración entre un algoritmo BH y una descomposición de procesos Peano-Hilbert. Esta es una curva que recorre cada malla de la simulación solo una vez. El volumen de la simulación se reparte en dominios al segmentar esta curva en puntos arbitrarios entre los límites de la celda. Esto genera una manera de distribuir el conjunto de partículas en procesadores individuales.}}
+  \label{fig 3.1}
+\end{figure}
+
+El equipo de Volker Springel realizó la simulación del milenio \cite{3.0.3}utilizando GADGET-2; esta simulación utilizó más de 10 mil millones de partículas para rastrear la evolución de la distribución de la materia en una región cúbica del Universo de 2 mil millones de años luz en un lado. Mantuvo ocupado el superordenador principal en el Centro de Supercomputación de la Sociedad Max Planck en Garching, Alemania, durante más de un mes y la cantidad de información obtenida durante esa simulación rebasa los 25 Tbytes.
+
+La simulación incluye 20 millones de galaxias dentro de este enorme volumen agrupadas en halos de materia oscura, visualizada a esta escala como filamentos. Al comparar estos datos simulados con grandes estudios observacionales, se pueden aclarar los procesos físicos subyacentes a la acumulación de galaxias reales.
+
+\begin{figure}
+\centering
+  \includegraphics[angle=90,width=\textwidth]{./Figuras/Millenium}
+ \caption{\footnotesize{Distribución de materia oscura en la simulación del milenio.}}
+  \label{fig 3.2}
+\end{figure}
+
+\section{Axion-GADGET}
+Axion-GADGET \cite{3.1} es una modificación del código de simulaciones de $N$-cuerpos/SPH de GADGET-2. Está basado en un modelo diferente de materia oscura, el Axion Ultra--Ligero o Ultra--Light Axion DM, también llamado Fuzzy DM (Guzmán \& Ureña-López, 2003) sugiere la utilización del modelo SFDM para resolver los problemas que se han encontrado en simulaciones usando diversos códigos para simular las estructuras a gran escala. el FDM es un bosón escalar, ya discutido en la sección 1.2.3., con una masa ultra ligera $(m \sim 10^{-22})$ eV, la cuál es requerida debido a una reciente observación de la época de reionización del Universo. 
+
+Algunos de los valores discutidos entre los que debe valer esta masa dicen que su masa debe estar en el orden de 100 km s$^{-1}$, y que la longitud de onda de Broglie del FDM debe rondar $\sim \mathcal{O}$(kpc). Este FDM se produce de manera no térmica y en el régimen no relativista se comporta como CDM. La característica más llamativa del FDM es que el halo tiene un núcleo solitónico de tamaño $\sim \mathcal{O} $(kpc) resultante de la presión cuántica de las partículas FDM, que puede ser más grande que su propia gravedad. Por lo tanto, la presión cuántica juega un papel esencial en la resolución de la crisis de pequeña escala. Por otra parte, si la estructura de pequeña escala de halo se puede medir con mayor precisión en el futuro, la masa de partículas FDM puede restringirse. 
+
+La modificación propone un nuevo esquema de la interacción efectiva Partícula--Partícula del algoritmo PM para simular el modelo FDM, mediante el cual se puede calcular el efecto cuántico del FDM en la simulación de $N$-cuerpos con alta resolución.
+
+\subsection{Propiedades Físicas}
+La naturaleza de FDM se describe mediante las ecuaciones de Schrödinger-Poisson (Zhang et al. 2017) \cite{3.1}
+\begin{equation}
+i\hbar \frac{d \Psi}{dt} 
+=
+-\frac{\hbar^{2}}{2m_{\chi}} \vec{\nabla}^{2}\Psi + m_{\chi}V\Psi,\label{eqn 3.1}
+\end{equation}
+y
+\begin{equation}
+\vec{\nabla}^{2}V = 4\pi G m_{\chi}|\Psi|^{2},\label{eqn 3.2}
+\end{equation}
+donde $\hbar$, $m\chi$ y $V$ son la constante de Planck, la masa de la partícula y el potencial gravitacional actuando sobre la partícula, respectivamente. La función de onda se escribe como
+\begin{equation}
+\Psi = \sqrt{\frac{\rho}{m_{\chi}}}\exp(\frac{iS}{\hbar})\label{eqn 3.3}
+\end{equation}
+en términos de la densidad de número $\frac{\rho}{m_{\chi}}$, mientras que se puede definir el gradiente de $S$ como el momento lineal de la DM
+\begin{equation}
+\vec{\nabla}S = m_{\chi}\vec{v}.\label{eqn 3.4}
+\end{equation}
+Con esta definición, al introducir la función de onda $\Psi$ en la ecuación (\ref{eqn 3.1}) y resolviendo las ecuaciones de Schrödinger-Poisson, de la parte imaginaria, se obtiene la ecuación de continuidad
+\begin{equation}
+\frac{d\rho}{dt} + \vec{\nabla}\cdot(\rho\vec{v}) = 0,\label{eqn 3.5}
+\end{equation}
+mientras que de la parte real, se obtiene la ecuación de conservación de momento
+\begin{equation}
+\frac{d\vec{v}}{dt} + (\vec{v}\cdot\vec{\nabla})\vec{v} 
+=
+-\vec{\nabla}(Q + V).\label{eqn 3.6}
+\end{equation}
+$Q$ es un potencial cúantico , llamado potencial de Bohm, y está definido como
+\begin{equation}
+Q 
+=
+-\frac{\hbar^{2}}{2m^{2}_{\chi}}\frac{\vec{\nabla}^{2}\sqrt{\rho}}{\sqrt{\rho}}.\label{eqn 3.7}
+\end{equation}
+Note la relación entre esta presión y la presión encontrada en el Capítulo 1, en la ecuación (\ref{eqn 1.78}). La diferencia está en que en lugar de utilizar el operador D'Alambertiano $\Box$ se utiliza el operador Laplaciano $\nabla$, dado que la interacción entre partículas de materia oscura en este punto no es relativista, si no que meramente gravitacional. Esta ``presión cuántica'' es la que hace posible que en SFDM los halos de materia oscura creados a comparación de $\Lambda$CDM sean menos, que es lo que se esperaría para el modelo.
+
+Estas dos últimas ecuaciones son llamadas ecuaciones de Madelung (Spiegel 1980; Uhleman et al. 2014, Marsh 2015) \cite{3.2, 3.3, 3.4}. Se puede ver que la presión $Q$ solo está definida por la densidad de masa $\rho$ y puede identificarse como una fuerza adicional ejercida sobre las partículas.
+
+Para tomar en cuenta el efecto de la presión cuántica, se inicia con el Hamiltoniano sin el término de gravedad
+\begin{equation}
+H = \int \frac{\hbar^{2}}{2 m_{\chi}} |\vec{\nabla}\Psi|^{2}d^{3}x
+  = \int \frac{\rho}{2} |\vec{v}|^{2}d^{3}x + \int \frac{\hbar^{2}}{2 m_{\chi}} (\vec{\nabla}\sqrt{\rho})^{2}d^{3}x.\label{eqn 3.8}
+\end{equation}
+Entonces la energía cinética en forma discreta, con índice $j$ para identificar a cada partícula se escribe como
+\begin{equation}
+T = \int \frac{\rho}{2} |\vec{v}|^{2}d^{3}x = \sum_{j} \frac{1}{2} m_{j} \left(\frac{d q_{j}}{dt}\right)^{2}, \label{eqn 3.9}
+\end{equation}
+donde $q_{j}$ es la coordenada de la $j$--ésima partícula y la energía potencial será 
+\begin{equation}
+K_{p} = \int \frac{\hbar^{2}}{2 m_{\chi}} (\vec{\nabla}\sqrt{\rho})^{2}d^{3}x. \label{eqn 3.10}
+\end{equation}
+Note que el término de la energía potencial $K_{p}$ no está discretizado aún. Esto se realizará más adelante.
+
+El Lagrangiano del sistema será entonces 
+\begin{equation}
+L = T - K_{p}
+  =
+\sum_{j} \frac{1}{2} m_{j} \left(\frac{d q_{j}}{dt}\right)^{2}
+-
+ \int \frac{\hbar^{2}}{2 m_{\chi}} (\vec{\nabla}\sqrt{\rho})^{2}d^{3}x,\label{eqn 3.11}  
+\end{equation}
+y las ecuaciones de Euler-Lagrange tendrán la forma
+\begin{equation}
+\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_{j}} - \frac{\partial L }{\partial q_{j}} = 0 
+\Rightarrow 
+m_{j} \ddot{q}_{j} = - \frac{\partial K_{p}}{\partial q_{j}}.\label{eqn 3.12}
+\end{equation}
+Note que $K_{p}$ es una función continua y no puede usarse en el método Particle-Particle ($PP \; method$). Para eso debe implementarse una aproximación numérica con funciones delta que discreticen a la densidad de número de cada partícula individual.
+\subsection{Implementación de la Presión Cuántica}
+Para una interacción partícula--partícula, la densidad de número para cada partícula individual se describe con funciones delta. De manera que la densidad de masa $\rho$ puede escribirse como
+\begin{equation}
+\rho(\vec{r})
+=
+\sum_{i}m_{i}\delta(\vec{r}-\vec{r}_{i}).\label{eqn 3.13}
+\end{equation}
+Numéricamente, una función delta puede ser un problema computacional dada la cobertura de la función, ya que eso podría llevar a inconsistencias en el cálculo, tales como valores infinitos o no definidos. Sin embargo, se puede aproximar esta función delta como una función kernel/Gaussiana muy puntiaguda, con tal de que su anchura sea lo suficientemente pequeña.
+Las ventajas de esta aproximación son las siguientes:
+\begin{enumerate}
+\item Mantiene naturalmente el suavizamiento del kernel, es diferenciable y esféricamente simétrico. 
+\item La interacción partícula--partícula evita singularidades en posiciones donde la densidad sea nula.
+\end{enumerate}
+Debido al tamaño infinito de la red, esa singularidad puede hacer que numéricamente, el resultado no tenga sentido físico.
+Con esto en mente, se escribe la función $\delta$ como una Gaussiana de la forma
+\begin{equation}
+\delta (\vec{r}-\vec{r}_{i}) = 
+\frac{2\sqrt{2}}{\lambda ^{3} \pi ^{3/2}} \exp \left(-\frac{2|\vec{r}-\vec{r}_{i}|^{2}}{\lambda ^{2}}\right).\label{eqn 3.14}
+\end{equation}
+El valor de $\lambda$ no es arbitrario, debe ser del mismo orden de la longitud de onda de Broglie ya que una partícula de FDM debe tener probabilidad alta de ser encontrada dentro de un paquete de onda descrito por la ecuación (\ref{eqn 3.3}). Con estos valores, la probabilidad de encontrar una partícula de FDM en una longitud de onda es de $95 \%$. Tomando la masa del FDM del orden $\mathcal{O}(10^{-22})$eV como ejemplo, su longitud de onda $\lambda$ es del orde de kpc. Insertando la ecuación (\ref{eqn 3.14}) en el término $(\vec{\nabla}\sqrt{\rho})^{2}$ de la ecuación (\ref{eqn 3.10}) la expresión se puede expandir utilizando la función kernel
+\begin{equation}
+\begin{array}{ll}
+\left[\vec{\nabla}\sqrt{\rho (\vec{r})}\right]^{2} &=
+\frac{1}{4\rho(\vec{r})}\left[\sum_{i} m_{i}\vec{\nabla}\delta(\vec{r}-\vec{r}_{i})\right]^{2}, \\\\\\ 
+&=
+\frac{1}{4\rho(\vec{r})} 
+\left[\sum_{i}
+m_{i}\delta(\vec{r}-\vec{r}_{i})(-\frac{4}{\lambda^{2}})(\vec{r}-\vec{r}_{i})\right]^{2}, \\\\\\
+&=
+\frac{4}{\lambda^{4}\rho(\vec{r})}
+\left[
+\sum_{i} m_{i}\delta(\vec{r}-\vec{r}_{i})(\vec{r}-\vec{r}_{i})
+\right]^{2}. \label{eqn 3.15}
+
+\end{array}
+\end{equation}
+En la simulación, esas partículas de FDM se agrupan en cúmulos masivos en el espacio, estos cúmulos pueden tratarse como una partículas puntuales imaginarias (ignorando el tamaño de los cúmulos a escalas cosmológicas). La densidad de masa (\ref{eqn 3.13}) se vuelve
+\begin{equation}
+\rho(\vec{r})
+=
+\sum_{j}\sum_{i}m_{i}\delta(\vec{r}-\vec{r}_{j}),\label{eqn 3.16}
+\end{equation} 
+con el índice $j$ para cada agrupación de cúmulos. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.50\textwidth, height=0.60\textwidth]{./Figuras/Density}
+\caption{\footnotesize{Interpretación de la densidad de las partículas dentro del código.}}
+\end{figure}
+
+Matemáticamente, se puede pensar que la densidad de masa se expande alrededor de $\vec{r}_{j}$ para incluir a todas las partículas de FDM: $\vec{r} \rightarrow \vec{r}-\vec{r}_{j}$ y $\vec{r}_{i} \rightarrow \vec{r}_{i} - \vec{r}_{j}$. Tomando eso en consideración, la suma de partículas individuales de FDM es efectivamente la misma que sumando sobre todos los puntos imaginarios y la ecuación (\ref{eqn 3.15}) puede reescribirse como 
+\begin{equation}
+\left[\vec{\nabla}\sqrt{\rho (\vec{r})}\right]^{2} \simeq 
+\frac{4}{\lambda^{4}}
+\left[
+\sum_{i}m_{i}\delta(\vec{r}-\vec{r}_{j})(\vec{r}-\vec{r}_{j})
+\right]^{2}
+\left[
+\sum_{j}m_{j}\delta(\vec{r}-\vec{r}_{j})
+\right]^{-1}. \label{eqn 3.17}
+\end{equation}
+Las ecuaciones (\ref{eqn 3.15}) y (\ref{eqn 3.17}) son prácticamente iguales pero su significado no debe confundirse en este punto; el paquete de onda Gaussiano se vuelve un kernel imaginario de suavizamiento de partículas.
+
+Para discretizar completamente $\partial K_{p}/\partial q_{j}$ debe integrarse la ecuación (\ref{eqn 3.17}) en todo el espacio; dada la naturaleza de la propia función $\delta$, se enfoca en el volumen que rodea los puntos imaginarios de las partículas. Así, la integración total con la aproximación del kernel da
+\begin{equation}
+\int\left[\vec{\nabla}\sqrt{\rho (\vec{r})}\right]^{2}  \simeq 
+\int \footnotesize{\frac{4 d^{3}x}{\lambda^{4}}
+\left[
+\sum_{j} m_{j}\delta(\vec{r}-\vec{r}_{j})(\vec{r}-\vec{r}_{j})
+\right]^{2}
+\left[
+\sum_{j}m_{j}\delta(\vec{r}-\vec{r}_{j})
+\right]^{-1}}\label{eqn 3.18}
+\end{equation} 
+\begin{equation}
+\simeq
+\footnotesize{4\lambda ^{-4} 
+\sum_{j}m_{j}\delta(\vec{r}-\vec{r}_{j})(\vec{r}-\vec{r}_{j})^{2}\Delta V_{j}B_{j},}\label{eqn 3.19}
+\end{equation}
+\begin{equation}
+\simeq
+\footnotesize{4\lambda^{-4}
+\sum_{j}m_{j}
+\frac{\Delta V_{j}B_{j}}{\lambda^{3}\pi^{3/2}}
+\exp\left[-\frac{(\vec{r}-\vec{r}_{j})^{2}}{\lambda^{2}}\right]
+(\vec{r}-\vec{r}_{j})^{2},} \label{eqn 3.20}
+\end{equation}
+donde $V_{j}$ y $B_{j}$ son el volumen efectivo y el factor de corrección de la $j$--ésima partícula. 
+
+El factor de corrección $B_{j}$ para la $j$--ésima partícula en la simulación se propone para que numéricamente pueda distinguirse entre los resultados de la integración de la función $\delta$ como un kernel Gaussiano, es decir,  cuando se considera a esta función como kernel cuya anchura es igual a una longitud de onda de una partícula, no se comporta como una función $\delta$ en la  región donde la distancia entre dos centros del kernel es menor a una longitud de onda. En rangos tan pequeños, la superposición entre dos Gaussianas puede contribuir significativamente, especialmente al hacer integraciones con alta densidad de partículas.
+
+El volumen efectivo $\Delta V_{j}$ para cada partícula en la simulación es del orden de $\lambda^{3}\pi^{3/2}$, resultado de una integral del kernel Gaussiano; el valor exacto de $\Delta V_{j}$ puede diferir de  sistema a sistema por la propia complejidad de la región central del kernel. Se trata de un parámetro libre fenomenológico o constante, pero se ajusta su valor para hacer coincidir el resultado dentro del núcleo del solitón obtenido con otras aproximaciones con mejor resolución en regiones que miden menos de una longitud de onda. (Schieve et al. 2014) \cite{3.5}.
+
+Finalmente; la ecuación (\ref{eqn 3.10}) se reacomoda
+\begin{equation}
+\footnotesize{\sum_{j} \frac{\partial K_{p}}{\partial q_{j}}
+=
+\frac{4\hbar^{2}}{m_{\chi}^{2}\lambda^{4}}
+\sum_{j}m_{j}\Delta V_{j}B_{j}
+\exp\left[
+-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}}\right]
+(1-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}})
+(\vec{r}-\vec{r}_{j})}\label{eqn 3.21}
+\end{equation}
+al igual que la ecuación de movimiento (\ref{eqn 3.12})
+\begin{equation}
+\footnotesize{\sum_{j}m_{j}\ddot{q}_{j}
+=
+\frac{4\hbar^{2}}{m_{\chi}^{2}\lambda^{4}}
+m_{j}\Delta V_{j}B_{j}
+\exp\left[
+-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}}\right]
+(1-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}})
+(\vec{r}-\vec{r}_{j}).}\label{eqn 3.22}
+\end{equation}
+Sustituyendo $q$ con $\vec{r}$, la aceleración adicional de la presión cuántica en la simulación se describe como
+\begin{equation}
+\footnotesize{\ddot{\vec{r}}
+=
+\frac{4M\hbar^{2}}{M_{0}m_{\chi}^{2}\lambda^{4}}
+\sum_{j}B_{j}
+\exp\left[
+-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}}\right]
+\left(1-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}}\right)
+(\vec{r}_{j}-\vec{r}).}\label{eqn 3.23}
+\end{equation}
+$M$ es la masa de la partícula en la simulación y $M_{0}$ es un factor de normalización que involucra a $\Delta V_{j}$, cuyo valor se elige $M_{0} = 10^{6} M_{\odot}$. Si se coloca cualquier partícula solitaria de prueba alrededor de fuentes de presión cuántica, la energía adicional dada al sistema por parte de esta presión es cero. El trabajo total, es decir la integración de la ecuación (\ref{eqn 3.23}) de $r=0$ a $r=\infty$ se anula. 
+
+Es decir, se ha deducido que la presión cuántica es una interacción de rango corto, mostrado con la ecuación (\ref{eqn 3.23}) ya que el término exponencial que decrece y depende en gran manera de la longitud de onda $\lambda$ de Broglie que posea la materia oscura.
+
+Zhang en su artículo menciona que pone a prueba esta nueva modificación con un sistema de dos partículas ($B_{j}=1$), separadas por una distancia del orden de $\mathcal{O}$(kpc), la aceleración causada por la presión cuántica será de $\mathcal{O}$($\frac{\hbar^{2}}{m^{2}\lambda^{3}}$) $\sim$ $\mathcal{O}$($10^{-10}m/s^{2}$). La presión cuántica puede ser atractiva si la distancia entre dos partículas es menor a $\lambda/\sqrt{2}$. Sin embargo, se vuelve repulsiva si la distancia es mayor a $\lambda/\sqrt{2}$. Al recordar el término $Q$ de la ecuación (\ref{eqn 3.3}), la presión cuántica es proporcional a la segunda derivada de la densidad de masa, que puede tener valores positivos, negativos o nulos, correspondientes físicamente a fuerzas atractivas, repulsivas o nulas. 
+
+La modificación al código se hace solamente para el cálculo de fuerzas entre partículas de materia oscura, es decir el $TreePM\;algorithm$ es el gran cambio en este código, el cálculo de fuerza para materia bariónica, es decir, SPH se deja intacto.
+
+La finalidad de utilizar esta modificación es la de comparar el modelo FDM con $\Lambda$CDM en escalas cosmológicas. En la siguiente sección se describen algunos ejemplos que vienen incluidos dentro del propio código; la simulación se lleva a cabo con GADGET-2 y con Axion-GADGET.
+
+\section{Ejemplos}
+Para tener una idea del uso del código, se describen ciertos ejemplos incluidos dentro de la distribución de GADGET-2. Antes de ejecutar cualquier simulación se debe editar el \textsf{makefile} dentro del folder de \textsf{Gadget2}, este proceso se detalla más profundamente en el Apéndice \ref{Apend.A}. Los diferentes ejemplos se explican abajo y fueron realizados en una laptop con un solo procesador.
+
+\subsection{Colisión de galaxias}
+Esta simulación consiste de dos discos de galaxias acercándose una a otra, llevando a una fusión entre ellas. Cada galaxia consiste de un disco estelar y un halo masivo extenso de materia oscura. Este ejemplo utiliza física Newtoniana, con 20000 partículas de disco y 40000 partículas de halo (figura \ref{fig 3.3}). 
+
+\subsection{Formación de estructura a gran escala}
+Este ejemplo consiste de $32^{3}$ partículas de materia oscura, junto con $32^{3}$ partículas de gas, la formación de estructura se lleva a cabo en una caja periódica de tamaño $(50 h^{-1} \textup{Mpc})^{3}$ en un Universo $\Lambda$CDM. La física involucrada es para gases adiabáticos y la temperatura mínima del gas se fija en 1000 K. Este ejemplo utiliza condiciones iniciales de malla, donde las partículas de gas se colocan en los centros de la malla rodeados por partículas de materia oscura. La simulación inicia en $z = 10$ y termina en la época presente (figura \ref{fig 3.5}).
+
+%\begin{figure}[H]
+%\centering
+ % \includegraphics[width=0.6\textwidth]{./Figuras/lcdm_gas_xy_00001}
+  %\caption{\footnotesize{Inicio de la simulación. Las partículas están ordenadas en una malla dentro de una caja de tamaño $(50 h^{-1} \textup{Mpc})^{3}$.}}\label{fig 3.4}
+%\end{figure}
+
+Los parámetros utilizados para esta simulación se indican en la tabla \ref{tabla 3.1}
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+& \multicolumn{3}{c|}{Parámetros cosmológicos} \\
+\cline{2-4}
+& Descripción & Símbolo & Valor\\
+\hline \hline
+\multirow{5}{3cm}{Características} & Densidad de materia oscura & $\Omega_{0}$ & 0.3\\ \cline{2-4}
+& Densidad de energía oscura & $\Omega_{\Lambda} $ & 0.7\\ \cline{2-4}
+& Densidad de materia bariónica & $\Omega_{b}$ & 0.04\\ \cline{2-4}
+& Parámetro de Hubble & $h$ & 0.7 \\ \cline{2-4}
+& Boxsize & $L$ & 50 Mpc\\ \cline{1-4}
+\end{tabular}
+\caption{Parámetros de la simulación de $\Lambda$CDM.}
+\label{tabla 3.1}
+\end{table}
+
+\begin{figure}[htpb]
+\centering
+\subfigure[]{\includegraphics[width=0.5\textwidth]{./Figuras/movie_xy_00000}}
+\subfigure[]{\includegraphics[width=0.5\textwidth]{./Figuras/movie_xy_00030}}
+\subfigure[]{\includegraphics[width=0.9\textwidth]{./Figuras/movie_xy_00101}}
+\caption{\footnotesize{Evolución de dos galaxias espirales colisionando para formar una sola. En la figura las partículas azules representan el halo de materia oscura, las partículas rojas representan el disco estelar.}} \label{fig 3.3}
+\end{figure}
+
+\begin{figure}[htpb]
+\centering
+\subfigure[Materia oscura]{\includegraphics[width=0.4\textwidth]{./Figuras/lcdm_DM_xy_00080}}
+\subfigure[Gas]{\includegraphics[width=0.4\textwidth]{./Figuras/lcdm_gas_xy_00080gas}}
+\subfigure[Estructura]{\includegraphics[width=0.8\textwidth]{./Figuras/lcdm_gas_xy_00080}}
+\caption{\footnotesize{Evolución desde $z=10$ hasta $z = 0$. En la figura se observan los halos de materia oscura y las agrupaciones de gas alrededor de los mismos.}} \label{fig 3.5}
+\end{figure}
+El ejemplo de la formación de estructura a gran escala es el que se analizará con ambos códigos. Para este fin, se generan idénticas condiciones iniciales para ambas simulaciones, haciendo cambios en el suavizamiento gravitacional y en el caso de FDM, en el valor de la masa de las partículas de materia oscura.  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Análisis de Resultados}
+Al ya tener una idea general de lo que sucede al realizar simulaciones de $N$-cuerpos, Es necesario llevar a cabo un estudio a detalle de los resultados obtenidos, pero realizar un análisis de la cantidad de datos de una sola simulación no es tarea fácil. Existe una gran variedad de programas y códigos hechos para poder generar, visualizar e interpretar dichos resultados; muchos de ellos son de gran utilidad ya que permiten tabular distintas propiedades físicas que la simulación lleva a cabo. Otros ayudan a la visualización directa de las partículas y permiten una observación  y manipulación en 3 dimensiones de los archivos de salida o \textsf{snapshots}, además de que con estos archivos pueden generarse imágenes secuenciales que después pueden procesarse en video. En esta sección se utilizarán diversas herramientas computacionales para crear condiciones iniciales de acuerdo a la capacidad de cálculo disponible; códigos para analizar los datos que se obtienen de cada \textsf{snapshot} y programas para interpretar resultados.
+
+\section{Generar Condiciones Iniciales}
+Para poder llevar a cabo una simulación cosmológica con GADGET-2 y en general, con cualquier otro código, se debe contar con un archivo de condiciones iniciales. En dicho archivo se indica:
+\begin{enumerate}
+\item El tipo de simulación que se va a llevar a cabo: cosmológica, galáctica, etc.
+\item La cantidad de partículas que se usarán en la simulación.
+\item El tiempo de inicio de la simulación en caso de que sea cosmológica ($z$).
+\item La densidad de materia oscura ($\Omega_{0}$).
+\item La densidad de energía oscura ($\Omega_{\Lambda}$).
+\item La densidad de materia bariónica ($\Omega_{b}$).
+\item El parámetro de Hubble ($h$).
+\item El tamaño de la caja de simulación ($L$).
+\item El término de normalización del espectro de potencias ($\sigma_{8}$).
+\end{enumerate}
+Entre otras cantidades, tales como la longitud, la masa y la velocidad en unidades convencionales, es decir kpc, $\textup M_{\odot}$ y km/s. El código que genere este archivo de parámetros lleva a cabo una aproximación, llamada \textit{Aproximación Zeldovich} \cite{4.1, 4.2}. Esta es una aproximación simple que describe la etapa no lineal de la evolución gravitacional de una distribución de materia, que se considera homogénea y sin colisiones. Utiliza teoría de perturbaciones no lineal para la densidad de materia. La aproximación Zeldovich se aplica de forma exitosa para describir la agrupación a gran escala de la distribución de los cúmulos de galaxias.
+
+Hay gran cantidad de códigos para generar condiciones iniciales (MuSIC, pyICs, S-GenIC \cite{4.3}); en este trabajo se hizo el uso de N-GenIC \cite{3.0.3}, dado que fue creado por Volker Springel en 2003 y sus archivos de salida son creados específicamente para GADGET, incluso este código fue utilizado para crear las condiciones iniciales para la simulación del milenio.
+
+Las condiciones iniciales para la formación de estructura utilizada en este trabajo se indican en la tabla \ref{tabla 4.1}
+
+\label{tabla 4.1}
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+& \multicolumn{3}{c|}{Condiciones Iniciales} \\
+\cline{2-4}
+& Descripci\'on & S\'imbolo & Valor\\
+\hline \hline
+\multirow{3}{3cm}{Densidades \\ ($z=0$)}
+& Materia oscura & $\Omega$ & 0.268\\ \cline{2-4}
+& Constante cosmol\'ogica & $\Omega_{\Lambda}$ & 0.683\\ \cline{2-4}
+& Materia Bari\'onica &  $\Omega_{b}$ & 0.049\\ \cline{1-4}
+\hline
+Tama\~no de simulaci\'on & Boxsize & $L$ & 5 Mpc\\ \cline{1-4}
+\hline
+N\'umero de part\'iculas & Cantidad & $N_{part}$ &$2^{21}\sim$ 2M\\ \cline{1-4}
+\multirow{3}{1cm}{Tiempo} & Redshift inicial & $z_{i}$ & 15\\ \cline{2-4}
+& Redshift final & $z_{f}$ & 0\\ \cline{1-4}
+\hline
+\multirow{3}{3cm}{\footnotesize{Otras cantidades}} & Par\'ametro de Hubble & $h$  & 0.7\\         \cline{2-4}
+& espectro de potencias & $\sigma_{8}$ & 0.8\\ \cline{1-4}
+%&Suavizamiento & $\epsilon$ & 1.81 kpc\\ \cline{1-4}
+\end{tabular}
+\caption{Condiciones creadas con N-GenIC.}
+%\label{tabla:final}
+\end{table}
+No se utilizaron partículas de materia bariónica debido a la implementación de Axion-GADGET. 
+
+\begin{table}[htb]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+& \multicolumn{3}{c|}{Par\'ametros F\'isicos} \\
+\cline{2-4}
+& Descripci\'on & Cantidad & Unidad\\
+\hline \hline
+\multirow{3}{2cm}{Sistema de Unidades}
+& Longitud (cm) &  $3.08\times 10^{21}$  & 1 kpc\\ \cline{2-4}
+& Masa (g) & $1.989\times 10^{43}$ & $10^{10}$ $M_{\odot}$\\ \cline{2-4}
+& Velocidad (cm/s) & $10^{5}$  &1 km/s\\ \cline{1-4}
+\multirow{3}{1cm}{Suavizados} & $\Lambda$CDM & $\epsilon$ & [0.5,1.81] kpc\\ \cline{2-4}
+& SFDM & $\epsilon$ & [0.5,1.81] kpc\\ \cline{1-4}
+\multirow{3}{2cm}{SFDM} & FdmAxionMass & $M_{\chi}$  & $10^{-22}$ eV \\ \cline{2-4}
+& FdmKernelLambda & $\lambda$ & 1.14213562 kpc \\ \cline{1-4}
+\end{tabular}
+\caption{Cantidades adicionales para las simulaciones.}
+%\label{tabla:final}
+\end{table}
+
+\section{Ejecución de los códigos}
+GADGET y Axion-GADGET cuentan con archivos de parámetros para cada simulación, lo importante es especificar distintos valores al ejecutar el código, ya que estos deben coincidir con los valores que se han generado en las condiciones iniciales.
+\begin{figure}[]
+\centering
+\subfigure[Condiciones Iniciales]{\includegraphics[width=0.8\textwidth]{./Figuras/condiciones1}}
+\subfigure[Unidades y longitud de suavizado]{\includegraphics[width=0.8\textwidth]{./Figuras/condiciones2}}
+\caption{\footnotesize{Formato del archivo de parámetro para GADGET-2.}} \label{fig 4.1}
+\end{figure}
+En la figura \ref{fig 4.1} se observa que las condiciones iniciales son las mismas que las escritas en la sección anterior. Si por algún motivo estos valores no coincidieran, el propio código lo indica y termina su ejecución. Generar condiciones iniciales para más de un millón de partículas resultaría en mejor resolución, lamentablemente debido a las limitaciones computacionales que se tienen para este trabajo tener medio millón de partículas ya es trabajoso, ya que sólo se tienen dos computadoras trabajando en forma paralela. La simulación para $\Lambda$CDM tardó cerca de 5 horas en completarse, mientras que para SFDM llevó más de 20 horas.
+
+Las longitudes de savizado escogidas no son arbitrarias. Al utilizar el código Axion-GADGET deben añadirse 3 parámetros más, La masa de las partículas $M_{\chi}$ de FDM, un parámetro de normalización para la masa y su longitud de onda de Compton $\lambda$ (figura \ref{fig 4.2}). Se eligen longitudes de suavizado de 1 kpc y 10 kpc dado que la longitud de onda de Compton es de ese mismo orden, si se cambia el suavizado del archivo para ejecutar Axion-GADGET, el programa se detiene, esto es debido a que no puede iterar de manera correcta los cálculos de la fuerza entre partículas. La modificación del código sólo se hace para esta parte, la presión entre las partículas de materia oscura es de naturaleza cuántica, al elongar o acortar esta longitud, la ejecución se detiene.
+
+Al hacer simulaciones para dos modelos de materia oscura no es necesario implementar materia bariónica, ya que la finalidad de este trabajo es la comparación de la creación de halos de materia oscura, además de que implementar gas a las simulaciones implica doble carga de partículas, eventualmente esa doble carga lleva a tiempo invertido en simulación, por lo que para el recurso computacional con el que se cuenta al momento de realizar este trabajo tardaría más de lo esperado.
+
+\begin{figure}
+\centering \includegraphics[width=0.8\textwidth]{./Figuras/ICs4}
+\caption{\footnotesize{Parámetros adicionales para ejecutar Axion-GADGET.}}
+\label{fig 4.2}
+\end{figure}
+
+\begin{figure}[htpb]
+\centering
+\includegraphics[angle=90,width=0.8\textwidth]{./Figuras/xy_00081_image}
+\caption{\footnotesize{Simulación de formación de estructura para $\Lambda$CDM con 2 millones de part\'iculas.}} \label{fig 4.3}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{./Figuras/masses_LCDM2M}
+\caption{\footnotesize{Perfil de masas de halos de materia oscura, simulaci\'on de $\Lambda$CDM}}\label{fig 4.3.1}
+\end{figure}
+
+\section{Espectro de Masas de Halos de Materia Oscura}
+Al finalizar las simulaciones debe realizarse un análisis sobre los espectros de masas para halos de materia oscura creados en cada ejecución, para este fin es necesario implementar un script llamado Friends Of Friends \cite{4.4}, este código crea un catálogo de halos de materia oscura en función de su masa. En principio, las partículas se "unen" si su distancia se encuentra por debajo de un cierto umbral, llamado ``longitud de enlace''. Esto significa que las distancias de las partículas en el límite de dicho objeto vinculado (un ``grupo FOF'') son más pequeñas o iguales que la longitud de enlace, que corresponde a un umbral de densidad. 
+
+Por definición, los grupos FOF no pueden cruzarse, lo que significa que una partícula se puede asignar de forma exclusiva a un solo grupo FOF (para una longitud de enlace determinada). Esto es muy útil para establecer el vínculo entre los grupos FOF y sus partículas, como se proporciona en las tablas \textit{FOFParticles} . Además, las subestructuras siempre se encuentran completamente dentro de su halo principal o \textit{host}, ya que están definidas por longitudes de enlace más pequeñas.
+
+Luego de crear el catálogo de halos, se realiza otro script en Python que permite graficar la cantidad de halos creados en función de su masa,  como se observa en la figura (\ref{fig 4.4})
+\begin{figure}[htpb]
+\centering
+\subfigure[$\Lambda$CDM]{\includegraphics[width=1.0\textwidth]{./Figuras/massesLCDM}}
+\subfigure[SFDM]{\includegraphics[width=1.0\textwidth]{./Figuras/massesSFDM}}
+\caption{\footnotesize{Espectro de masas para $\Lambda$CDM y SFDM. Se observa que para SFDM se crean aproximadamente 50 halos menos que en $\Lambda$CDM.}} \label{fig 4.4}
+\end{figure}
+
+\textbf{n}group denota el número de grupo de halos de materia oscura que se crean para las simulaciones, el código numera del más masivo al menos masivo. Los resultados de la figura (\ref{fig 4.4}) son para la primer simulación, con las condiciones iniciales que se indican en la figura (\ref{fig 4.2}). 
+
+\section{Catálogo de Halos de Materia Oscura}
+Además de tener un espetro de masas de halos de materia oscura, también es posible obtener un catálogo muy completo de los mismos, este catálogo contiene información de todos y cada uno de los halos creados en cada simulación. El código para este análisis es llamado AMIGA Halo Finder o AHF \cite{4.5}. Este código es similar a Friends Of Friends. Emplea una red recursivamente refinada para ubicar sobredensidades de materia. Los picos de densidad identificados se tratan liego como centros de posibles halos. Después de eso, se genera una ramificación de halos de materia oscura, iniciando desde el más masivo al menos masivo, además de identificar halos principales, subhalos  y hasta sub-subhalos. Las propiedades del halo se calculan en base a la lista de partículas que estén unidas gravitacionalmente al pico de densidad respectivo. 
+
+El único parámetro que puede cambiarse al momento de identificar halos es el criterio de refinamiento (generalmente establecido de tres a cuatro partículas por celda) que sirve de base para la ramificación de halos y también establece la precisión con la que se determinan los centros. 
+
+El criterio virial de sobredensidad aplicado para encotrar los halos se determina a partir del modelo cosmológico y sus respectivos datos. El radio de los halos para AHF se define como 
+\begin{equation}
+M_{vir} = \frac{4 \pi}{3}R_{vir}^{3}\Delta_{vir}\rho_{back},\label{eqn 4.1}
+\end{equation}
+donde $R_{vir}$ es un radio dentro del cual se está colapsando una perturbación de densidad de ``sombrero de copa'' esférica destinada a convertirse en una galaxia. $\Delta_{vir}=\Delta_{vir}(\Omega_{m},\Omega_{\Lambda},z)$ se ha calculado a través del modelo de colapso esférico, el cual el exceso de densidad dentro de una esfera conduce a que la expansión dentro de ella se frene más que en el resto del Universo. Es también una función de la cosmología (densidad de materia y energía oscura) y del dezplazamiento al rojo $z$. Por otro lado,  $\rho_{back}=\rho_{back}(\Omega_{m},\Omega_{\Lambda},z)$ es la densidad del fondo del Universo.
+
+Al ultilizar AHF se puede generar un gran catálogo de halos de materia oscura, para ello es necesario tener archivos ya generados por GADGET-2. Los \textsf{snapshots} pueden analizarse de manera paralela, para este estudio, se utiliza el último archivo generado por la simulación, en $z = 0.769$. Además de generar la cantidad de halos disponibles, AHF puede identificar los halos principales y subhalos, sus posiciones, velocidades, energía potencial y cinética e incluso momento angular para cada halo. El resultado es un archivo extensísimo de datos que valdrá la pena analizar en un futuro. Puede consultarse parte del catálogo en el Apéndice B.
+
+
+\section{Diferencia de Imágenes}
+Dado que este trabajo se trata de comparar dos modelos de materia oscura, resulta de gran utilidad realizar una comparación de las imágenes que se crean en los archivos de salida, para eso se creó un pequeño script en Python, el cual realiza una diferenciación entre dos imágenes que a simple vista parecen similares. Este script utiliza paquetes y librerías propias de Python necesarias para el procesamiento de imágenes, siendo la paquetería \textsf{SSIM} la base del script.
+
+Lo que realiza \textsf{SSIM} es un Índice de Similitud de Estructura \cite{4.6} que tiene la siguiente forma
+\begin{equation}
+SSIM(x,y) = \frac{(2\mu_{x}\mu_{y}+c_{1})(2\sigma_{xy}+c_{2})}{(\mu_{x}^{2}+\mu_{y}^{2}+c_{1})(\sigma_{x}^{2}+\sigma_{y}^{2}+c_{2})}.\label{SSIM}
+\end{equation}
+\textsf{SSIM} trata de modelar el cambio percibido en la informaci\'on estructural de la imagen. La ecuación (\ref{SSIM}) se utiliza para comparar dos \textit{ventanas} o porciones de la imagen en lugar de la imagen completa. Esto conlleva a una aproximaci\'on más exacta que puede contar los cambios en la estructura de la imagen.
+
+Los parámetros de la ecuación (\ref{SSIM}) incluyen las posiciones $(x,y)$ de la ventana de lado $N\times N$ de cada imagen, el promedio de la intensidad de píxeles en la dirección $x$ e $y$ y la varianza de las intensidades igualmente en dirección $x$ e $y$, así como la covarianza. Esto permite valores de $SSIM \in [-1,1]$, siendo el valor de $1$ una perfecta similitud. 
+
+Para este propósito, se incluyeron los resultados de dos simulaciones con condiciones iniciales idénticas, exceptuando la masa y longitud de onda para Axion-GADGET.
+
+\begin{figure}
+ \centering
+\subfigure[$\Lambda$CDM]{\includegraphics[width=0.8\textwidth]{./Figuras/LCDM}}
+\subfigure[SFDM]{\includegraphics[width=0.8\textwidth]{./Figuras/SFDM}}
+\caption{\footnotesize{Comparación de las imágenes en $z=0.769$ para ambos modelos. Las regiones encerradas en rojo marcan las diferencias que el script encuentra al procesar ambas imágenes.}}\label{fig 4.5}
+\end{figure}
+
+El script convierte ambas imágenes en un arreglo de bits ($8$-bits) para después procesar los píxeles de cada imagen y crea regiones, en este caso de color rojo, donde identifica diferencias entre el promedio y la varianza de píxeles. A pesar de tener una buena resoluci\'on dada la cantidad de partículas, procesar las imágenes de esta forma es engañoso, dado que los archivos de salida de las simulaciones crean imágenes en un ambiente tridimensional. El siguiente paso en este trabajo sería crear un script que pueda procesar una serie de más de doscientas imágenes y que además sea ejecutable de manera paralela.
+
+Cabe señalar sin embargo, que al ejecutar,  $SSIM = 0.9257955035056492$. Es decir, una similitud de $\approx 92\%$, lo cual es un excelente valor y verifica con lo esperado para la simulación. Puede consultarse el script en el Apéndice C.
+
+
+ 
+
+\appendix 
+
+\chapter{Instalación de GADGET-2}\label{Apend.A}
+GADGET-2 es un código fuente de dominio libre, de manera que cualquier persona pueda hacer simulaciones con el. Las instrucciones para compilar y correr el código dependen en gran manera de la plataforma que se utilice; si el usuario tiene Linux o UNIX, las herramientas necesarias para compilarlo están completas. En MacOS, se necesita una actualización de \textsf{Xcode}, el cual incluye todos los compiladores necesarios para instalar el código. En Windows, es probable que tenga que obtenerse \textsf{cygwin}, el cual proporciona soporte completo de UNIX en sistemas.
+
+Primero, se necesita descargar el siguiente software:
+\begin{enumerate}
+\item \underline{Gadget-2.0.7}.
+\item Versión \underline{1.9} o superior de \underline{GNU scientific library} (GSL).
+\item Versión \underline{2.1.5} de \underline{FFTW fast Fourier Transform in the West}.
+\item Una librería de procesamiento en paralelo, como Message Passing Interface (MPI) o como \textsf{Open-MPI} o \textsf{MPICH}.
+\end{enumerate}
+
+\textsf{Open-MPI} viene incluido en MacOS, por lo que usuarios con ese sistema operativo no requieren descargarlo. No descargar una versión \underline{3.x} de FFTW, ya que no incluye soporte para procesamiento en paralelo.
+
+Una vez que se tiene todo el software descargado, se requiere extraer el \textsf{.tar.gz} e instalar. Todo el proceso se hace en una Terminal para un sistema operativo Linux, la instalación prosigue de la siguiente manera:
+\begin{enumerate}
+\item Extraer el software:
+
+\textsf{jazhiel@PC$\sim$/Documents/code: tar -xzvf fftw-2.1.5.tar.gz}
+
+\textsf{jazhiel@PC$\sim$/Documents/code: tar -xzvf gsl-1.9.tar.gz}
+
+\textsf{jazhiel@PC$\sim$/Documents/code: tar -xzvf gadget-2.0.7.tar.gz}
+
+\item Instalar GSL:
+
+\textsf{jazhiel@PC$\sim$/Documents/code: cd gsl-1.9/}
+
+\textsf{jazhiel@PC$\sim$/Documents/code/gsl-1.9: ./configure}
+
+\textsf{snip: muchos outputs de diagnóstico}
+
+\textsf{jazhiel@PC$\sim$/Documents/code/gsl-1.9: make}
+
+\textsf{jazhiel@PC$\sim$/Documents/code/gsl-1.9: sudo make install}
+
+Esta es una instalación en una carpeta \textsf{root}. Si no se tienen privilegios de administrador es probable que se necesite instalar en una carpeta aparte, esto se hace con el comando \begin{verbatim} --prefix=/path/to/folder/
+\end{verbatim}  donde \textsf{path} es la dirección del directorio donde se instalará el software.
+
+\item Instalar FFTW:
+
+\textsf{jazhiel@PC$\sim$/Documents/code: cd fftw-2.1.5/}
+
+\textsf{jazhiel@PC$\sim$/Documents/code/fftw-2.1.5: ./configure - -enable-mpi - -enable-type-prefix - -enable-float}
+
+\textsf{jazhiel@PC$\sim$/Documents/code/fftw-2.1.5: make}
+
+\textsf{Este es un buen momento para ir por un café.}
+
+\textsf{jazhiel@PC$\sim$/Documents/code/fftw-2.1.5: sudo make install}
+
+\item Editar el \textsf{Makefile} de Gadget:
+
+GADGET tiene una increíble cantidad de parámetros para compilar, los cuales se describen de manera extensa en la guía de usuario. Hay muchos cambios que se deben hacer al \textsf{makefile} de Gadget para que compile correctamente.  En el directorio donde se extrajo Gadget, luego al directorio de \textsf{Gadget-2} dentro de ese directorio. Abrir el \textsf{makefile} en un editor de textos (e.g. \textsf{vim, emacs, textedit, notepad}), editar los parámetros de compilación para que la parte inicial del \textsf{makefile} luzca así:
+\begin{verbatim}
+
+#------------------------- Basic operation mode of code
+#OPT += -DPERIODIC
+OPT += -DUNEQUALSOFTENINGS
+
+#--------------------Things that are always recommended
+OPT += -DPEANOHILBERT
+OPT += -DWALLCLOCK
+
+#--------------------TreePM Options
+#OPT += -DPMGRID=128
+#OPT += -DPLACEHIGHRESREGION=3
+#OPT += -DENLARGEREGION=1.2
+#OPT += -DASMTH=1.25
+#OPT += -DRCUT=4.5
+
+#------------------------Single/Double Precision
+#OPT += -DDOUBLEPRECISION
+#OPT += -DDOUBLEPRECISION_FFTW
+
+#-----------------------Time integration options
+OPT += -DSYNCHRONIZATION
+#OPT += -DFLEXSTEPS
+#OPT += -DPSEUDOSYMMETRIC
+#OPT += -DNOSTOP_WHEN_BELOW_MINTIMESTEP
+#OPT += -DNOPMSTEPADJUSTMENT
+
+#-------------------Output
+#OPT += -DHAVE_HDF5
+#OPT += -DOUTPUTPOTENTIAL
+#OPT += -DOUTPUTACCELERATION
+#OPT += -DOUTPUTCHANGEOFENTROPY
+#OPT += -DOUTPUTTIMESTEP
+
+#------------------Things for special behaviour
+#OPT += -DNOGRAVITY
+#OPT += -DNOTREERND
+#OPT += -DNOTYPEPREFIX_FFTW
+#OPT += -DLONG_X=60
+#OPT += -DLONG_Y=5
+#OPT += -DLONG_Z=0.2
+#OPT += -DTWODIMS
+#OPT += -DSPH_BND_PARTICLES
+#OPT += -DNOVISCOSITYLIMITER
+#OPT += -DCOMPUTE_POTENTIAL_ENERGY
+#OPT += -DLONGIDS
+#OPT += -DISOTHERM_EQS
+#OPT += -DADAPTIVE_GRAVSOFT_FORGAS
+#OPT += -DSELECTIVE_NO_GRAVITY=2+4+8+16
+
+#----------------------Testing and Debugging options
+#OPT += -DFORCETEST=0.1
+
+#------------------------- Glass making
+#OPT += -DMAKEGLASS=262144
+
+El cambio más importane es comentar la opción de
+HAVE_HDF5 para evitar errores de compilación.
+
+Luego, se debe editar nuevamente el makefile para 
+indicar dónde se han instalado las librerías GSL y FFTW,
+mi makefile luce así:
+
+#--------------------------------------------------------
+# Here, select compile environment for the target machine. 
+#This may need adjustment, depending on your local system. 
+#Follow the examples to add additional target platforms, 
+#and to get things properly compiled.
+#--------------------------------------------------------
+
+#------------------ Select some defaults
+
+CC = mpicc # sets the C-compiler
+OPTIMIZE = -O2 -Wall -g # sets optimization and warning 
+                        #flags
+
+MPICHLIB = -lmpich
+
+#-------------------Select target computer
+
+SYSTYPE="MPA"
+
+#------------------Adjust settings for target computer
+
+ifeq ($(SYSTYPE),"MPA")
+CC       =  mpicc   
+OPTIMIZE =  -O3 -Wall
+GSL_INCL =  -I/usr/local/include
+GSL_LIBS =  -L/usr/local/lib  -Wl,"-R /usr/common/pdsoft/
+\lib"
+FFTW_INCL=  -I/usr/local/include
+FFTW_LIBS=  -L/usr/local/lib
+MPICHLIB =  -L/usr/lib
+#HDF5INCL =  
+#HDF5LIB  =  -lhdf5 -lz 
+endif
+\end{verbatim}
+Puede definirse un \textsf{SYSTYPE} propio para indicar a GADGET las direcciones donde se ha instalado las librerías de GSL y FFTW. Por default, están en \textsf{/usr/local/}. Es importante guardar los cambios que se han hecho y leer el manual del usuario de GADGET, ya que dependiendo de lo que se quiera simular, el \textsf{makefile} tiene que editarse; la configuración anterior es para simular la colisión de dos galaxias.
+
+Para correr esta colisión, se recomienda crear un folder de trabajo con los ejecutables y archivos de parámetros:
+
+\textsf{jazhiel@PC$\sim$/Documents/code/Gadget-2.0.7: mkdir galaxy}
+
+Copiar el ejecutable \textsf{Gadget2} en el folder \textsf{galaxy}:
+
+\textsf{jazhiel@PC$\sim$/Documents/code/Gadget-2.0.7: cp Gadget2/Gadget2 galaxy/}
+
+Copiar los archivos de parámetros en el folder \textsf{galaxy}:
+
+\textsf{jazhiel@PC$\sim$/Documents/code/Gadget-2.0.7: cp Gadget2/parameterfiles/
+galaxy.param galaxy/}
+
+Entrar en el folder \textsf{galaxy}:
+
+\textsf{jazhiel@PC$\sim$/Documents/code/Gadget-2.0.7: cd galaxy}
+
+Editar el archivo \textsf{galaxy.param} para que las dos primeras líneas luzcan de la siguiente manera:
+
+\begin{verbatim}
+% Relevant files
+
+InitCondFile /path/to/Gadget-2.0.7/ICs/galaxy_littleendian
+\.dat
+OutputDir /path/to/Gadget-2.0.7/galaxy/
+\end{verbatim}
+
+Debe cambiarse la dirección al folder de condiciones iniciales del código y el directorio de \textsf{output} en donde se ha creado el folder \textsf{galaxy}. Ahora se tiene todo para correr la primera simulación con el siguiente comando:
+
+\textsf{jazhiel@PC$\sim$/Documents/code/Gadget-2.0.7/galaxy: mpirun -np 2 ./Gadget2 galaxy.param}
+
+Este comando llama un programa de MPI para procesamiento en paralelo, en este caso Gadget. El parámetro \textsf{-np 2} indica cuántos procesadores se utilizarán para la ejecución de Gadget, es decir, 2. Si se cuenta con más de dos procesadores puede cambiarse \textsf{-np 2} al número de procesadores disponibles. Si no se cuenta con procesamiento en paralelo, invocar el comando:
+
+\textsf{jazhiel@PC$\sim$/Documents/code/Gadget-2.0.7/galaxy: ./Gadget2\\ galaxy.param}
+
+será suficiente, aunque más tardado. Se recomienda incrementar el número de archivos de salida para crear una animación de la colisión de las galaxias.
+\end{enumerate}
+
+
+\chapter{Procesamiento de imágenes}\label{Apend.B}
+Este script está escrito en Python y puede ejecutarse para realizar una comparación entre dos imágenes similares:
+\begin{verbatim}
+# importar paquetes necesarios
+from skimage.measure import compare_ssim
+import argparse
+import imutils
+import cv2
+ 
+# construir  argument parse and analizar los argumentos
+ap = argparse.ArgumentParser()
+ap.add_argument("-f", "--first", required=True,
+	help="first input image")
+ap.add_argument("-s", "--second", required=True,
+	help="second")
+args = vars(ap.parse_args())
+\end{verbatim}
+
+\textsf{--first} y \textsf{--second} serán los argumentos para las direcciones de las imágenes que se quieren comparar. Luego se carga cada imagen y se convierte a una escala de grises
+
+\begin{verbatim}
+# cargar imagenes de input
+imageA = cv2.imread(args["first"])
+imageB = cv2.imread(args["second"])
+ 
+# convertir a escala de grises
+grayA = cv2.cvtColor(imageA, cv2.COLOR_BGR2GRAY)
+grayB = cv2.cvtColor(imageB, cv2.COLOR_BGR2GRAY)
+\end{verbatim}
+
+Se calcula el Índice de Similitud de Estructura (SSIM)
+\begin{verbatim}
+# Calcular Structural Similarity Index (SSIM) entre
+# imagenes, asegura que la imagen de diferencia sea un 
+#output
+(score, diff) = compare_ssim(grayA, grayB, full=True)
+diff = (diff * 255).astype("uint8")
+print("SSIM: {}".format(score))
+\end{verbatim}
+
+Utilizando la función \textsf{compare} se calcula un \textsf{score} y una imagen de diferencia \textsf{diff}. \textsf{score} representa el índice de similitud de estructura entre imágenes y puede arrojar el valor entre $[-1,1]$, siendo $1$ una ``similitud perfecta''.
+
+La imagen \textsf{diff} contiene las \textit{diferencias} reales entre las imágenes que se desea visualizar. Esta imagen está representada como un arreglo de datos tipo \textsf{float} en el rango $[0,1]$, el arreglo se convierte a 8-bits, todos enteros en el rango $[0,255]$. 
+
+Se buscan los contornos para que pueda colocarse rectángulos alrededor de las regiones identificadas como ``diferentes''
+\begin{verbatim}
+# limitar(threshold) la imagen diferencia, 
+#luego encontrar contornos para
+# obtener regiones de las imagenes que difieran
+thresh = cv2.threshold(diff, 0, 255,
+	cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
+cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+	cv2.CHAIN_APPROX_SIMPLE)
+cnts = cnts[0] if imutils.is_cv2() else cnts[1]
+\end{verbatim}
+
+Ya que se tienen los contornos almacenados en una lista, se dibujan rectángulos alrededor de las diferentes regiones en cada imagen
+\begin{verbatim}
+# loop alrededor de contornos
+for c in cnts:
+	# calcular la bounding box del contorno y dibujar 
+	# bounding box en ambas imagenes para representar donde 
+	# difieren las dos imagenes
+	(x, y, w, h) = cv2.boundingRect(c)
+	cv2.rectangle(imageA, (x, y), (x + w, y + h), (0, 0, 255), 2)
+	cv2.rectangle(imageB, (x, y), (x + w, y + h), (0, 0, 255), 2)
+ 
+# mostrar output de imagenes
+cv2.imshow("Original", imageA)
+cv2.imshow("Modified", imageB)
+cv2.imshow("Diff", diff)
+cv2.imshow("Thresh", thresh)
+cv2.waitKey(0)
+\end{verbatim}
+
+Pueden guardarse las imágenes en la carpeta que se desee
+\begin{verbatim}
+cv2.imwrite('path/to/folder/Original.png', imageA)
+cv2.imwrite('path/to/folder/Modified.png', imageB)
+cv2.imwrite('path/to/folder/Diff.png', diff)
+cv2.imwrite('path/to/folder/Thresh.png', thresh)
+\end{verbatim}
+
+finalmente, para ejecutar el script
+\begin{verbatim}
+python image_diff.py --first /path/to/first/image1.png
+--second /path/to/second/image2.png
+\end{verbatim}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%BIBLIOGRAFIAPAPUUU$%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------------------------------------------------%
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliographystyle{acm} % estilo de la bibliografía.
+\bibliography{yyyy} % yyyy.bib es el fichero donde está salvada la bibliografía.
+\begin{thebibliography}{a}
+
+%1%
+\bibitem{1.01} \textsc{Ryden, B. S. (2003)},
+\textit{Introduction To Cosmology},
+San Francisco: Addison-Wesley
+
+%1%
+\bibitem{1.02} \textsc{Battaner, E. (2015)},
+\textit{Grandes estructuras del universo: El cosmos a gran escala},
+RBA Contenidos Editoriales y Audiovisuales, S.A.U.
+%2%
+\bibitem{1.1} \textsc{Hubble, E. (1929)}
+\textit{A Relation between Distance and Radial Velocity among Extra-Galactic Nebulae}
+Proceedings of the National Academy of Sciences of the United States of America, vol. 15, Issue 3, pp. 168-173
+%3%
+\bibitem{1.1.1} \textsc{Zwicky, F. (1937)},
+\textit{On the Masses of Nebulae and of Clusters of Nebulae},
+Astrophysical Journal, vol. 86, p.217
+%4%
+\bibitem{1.1.2} \textsc{Rubin, V. C.; Ford, W. K. (1970)},
+\textit{Rotation of the Andromeda Nebula from a Spectroscopic Survey of Emission Regions},
+Astrophysical Journal, vol. 159, p.379 
+%5%
+\bibitem{1.1.3} \textsc{Spergel, D.N. et al. (2007)},
+\textit{Wilkinson Microwave Anisotropy Probe (WMAP) Three Year
+Observations: Implications for Cosmology},
+ArXiv preprint, arXiv:astro-ph/0603449v2
+%6%
+\bibitem{1.1.4} \textsc{Mandolesi, N.; Burigana, C.; Gruppuso, A.; Natoli, P. (2013)},
+\textit{The Planck Mission: Recent Results, Cosmological and Fundamental Physics Perspectives},
+International Journal of Modern Physics D, vol. 22, Issue 14, id. 1330029
+%7%
+\bibitem{1.1.5} \textsc{Spergel, D. N.; Bolte, M.; Freedman, W. (1997)},
+\textit{The age of the universe},
+Proceedings of the National Academy of Sciences of the United States of America, vol. 94 pp. 6579-6584
+%8%
+\bibitem{1.1.6} \textsc{Sarkar, S. (1996)},
+\textit{Big Bang nucleosynthesis and physics beyond the Standard Model},
+ArXiv preprint, arXiv:hep-ph/9602260v2
+%9%
+\bibitem{1.1.7} \textsc{Burles, S.; Nollet, K. M.; Turner, M. S. (2000)},
+\textit{What Is The BBN Prediction for the Baryon Density and How Reliable Is It?},
+ArXiv preprint, arXiv:astro-ph/0008495v4
+%10%
+\bibitem{1.1.8} \textsc{Olive, K. A.; Stelgman G.; Walker, T. P.; (1999)},
+\textit{Primordial Nucleosynthesis: Theory and Observations},
+ArXiv preprint arXiv:astro-ph/9905320v1 
+%11%
+\bibitem{1.1.9} \textsc{Blanton, M. R. et al. (2017)},
+\textit{Sloan Digital Sky Survey IV: Mapping the Milky Way, Nearby Galaxies, and the Distant Universe},
+The Astronomical Journal, vol. 154, Issue 1, pp. 35 (2017)
+%12%
+\bibitem{1.2.1} \textsc{Guth, A. H. (1981)},
+\textit{Inflationary universe: A possible solution to the horizon and flatness problems},
+Physical Review D (Particles and Fields), vol. 23, Issue 2, 15 January 1981, pp.347-356
+%13%
+\bibitem{1.2.2} \textsc{Peebles, P. J. E.; Ratra, B. (2002)},
+\textit{The Cosmological Costant and Dark Energy},
+ArXiv preprint arXiv:astro-ph/0207347v2
+%14%
+\bibitem{1.2.3} \textsc{Sasaki, M. (1986)},
+\textit{Large Scale Quantum Fluctuations in the Inflationary Universe},
+Progress of Theoretical Physics, vol. 76, Issue 5, pp. 1036–1046
+%15%
+\bibitem{1.2.4} \textsc{Springel, V. et al. (2005)},
+\textit{Simulations of the formation, evolution and clustering of galaxies and quasars},
+Nature, vol 435, Issue 7042, pp. 629-636
+%16%
+\bibitem{1.2.5} \textsc{Klypin, A. A.; Kravstov, A. V.; Bullock, J. S.; Primack, J. R. (2001)},
+\textit{Resolving the Structure of Cold Dark Matter Halos},
+The Astrophysical Journal, vol. 554, Issue 2, pp. 903-915
+%17%
+\bibitem{1.2.6} \textsc{Homma, D.; Chiba, M.; Okamoto, S. et al. (2016)},
+\textit{A New Milky Way satellite discovered in the SUBARU/HYPER SUPRIME-CAM survey},
+The Astrophysical Journal, vol. 832, 1
+%18%
+\bibitem{1.2} \textsc{ Grøn, O. Hervik, S. (2004)},
+Dynamics of Homogeneus and Isotropic cosmologies. In
+\textit{Einstein's General Theory of Relativity},
+University of Oslo, pp. 265-267
+%19%
+\bibitem{1.3} \textsc{Schutz, B. (2009)},
+Perfect fluids in special relativity. In 
+\textit{A first Course in General Relativity},
+pp. 84-110, Cambridge: Cambridge University Press
+%20%
+\bibitem{1.4} \textsc{Schutz, B. (2009)},
+The Einstein field equations. In
+\textit{A first Course in General Relativity},
+pp. 184-202, Cambridge: Cambrige University Press
+%21%
+\bibitem{b1} \textsc{Navarro, J. F.; Frenk, C. S.; White, S. D. M. (1996)},
+\textit{The Structure of Cold Dark Matter Halos},
+Astrophysical Journal vol. 462, p.563
+%22%
+\bibitem{b2} \textsc{Moore, B. (1994)},
+\textit{Evidence against dissipation-less dark matter from observations of galaxy haloes},
+Nature, vol. 370, pp. 629-631 
+%23%
+\bibitem{Moore 1999} \textsc{Moore, B., Quinn, T., Governato, F., Stadel, J., Lake, G (1999)},
+\textit{Cold collapse and the core catastrophe}
+Monthly Notices of the Royal Astronomical Society, vol. 310, Issue 4, pp. 1147-1152
+%24%
+\bibitem{Navarro Hayashi} \textsc{Navarro, J. F.; Hayashi, E.; Power, C.; Jenkins, A. R.; Frenk, C. S.; White, S. D. M.; Springel, V.; Stadel, J.; Quinn, T. R. (2004)}, 
+\textit{The inner structure of $\Lambda$CDM haloes - III. Universality and asymptotic slopes}, 
+Monthly Notices of the Royal Astronomical Society, vol. 349, Issue 3, pp. 1039-1051
+%25%
+\bibitem{Siddhartha Matos} \textsc{Guzmán, F. S.; Matos T. (2000)}, 
+\textit{Scalar fields as dark matter in spiral galaxies},
+Classical and Quantum Gravity, vol. 17, Issue 1, pp. L9-L16 
+%26%
+\bibitem{1.3.01} \textsc{Ji, S. U.; Sin, S. J. (1994)},
+\textit{Late-time phase transition and the galactic halo as a Bose liquid},
+Physical Review D, vol. 50, Issue 6, pp. 3650-3654 
+
+\bibitem{1.3.02} \textsc{Lee, J.; Koh, I. (1996)},
+\textit{Galactic halos as boson stars},
+Physical Review D, vol. 53, Issue 4, pp. 2236-2239
+
+\bibitem{1.3.03} \textsc{Guzmán, F. S. Matos, T. (2000)},
+\textit{Scalar Fields as Dark Matter in Spiral Galaxies}
+ArXiv preprint arXiv:gr-qc/9810028
+
+\bibitem{1.3.1} \textsc{Spergel, D. N.; Steinhardt P. J. (2000)},
+\textit{Observational Evidence for Self-Interacting Cold Dark Matter},
+Physical Review Letters, vol. 84, Issue 3760
+%27%
+\bibitem{1.3.2} \textsc{Colín, P.; Avila-Reese, V.; Valenzuela, O. (2000)},
+\textit{Substructure and halo density profiles in a Warm Dark Matter Cosmology},
+ArXiv preprint arXiv:astro-ph/0004115
+%28%
+\bibitem{1.3.2.1} \textsc{Clowe, D.; et al. (2006)},
+\textit{A Direct Empirical Proof of the Existence of Dark Matter},
+The Astrophysical Journal, vol. 648, Issue 2, pp L109-L113
+ 
+\bibitem{1.3.3} \textsc{Goodman, J. (2000)},
+\textit{Repulsive Dark Matter},
+ArXiv preprint arXiv:astro-ph/0003018
+%29%
+\bibitem{1.3.4} \textsc{Hu, W.; Barkana, R.; Gruzinov, A. (2000)},
+\textit{Cold and Fuzzy Dark Matter}
+ArXiv preprint arXiv:astro-ph/0003365
+%30%
+\bibitem{1.3.5} \textsc{Kaplinghat, M.; Knox, L. Turner, M. S. (2000)},
+\textit{Annihilating Cold Dark Matter}
+ArXiv preprint arXiv:astro-ph/0005210
+%31%
+\bibitem{1.3.6} \textsc{Cen, R. (2000)},
+\textit{Decaying Cold Dark Matter Model and Small-Scale Power},
+ArXiv preprint arXiv:astro-ph/0005206
+%32%
+\bibitem{1.3.7} \textsc{Ellis, J. (2007)},
+\textsc{Beyond the standard model with the LHC},
+Nature, vol. 448, Issue 7151, pp. 297-301
+%33%
+\bibitem{1.3.8} \textsc{Milgrom, M. (2002)},
+\textit{MOND--theoretical aspects}
+ArXiv preprint arXiv:astro-ph/0207231
+%34%
+\bibitem{2.1.1} \textsc{Kravstov, A. V. (1999)},
+\textit{High-resolution simulations of structure formation in the universe}
+Thesis (PhD). NEW MEXICO STATE UNIVERSITY, Source DAI-B 60/11, p. 5564, May 2000, 256 pages
+%35%
+\bibitem{2.1.2} \textsc{O'Shea, B. W.; Bryan, G.; Bordner, J.; Norman, M. L.; Abel, T.; Harkness, R.; Kritsuk, A. (2004)},
+\textit{Introducing Enzo, an AMR Cosmology Application}
+ArXiv preprint arXiv:astro-ph/0403044
+%36%
+\bibitem{2.1.3} \textsc{Teyssier, R. (2002)},
+\textit{Cosmological hydrodynamics with adaptative mesh refinement. A new high resolution code called RAMSES},
+Astronomy and Astrophysics, vol.385, pp.337-364
+%38%
+\bibitem{b3} \textsc{Reif, F.; Scott, H. L.,(1998)},
+\textit{Fundamentals of Statistical and Thermal Physics}
+American Journal of Physics, vol. 66, Issue 2, pp. 164-167
+%39%
+\bibitem{b4} \textsc{Springel, V.; Yoshida, N.; White, S. D. M., (2001)}
+\textit{GADGET: a code for collisionless and gasdynamical cosmological simulations },
+New Astronomy Volume 6, pp. 79-117
+%40%
+\bibitem{b5} \textsc{Bodenheimer, P.; Laughlin, G. P.; Rózyczka, M.; Yorke, H. W., (2007)} 
+\textit{Numerical Methods in Astrophysics: An Introduction},
+CRC Press, December 2006
+
+\bibitem{b5.1} \textit{Klypin, A. A.; Shadarin, S. F. (1983)},
+\textit{Three--dimensional numerical model of the formation of large--scale structure in the Universe}
+Monthly Notices of the Royal Astronomical Society (ISSN 0035-8711), vol. 204, pp. 891-907
+
+\bibitem{b5.2} \textsc{White, S. D. M.; Frenk, C. S.; Davis, M. (1983)},
+\textit{Clustering in a neutrino--dominated universe},
+Astrophysical Journal, Part 2 - Letters to the Editor (ISSN 0004-637X), vol. 274, pp. L1-L5
+
+\bibitem{b5.3} \textsc{Parzen, E. (1962)},
+\textit{On Estimation of a Probability Density Function and Mode},
+Annals of Mathematical Statistics, vol. 33 no. 3 pp. 1065-1076
+
+\bibitem{b5.4} \textsc{Boneva, L. I.; Kendall, D.; Stepanov, I. (1971)}
+\textit{Spline Transformations: Three New Diagnostic Aids for the Statiscical Data-Analyst},
+Journal of the Royal Statistical Society, vol. 33 no. 1 pp. 1-71
+%41%
+\bibitem{b6} \textsc{Gingold, R. A.; Monaghan, J.J. (1977)}
+\textit{Smoothed Particle Hydrodynamics: Theory and applications to non-spherical stars},
+Monthly Notices of the Royal Astronomical Society, vol. 181, pp. 375-389
+%42%
+\bibitem{b7} \textsc{Monaghan, J. J., (1997)}
+\textit{SPH and Riemman Solvers},
+Journal of Computational Physics, vol. 136, Issue 2 pp. 298-307 
+%43%
+\bibitem{b8} \textsc{Monaghan, J. J. (1992)}
+\textit{Smoothed Particle Hydrodynamics},
+%44%
+\bibitem{b8.1} \textsc{Monaghan, J.J.; Lattanzio, J. C. (1985)},
+\textit{A refined particle method for astrophysical problems},
+Astronomy and Astrophysics (ISSN 0004-6361), vol. 149, no. 1, pp. 135-143
+Annual review of astronomy and astrophysics, vol. 30 (A93-25826 09-90), pp. 543-574
+%45%
+\bibitem{b8.2} \textsc{Barnes, J.; Hut, P. (1986)},
+\textit{A hierarchical $\mathcal{O}N\log N$ force--calculation algorithm}
+Nature, vol. 324, Issue 4, pp. 446-449
+
+\bibitem{b9} \textsc{Price, D. J. (2004)}
+\textit{Smoothed Particle Magnetohydrodynamics-II. Variational principles and variable smoothing-length terms},
+Monthly Notices of the Royal Astronomical Society, vol. 348, Issue 1, pp. 139-152
+%46%
+\bibitem{b9.1} \textsc{Gingold, R. A.; Monaghan, J.J. (1977)},
+\textit{Smoothed particle hydrodynamics - Theory and application to non-spherical stars},
+Monthly Notices of the Royal Astronomical Society, vol. 181, pp. 375-389
+%47%
+\bibitem{b9.2} \textsc{Monaghan, J. J.; Gingold, R. A. (1983)},
+\textit{Shock Simulation by the Particle Method SPH},
+Journal of Computational Physics, vol. 52, Issue 2, pp. 374-389
+
+\bibitem{b10} \textsc{Springel, V. (2005)},
+\textit{The cosmological simulation code: GADGET-2},
+Monthly Notices of the Royal Astronomical Society, vol. 364, pp. 1105-1134
+%47%
+\bibitem{3.0.1} \textsc{Bode, P.; Ostriker, J. P.; Xu, G. (2000)}
+\textit{The Tree-Particle-Mesh N-body Gravity Solver}
+ArXiv preprint arXiv:astro-ph/9912541 
+
+
+\bibitem{3.0.2} \textsc{Bagla, J. S. (2002)},
+\textit{TreePM: A code for cosmological N-body simulations}
+Journal of Astrophysics and Astronomy, vol. 23, Issue 3-4, pp.185-196
+
+\bibitem{3.0.3} \textsc{Springel, V.; White,S. D. M.; Jenkins, A.; Frenk, C. S.; Yoshida, N.; Gao, L.; Navarro, J.; Thacker, R.; Croton, Da.; Helly, J.; Peacock, J. A.; Cole, S.; Thomas, P.; Couchman, H.; Evrard, A.; Colberg, J.; Pearce, F. (2005)}
+\textit{Simulations of the formation, evolution and clustering of galaxies and quasars}
+Nature, vol. 435, pp. 629
+
+\bibitem{3.1} \textsc{Zhang, J., Tsai, Y.-L. S., Kuo, J.-L, Cheung, K., Chu, M.-C (2017)},
+\textit{Ultra-Light Axion Dark Matter and its Impacts on Dark Halo Structure in $N$-body Simulation},
+ArXiv preprint  arXiv:1611.00892v6
+%48%
+%\bibitem{3.1.1} \textsc{Bardos, C., Erdös, L., Goise, F., Mauser, N., Yau, H.-T (2002)},
+%\textit{Derivation of the Schrödinger–Poisson equation from the quantum
+%$N$-body problem}
+%Comptes Rendus Mathematique, vol. 334, Issue 6, pp. 515-520
+%49%
+\bibitem{3.2} \textsc{Spiegel, E. A. (1980)},
+\textit{Fluid form of the linear and nonlinear Schrödinger equations},
+Physica D: Nonlinear Phenomena vol. 1 Issue 2, pp. 236-240 
+%50%
+\bibitem{3.3} \textsc{Uhleman, C., Kopp, M., Haugg, T. (2014)},
+\textit{Schrödinger method as N-body double and UV completion of dust},
+Physical Review D. vol. 90, Issue 2 
+%51%
+\bibitem{3.4}\textsc{Marsh, D. J. E. (2015)},
+\textit{Nonlinear hydrodynamics of axion dark matter: Relative velocity effects and quantum forces},
+Physical Review, vol. 91, Issue 12
+%52%
+\bibitem{3.5} \textsc{Schive, H.-Y.m Chiueh, T., Broadhurst, T. (2014)},
+\textit{Cosmic structure as the quantum interference of a coherent dark wave},
+Nature Physics, vol. 10, Issue 7, pp. 496
+
+\bibitem{4.1} \textsc{Zeldovich, Y. B. (1970)},
+\textit{Gravitational instability: An approximate theory for large density perturbations},
+Astronomy and Astrophysics, vol. 5, pp. 84 - 89
+
+\bibitem{4.2} \textsc{Shandarin, S. F.; Zeldovich, Y. B. (1989)},
+\textit{The large-scale structure of the universe: Turbulence, intermittency, structures in a self-gravitating medium},
+Reviews of Modern Physics, vol. 61, pp. 185
+
+\bibitem{4.3} \textsc{Hahn, O.; Abel, T. (2011)},
+\textit{Multi-scale initial conditions for cosmological simulations},
+ArXiv preprint, arXiv:1103.6031
+
+\bibitem{4.4} \textsc{Davis, M.; Efstathiou, G.; Frenk, C. S.; White, S. D. M. (1985)},
+\textit{The evolution of large-scale structure in a universe dominated by cold dark matter},
+Astrophysical Journal, Part 1 (ISSN 0004-637X), vol. 292, pp. 371-394 
+
+\bibitem{4.5} \textsc{Knollmann, S. R.; Knebe, A. (2009)},
+\textit{AHF: Amiga's Halo Finder},
+The Astrophysical Journal Supplement, vol. 182, Issue 2, pp. 608-624
+
+\bibitem{4.6} \textsc{Wang, Z.; Bovik, A. C.; Sheikh, H. R.; Simoncelli E. P. (2004)}
+\textit{Image Quality Assessment: From Error Visibility to Structural Similarity}
+IEEE Transactions On Image Processing, vol. 13, no. 4
+\end{thebibliography}
+\end{document}
