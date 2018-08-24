@@ -1,0 +1,915 @@
+\documentclass[10pt]{beamer}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{media9}
+\usepackage{animate}
+\usepackage{movie15}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\usetheme{Berlin}
+%\usetheme[realshadow,corners=2pt,padding=2pt]{chamfered}
+%\usecolortheme{shark}
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\usecolortheme[named=UBCblue]{structure}
+\usepackage{tikz}
+\newcommand<>{\hover}[1]{\uncover#2{%
+ \begin{tikzpicture}[remember picture,overlay]%
+ \draw[fill,opacity=0.4] (current page.south west)
+ rectangle (current page.north east);
+ \node at (current page.center) {#1};
+ \end{tikzpicture}}
+}
+
+\title{Dark Matter Models: A Numerical Perspective}
+\author{Jazhiel Chac\'on Lavanderos}
+\institute{Escuela Superior de F\'isica y Matem\'aticas, I.P.N.}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Contenido}
+%\begin{itemize}
+%\setlength{1em}
+%\item Introducci\'on \\
+%\item Simulaciones de $N$-Cuerpos \\
+%\item El C\'odigo  \\
+%\item Resultados \\
+%\item Conclusiones y Perspectivas
+%\end{itemize}
+%\end{frame}
+\begin{frame}
+ \frametitle{Outline}
+\begin{itemize}
+  \setlength\itemsep{2em}
+  \item Introduction
+  \item $\Lambda$CDM and SFDM models
+  \item $N$-body simulations
+  \item GADGET Code
+  \item Analysis and Results
+  \item Conclusions
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+% \frametitle{Resumen}
+%La naturaleza de la materia oscura ha sido y sigue siendo desconocida, f\'isicos te\'oricos y experimentales han trabajado en conjunto para poder descubrir su composici\'on durante las \'ultimas d\'ecadas. Una de las alternativas es crear simulaciones basadas en teor\'ias ya establecidas para poder explicar la existencia de la materia oscura y su composici\'on.
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Cosmological Principle}
+\begin{itemize}
+ \setlength\itemsep{1em}
+ \item At large scale, the Universe is Homogeneous and Isotropic in a 3-Dimensional space.
+ \item \textbf{Homogeneity}  $\rightarrow$ Matter is equally distributed (galaxies are equally distributed at large scale).
+ \item \textbf{Isotropy} $\rightarrow$ Physical properties are equal in every point in the Universe.
+\end{itemize} 
+\begin{figure}[h]
+  \includegraphics[width=0.4\textwidth]{./Figuras/WMAP}
+  \includegraphics[width=0.35\textwidth, height=0.3\textwidth]{./Figuras/HubbleXDF}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Introducci\'on a la Cosmolog\'ia}
+%La cosmolog\'ia es la ciencia que estudia el Universo como un todo. El principio cosmol\'ogico es la base de cualquier modelo de evoluci\'on. Este principio aclara que \textbf{el Universo es homog\'eneo e is\'otropo en un espacio tridimensional.}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Basado en la Teor\'ia del Big Bang y en la Relatividad, la intuici\'on indicar\'ia que si, el Universo se expande, pero que en alg\'un punto en el tiempo, esta expansi\'on deber\'ia reducirse y detenerse, toda la materia tendr\'ia que recolapsar sobre si misma, debido a la autogravitaci\'on.
+
+
+\begin{frame}
+\frametitle{Expansion of the Universe}
+1927 $\rightarrow$ Edwin Hubble, analysing Globular Clusters concludes that
+\begin{equation}
+\vec{v} = H \vec{r},\label{eqn 1}
+\end{equation}
+where $H(t)$ is the \textit{Hubble parameter}. In comoving coordinates
+\begin{equation}
+\vec{r}=a(t)\vec{x},\label{eqn 2}
+\end{equation}
+$a(t)$ is called the \textit{scale factor} of the Universe. Then we have
+\begin{equation}
+\vec{v}=\vec{\dot{r}} = H\vec{r},\label{eqn 3}
+\end{equation}
+\begin{equation}
+\frac{d}{d t}(a\vec{x}) = Ha\vec{x},\label{eqn 4}
+\end{equation}
+thus
+\begin{equation}
+H(t) = \frac{\dot{a}(t)}{a(t)}\label{eqn 5} 
+\end{equation}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\begin{frame}
+%La luz de las galaxias tiene diferentes caracter\'isticas espectrales propias de los \'atomos que la componen, al examinar l\'ineas de emisi\'on se concluye que se desplazan al rojo del especto. Este cambio indica que todas las galaxias se alejan y se define como 
+%\begin{equation}
+%z \equiv \frac{\lambda-\lambda_{0}}{\lambda_{0}},\label{eqn 6}
+%\end{equation}
+%la velocidad relativa entre galaxias viene dada por 
+%\begin{equation}
+%d\vec{v} = H d\vec{r} = \frac{\dot{a}}{a}cdt = c \frac{da}{a}\label{eqn 7}
+%\end{equation}
+%donde $c$ es la velocidad de la luz de un fot\'on emitido por una galaxia. Si se escribe  el cambio en la longitud de onda emitida como $d\lambda = \lambda - \lambda_{0}$\label{eqn 8}, sustituyendo en la ecuaci\'on (\ref{eqn 7}) se obtiene 
+%\begin{equation}
+%c\frac{da}{a} = d \vec{v} = cz = c\frac{d\lambda}{\lambda}.%\label{eqn 8}
+%\end{equation}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Einstein Equations and the Minkowski  metric}
+Space-time is curved by matter content in it. These are 10 coupled ODE equations 
+
+%Introduciendo un espacio-tiempo mediante la ecuaci\'on de la m\'etrica
+%\begin{equation}
+%ds^{2} = g_{\alpha\beta}dx^{\alpha}dx^{\beta},\label{eqn 9}
+%\end{equation}
+%se obtiene
+%\begin{equation}
+%R_{\alpha\beta} - \frac{1}{2} R g_{\alpha\beta} + \Lambda g_{\alpha\beta} = 0,\label{eqn 10}
+%\end{equation}
+%$R{\alpha\beta}$ son el tensor y escalar de Ricci respectivamente, $g_{\alpha\beta}$ es el tensor m\'etrico y $\Lambda$ es la constante cosmol\'ogica. En presencia de materia y energ\'ia, la ecuaci\'on (\ref{eqn 10}) es
+\begin{equation}
+R_{\alpha\beta} - \frac{1}{2} R g_{\alpha\beta} + \Lambda g_{\alpha\beta} = \kappa T_{\alpha\beta}. \label{eqn 11}
+\end{equation}
+Given two space--time events, $(t,r,\theta , \phi)$ , $(t +dt, r + dr, \theta + d\theta, \phi + d\phi)$ the space--time separation between these is 
+\begin{equation}
+ds^{2}=-c^{2}dt^{2} + dr^{2} +r^{2}(d\theta^{2} + \sin^{2}\theta d\phi^{2}.),\label{eqn 12}
+\end{equation}
+This is the Minkowski metric, which describes a flat space--time.
+%$R_{\alpha\beta}$ is the Ricci tensor and $R$ scalar curvature respectively, $g_{\alpha\beta}$ $\rightarrow$ metric tensor, $\Lambda$ $\rightarrow$ Cosmological constant, $T_{\alpha\beta}$ $\rightarrow$ energy-momenta tensor. $\kappa = 8\pi G/c^{4}$.
+\begin{figure}
+ \centering
+\includegraphics[width=0.35\textwidth, height=0.25\textwidth]{./Figuras/RG}
+\end{figure}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{FLRW Metric}
+%Given two space--time events, $(t,r,\theta , \phi)$ , $(t +dt, r + dr, \theta + d\theta, \phi + d\phi)$ the space--time separation between these is 
+%\begin{equation}
+%ds^{2}=-c^{2}dt^{2} + dr^{2} +r^{2}d\Omega^{2},\label{eqn 12}
+%\end{equation}
+%where
+%\begin{equation*}
+%d\Omega^{2} \equiv d\theta^{2} + \sin^{2}\theta d\phi^{2}.
+%\end{equation*}
+%This is the \textit{Minkowski metric}, which describes a flat space.
+By adding gravity, the flat space--time metric changes to
+\begin{equation}
+ds^{2}
+=
+-c^{2}dt^{2} + a^{2}(t)
+\left[
+\frac{dr^{2}}{1-k r^{2}} + r^{2}d\Omega^{2}
+\right],\label{eqn 13}
+\end{equation}
+$k > 0$, $k = 0$ o $k < 0$ would describe open, flat and closed spaces, respectively. Eq. (\ref{eqn 13}) is known as FLRW metric.
+\begin{figure}
+\centering
+    \includegraphics[width=0.4\textwidth]{./Figuras/geometry}
+    \includegraphics[width=0.4\textwidth]{./Figuras/ScaleFactor}
+ \end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+ %\begin{figure}
+%\centering
+%    \includegraphics[width=0.4\textwidth]{./Figuras/geometry}
+    %\includegraphics[width=0.4\textwidth]{./Figuras/ScaleFactor}
+ %\end{figure}
+%The Universe may have differente geometries, depending on the curvature $k$, nowadays is assumed a flat-space Universe.
+
+%Einstein's equations can be solved by using an isotropic and homogeneus energy-momenta tensor, this is a perfect fluid tensor, which has the form
+%\begin{equation}
+%T_{\mu \nu} =
+%(\rho + p)u_{\mu}u_{\nu} + pg_{\mu \nu},\label{eqn 14}
+%\end{equation}
+%donde $\rho$ es la densidad de masa propia del fluido, $u_{\mu}$ es la cuadrivelocidad y $p$ es la presi\'on $(p > 0)$ o la tensi\'on $(p < 0)$. Para la m\'etrica de la ecuaci\'on (\ref{eqn 13}) este tensor es diagonal
+%\begin{equation}
+%T_{\mu \nu} = \textup{diag}(-\rho, p, p, p).%\label{eqn 15}
+%\end{equation}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Friedmann equations}
+Friedmann equations can be derived from Einstein equations and the FLRW metric, using a homogeneus and isotropic energy-momenta tensor $T$, this is a perfect fluid tensor
+\begin{equation}
+T_{\mu \nu} = \textup{diag}(-\rho, p, p, p).\label{eqn 15}
+\end{equation}
+Eq. (\ref{eqn 13}) and Eq. (\ref{eqn 15}) will derive the Friedmann equations (taking $\Lambda=$0, $c=$1)
+\begin{equation*}
+ 3\frac{\dot{a}^{2} + k}{a^{2}}  = 8 \pi G \rho
+ \end{equation*}
+\begin{equation} 
+-2\frac{\ddot{a}}{a} - \frac{\dot{a}^{2} + k}{a^{2}}= 8 \pi G p.\label{eqn 16}
+\end{equation}
+Combining this last set of equations, the following is obtained
+\begin{equation}
+\frac{\ddot{a}}{a} = -\frac{4 \pi G}{3}(\rho + 3p), \label{eqn 17}
+\end{equation}
+Which describe the dynamics of the Universe.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{$\Lambda$CDM}
+%Aunque la primera evidencia de materia oscura fue descubierta en la d\'ecada de 1930, no fue hasta la d\'ecada de 1980 que los astr\'onomos se convencieron de que \'esta es el componente responsable que mantiene unidas a las galaxias y los c\'umulos de galaxias de manera gravitacional.
+
+%El modelo \textit{Lambda Cold Dark Matter} ($\Lambda$CDM) es una parametrizaci\'on del modelo del Big Bang. Tambi\'en conocido como el ``modelo est\'andar de la cosmolog\'ia'' se  fundamenta,  principalmente, sobre las siguientes bases te\'oricas y experimentales.
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Dark Matter}
+\begin{itemize}
+ \setlength\itemsep{1em}
+\item 1933 Fritz Zwicky: Visible matter in Coma Cluster cannot explain rotational velocities from these galaxies. There must be missing matter.
+\end{itemize}
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth, height=0.4\textwidth]{./Figuras/Zwicky}
+\includegraphics[width=0.4\textwidth, height=0.4\textwidth]{./Figuras/Coma}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{itemize}
+ \setlength\itemsep{2em}
+\item 1980 Vera Rubin: Observations on spiral galaxies. Rotational curves from stars within these galaxies cannot be explained by Newtonian dynamics. There is some kind of missing matter or ``Dark'' matter.
+\end{itemize}
+\centering
+\includegraphics[width=0.4\textwidth]{./Figuras/Rubin}
+\includegraphics[width=0.4\textwidth]{./Figuras/M33Rotation}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{CMB and Universe timeline}
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{./Figuras/planck}
+\includegraphics[width=0.4\textwidth]{./Figuras/BBCosmology}
+\end{figure}
+CMB $\rightarrow$ radiation from 380,000 years after Big Bang. $T = 2.785 \pm 0.005$ K.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Cosmic Pie}
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{./Figuras/CosmicPie}
+\end{figure}
+Planck Collaboration 2013 ESA.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Lambda Cold Dark Matter ($\Lambda$CDM)}
+\begin{itemize}
+ \setlength\itemsep{2em}
+\item General Relativity framework, which provides gravitational theory of large scale structures.
+\item Cosmological principle.
+\item Hubble's Law.
+\item Cosmic Microwave Background (CMB).
+%\item La determinaci\'on de la abundancia relativa de elementos primigenios $^{1}$H, $^{2}$D, $^{3}$He, $^{4}$He y $^{7}$Li formados en las reacciones nucleares en la \'epoca de Big Bang Nucleos\'intesis.
+%\item El an\'alisis de la estructura a gran escala del Universo, mediante experimentos como el SDSS, que atestiguan la homogeneidad y ayudan a la determinaci\'on de los distintos par\'ametros del modelo est\'andar.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{itemize}
+ \setlength\itemsep{2em}
+\item Density perturbations. Or density (quantum) fluactuations.
+
+\item \textit{Inflation}: accelerated expansion; explains flatness and homogeneity.
+
+%\item El Hot Big Bang, origen extremadamente caliente que da lugar a BBN.
+
+\item \textit{Cosmological constant} $\Lambda$ introduced by Einstein on the GR equations
+\begin{equation}
+H^{2}(t) = \left(\frac{\dot{a}}{a}\right)^{2}
+= 
+\frac{8 \pi G \rho}{3} - \frac{k}{a^{2}} + \frac{\Lambda}{3}.\label{eqn 18}
+\end{equation}
+\item \textit{Cold Dark Matter}, with a gravitationally attractive behaviour, non-relativistic velocities (Cold) non-interacting with radiation (Dark).
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Issues with $\Lambda$CDM}
+\begin{itemize}
+ \setlength\itemsep{1em}
+\item CUSP-CORE $\rightarrow$ Dark Matter density profiles obey a CORE behaviour, unlike the CUSP predicted by CDM theory.
+\item Missing Satellite problem $\rightarrow$ CDM predicts $100-1000$ satellite galaxies for a Milky Way size like galaxy. There's less than 50. 
+\item Among other ones...
+\end{itemize}
+\begin{figure}
+\includegraphics[width=0.6\textwidth, height=0.3\textwidth]{./Figuras/CORECUSP}
+\includegraphics[width=0.3\textwidth, height=0.3\textwidth]{./Figuras/Satellites}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%SFDM
+\begin{frame}
+\frametitle{Scalar Field Dark Matter (SFDM)}
+\begin{itemize}
+ \setlength\itemsep{2em}
+\item Dark matter is considered as a scalar field $\Phi$ with an auto-interacting scalar potential $V(\Phi)$.
+\item At certain temperatures, it's behaviour it's like a Bose Einstein Condensate (BEC) and it's minimally coupled to gravity
+\item $M_{\chi} \sim 10^{-22}$eV 
+\item $\lambda \sim \mathcal{O}(kpc)$ Compton wavelength of SFDM is galaxy sized.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Campos escalares}
+%%%PONER CAMPO ESCALAR TEORIA
+%En el modelo de Campo Escalar, se propone que los halos gal\'acticos se forman de condensados de Bose-Einstein de un campo escalar (SF) cuyo bos\'on tiene una masa ultra ligera del orden de $m \sim 10^{-22}$eV. De este valor se sigue que la temperatura cr\'itica de condensaci\'on $T_{c} \sim 1/m^{5/3} \sim $ TeV, es muy alta, por lo tanto, se forman semillas de Condensados de Bose-Einstein (CBE) en \'epocas tempranas en el Universo.
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%Recordando las ecuaciones de FLRW, el tensor energ\'ia-momento \textbf{T} para un campo escalar, la densidad de energ\'ia escalar $T_{0}^{0}$ y la presi\'on escalar $T_{j}^{i}$ estar\'an dadas por
+%\begin{equation}
+%T_{0}^{0}=-\rho_{\Phi_{0}}=-\left(\frac{1}{2}\dot{\Phi}_{0}^{2} + V \right),\label{eqn 19}
+%\end{equation}
+%y
+%\begin{equation}
+%T_{j}^{i}=P_{\Phi_{0}}=\left(\frac{1}{2} \dot{\Phi}_{0}^{2}-V \right)\delta_{j}^{i},\label{eqn 20}
+%\end{equation}
+%donde el punto se entiende como la derivada respecto al tiempo cosmol\'ogico y $\delta_{j}^{i}$ es la delta de Kronecker.
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%la Ecuaci\'on de Estado para el campo escalar es $p_{\Phi_{0}}=\omega_{\Phi_{0}}\rho_{\Phi_{0}}$ con
+%\begin{equation}
+%\omega_{\Phi_{0}} = \frac{\frac{1}{2}\dot{\Phi}_{0}^{2}-V}{\frac{1}{2}\dot{\Phi}_{0}^{2}+V}.\label{eqn 21}
+%\end{equation}
+%Se definen nuevas variables adimensionales
+%\begin{equation}
+%x\equiv \frac{\kappa}{\sqrt{6}}\frac{\Phi_{0}}{H}, \;\;\; u\equiv\frac{\kappa}{\sqrt{3}}\frac{\sqrt{V}}{H}\label{eqn 22}
+%\end{equation}
+%donde $\kappa^{2}\equiv 8\pi G$ y $H \equiv \dot{a}/a$ es el par\'ametro de Hubble. Se toma el potencial escalar como $V = m^{2}\Phi^{2}/2\hbar^{2} + \lambda\Phi^{4}/4$, si se toma $c = 1$, para un bos\'on ultra ligero se tendr\'a que $\mu_{\Phi} \sim 10^{-22} $eV.
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Aproximaci\'on hidrodin\'amica}
+%En esta aproximaci\'on, se hace una transformaci\'on para %resolver las ecuaciones de Friedmann de manera anal\'itica con %la condici\'on $H<<m$. 
+%Se toma el potencial escalar como $V = m^{2}\Phi^{2}/2\hbar^{2} + \lambda\Phi^{4}/4$. As\'i, para el bos\'on ultra ligero se tiene que $m \sim 10^{-22}$ eV. $\Phi_{0}$ se expresa en t\'erminos de nuevas variables $S$ y $\rho_{0}$, donde $S$ es constante en el fondo y $\rho_{0}$ ser\'a la densidad de energ\'ia del fluido tambi\'en en esta regi\'on, así el campo en dicha región se expresa como
+%\begin{equation}
+%\Phi_{0} = (\psi_{0}e^{-imt/\hbar} + \psi_{0}^{*}e^{imt/\hbar}),\label{eqn 23}
+%\end{equation}
+%donde
+%\begin{equation}
+%\psi_{0}(t) = \sqrt{\rho_{0}(t)}e^{iS/\hbar},\label{eqn 24}
+%\end{equation}
+%As\'i, el campo escalar en la regi\'on del fondo del Universo se puede expresar como 
+%\begin{equation}
+%\Phi_{0}=2\sqrt{\rho_{0}}\cos(S-mt/\hbar),\label{eqn 25}
+%\end{equation}
+%con esto se obtiene
+%\begin{equation}
+%\dot{\Phi}_{0}^{2} = \rho_{0} 
+%\left[
+%\frac{\dot{\rho}_{0}}{\rho_{0}}\cos(S-mt/\hbar) 
+%- 2(\dot{S}-mt/\hbar)\sin(S-mt/\hbar)
+%\right]^{2}.\label{eqn 26}
+%\end{equation}
+%Observe que el principio de incertidumbre implica que $m \Delta t \sim \hbar$, y que para el fondo en el caso no relativista se cumple la relación $\dot{S}/m \sim 0$.
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Hydrodynamical treatment and perturbation theory for SFDM}
+%El campo escalar tiene oscilaciones intensas desde el inicio, estas oscilaciones se transmiten a las fluctuaciones que crecen de manera r\'apida. 
+%Una perturbaci\'on en cualquier cantidad es la diferencia entre su valor correspondiente en un evento en el espacio--tiempo real y su correspondiente valor de ``fondo'', as\'i, 
+For the scalar field, the following perturbation is proposed
+\begin{equation}
+\Phi = \Phi_{0}(t) + \delta\Phi(\vec{x},t),\label{eqn 27}
+\end{equation}
+Using the Klein-Gordon equation and  imposing $\dot{\phi}=0$
+\begin{equation}
+\delta\ddot{\Phi} + 3H\delta\dot{\Phi}
+- \frac{1}{a^{2}}\vec{\nabla}^{2}\delta\Phi
++V_{,\Phi\Phi}\delta\Phi +2V_{,\Phi}\phi = 0.\label{eqn 28}
+\end{equation}
+Then, the perturbed scalar field is expressed in terms of  $\Psi$ as follows
+\begin{equation}
+\delta\Phi = \Psi e^{-imt/\hbar} +\Psi^{*}e^{imt/\hbar},\label{eqn 29}
+\end{equation}
+This expression can be seen as a wavefunction superposition. Using equation (\ref{eqn 29}) and inserting in equation (\ref{eqn 28})
+\begin{equation}
+-i\hbar(\dot{\Psi}+\frac{3}{2}H\Psi) + \frac{\hbar^{2}}{2m}(\Box \Psi +9\lambda|\Psi|^{2}\Psi) + m\phi\Psi = 0,\label{eqn 30}
+\end{equation}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+where $\Box$ is defined by
+\begin{equation}
+\Box = \frac{d^{2}}{d t^{2}} + 3H\frac{d}{d t} - \frac{1}{a^{2}}\vec{\nabla}^{2}\label{eqn 31}
+\end{equation}
+%Para entender la naturaleza hidrodin\'amica de este modelo, 
+An approximation is made using a Madelung transformation, which combines field theory with condensate wavefunctions.
+\begin{equation}
+\Psi = \sqrt{\hat{\rho}}e^{iS}\label{eqn 32}
+\end{equation}
+with real amplitude  $\hat{\rho}=\rho/m=\hat{\rho}(\vec{x},t)$ and phase $S=S(\vec{x},t)$. The condition $|\Psi|^{2}=\Psi\Psi^{*}= \hat{\rho}$ is satisfied. Substituting eq. (\ref{eqn 32}) in eq. (\ref{eqn 30}) the following equations are obtanied
+\begin{equation}
+\dot{\hat{\rho}} + 3H\hat{\rho}
+-\frac{\hbar}{m}\hat{\rho}\Box S 
++\frac{\hbar}{a^{2}m}\vec{\nabla}S\vec{\nabla}\hat{\rho}
+-\frac{\hbar}{m}\hat{\rho}\dot{S}=0,\label{eqn 33}
+\end{equation}
+and
+\begin{equation}
+\hbar \dot{S}/m + \omega\hat{\rho}
++ \phi
++ \frac{\hbar^{2}}{2m^{2}}\left(\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}}\right)
++ \frac{\hbar^{2}}{2a^{2}}[\vec{\nabla}(S/m)]^{2}
+- \frac{\hbar^{2}}{2}(\dot{S}/m)^{2} = 0.\label{eqn 34}
+\end{equation}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+By taking the gradient of eqs. (\ref{eqn 33}), (\ref{eqn 34}), dividing by $a$ and using 
+$\vec{v}\equiv \frac{\hbar}{ma}\vec{\nabla}S$, the following is obtained
+\begin{equation}
+\dot{\hat{\rho}} + 3H\hat{\rho} - \frac{\hbar}{m}\hat{\rho}\Box S 
++ \frac{1}{a}\vec{v}\vec{\nabla}\hat{\rho} - \frac{\hbar}{m}\hat{\rho}\dot{S} = 0,\label{eqn 36}
+\end{equation}
+\begin{equation*}
+\dot{\vec{v}} + H\vec{v} + \frac{1}{2a\hat{\rho}}\vec{\nabla}p 
++ \frac{1}{a}\vec{\nabla}\phi + \frac{\hbar^{2}}{2m^{2}a}\vec{\nabla}
+\left(\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}}\right) 
+\end{equation*}  
+\begin{equation}
++\frac{1}{a}(\vec{v}\cdot\vec{\nabla})\vec{v}-\hbar(\dot{\vec{v}}+H\vec{v})(\dot{S}/m) = 0\label{eqn 37}
+\end{equation}
+%where$\omega = 9\hbar^{2}\lambda/2m^{2}$ y $p= \omega\hat{ \rho}^{2}$. 
+Eqs. (\ref{eqn 36}) and (\ref{eqn 37}) lead to the classical Euler fluid equations, with an extra quantum term $Q$, where 
+\begin{equation}
+Q = \frac{\hbar^{2}}{2m^{2}}\frac{\Box\sqrt{\hat{\rho}}}{\sqrt{\hat{\rho}}},\label{eqn 1.78}
+\end{equation}
+Q can be viewed as a sort of negative quantum force or ``pressure'', which allows dark matter to behave differently, in particular, could solve the CUSP-CORE and missing satellite problem due to its quantum nature.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{$N$-body simulations}
+%La evoluci\'on de estructura se aproxima con aglomeramiento gravitacional  no lineal a partir de condiciones iniciales espec\'ificas de part\'iculas de materia oscura y puede refinarse introduciendo efectos de din\'amica de gases, procesos qu\'imicos, transferencia radiativa y otros procesos astrof\'isicos.
+In the $\Lambda$CDM scenario, dark matter is considered a non collisional fluid described by the non collisional Botzman equation, coupled with Poisson equation, which describes a non linear evolution 
+\begin{equation}
+\frac{\partial f}{\partial t} + \vec{v}\cdot\frac{\partial f}{\partial r} + \frac{\vec{F}}{m}\cdot\frac{\partial f}{\partial v}=0,\label{eqn 39}
+\end{equation}
+$f= f(\vec{r}, \vec{p}, t)$ is a distribution function of the fluid. %es una funci\'on de distribuci\'on de la densidad, $\vec{v}$ es la velocidad, $\vec{r}$ es la posici\'on, $\vec{F}$ es la fuerza y $m$ la masa que describen completamente al fluido.
+$\vec{F}$ may be derived from a potential $\Phi$, as follows
+\begin{equation}
+\vec{F} = -m\nabla\Phi,\label{eqn 40}
+\end{equation}
+where $m$ es the particle mass of the system. Substituting (\ref{eqn 40}) in (\ref{eqn 39}) one can get
+\begin{equation}
+\frac{\partial f}{\partial t} + \vec{v}\cdot\frac{\partial f}{\partial r} - \vec\nabla\Phi\cdot\frac{\partial f}{\partial v}=0\label{eqn2.3}
+\end{equation} 
+%Este potencial $\Phi$ debe satisfacer la ecuación de Poisson
+%\begin{equation}
+%\nabla^{2} \Phi (\vec{r},t) = 4\pi \int_{S} f(\vec{r},\vec{v},t)d^{3}v\label{eqn2.4}
+%\end{equation}
+%donde $S$ es todo el espacio y $f$ se define mediante la siguiente expresión
+%\begin{equation}
+%f = f(\vec{r},\vec{v},t)d^{3}v d^{3}r\label{eqn 2.5}
+%\end{equation}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Fluidos sin Colisi\'on Autogravitantes}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{A simple problem}
+Given initial coordinates and velocities, $\vec{r}_{init}$, $\vec{v}_{init}$, of $N$ particles with mass $m_{i}$ and the initial condition $t = t_{init}$, calculate their coordinates and velocities $\vec{r}$, $\vec{v}$ on the next instant $t = t_{next}$. If $\vec{r}_{i}$ is the velocity and $m_{i}$ is the mass of each particle, then the equation of motion reads
+\begin{equation}
+\frac{d^{2}\vec{r}_{i}}{d t^{2}}=
+-G \sum_{j=1, i \not= j}^{N} \frac{m_{j}(\vec{r}_{i}-\vec{r}_{j})}{|\vec{r}_{i}-\vec{r}_{j}|^{3}}, \label{eqn 42}
+\end{equation}
+\centering
+\animategraphics[autoplay,loop,height=4.1cm]{9}{./Figuras/nbody}{0}{8}
+%donde $G$ es la consante de gravitaci\'on universal.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+A softening force has to be introduced: force gets weaker (gets softened) on small distances between particles to avoid calculating divergences.
+\begin{equation}
+\frac{d^{2}\vec{r}_{i}}{d t^{2}}=
+-G \sum_{j=1, i \not= j}^{N} \frac{m_{j}(\vec{r}_{i}-\vec{r}_{j})}{(\Delta\vec{r}_{ij}^{2} + \epsilon^{2})^{3/2}},\label{eqn 43}
+\end{equation} 
+where $\Delta\vec{r}_{ij}^{2} = |\vec{r}_{i} - \vec{r}_{j}|$ y $\epsilon$ is the softening length. Whe the  FLRW model is considered, particle dynamics is well described with the Hamiltionian
+\begin{equation}
+  H 
+  = \sum_{i=1}^{N} \frac{\vec{p_{i}}^{2}}{2 m_{i} a^{2}(t)} 
+  +
+  \frac{1}{2} \sum_{i\not=1,i\not=j}^{N}\sum_{j=1,j\not=i}^{N}
+  \frac{m_{i}m_{j}\Phi(\vec{x_{i}}-\vec{x_{j}})}{a(t)},\label{eqn 44}
+\end{equation}
+and $\Phi$ is trailing this softening length as follows
+\begin{equation}
+\Phi = -G\int_{S}\int_{S}\frac{f(\vec{r},\vec{v},t)d^{3}v'd^{3}r'}{||\epsilon^{2} + \Delta\vec{r}_{ij}^{2}||}
+\end{equation}
+%donde $\vec{p_{k}}$ y $\vec{x_{k}}$ son los vectores de momento y posici\'on en el sistema de coordenadas com\'oviles y $a$ es el factor de escala.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{How does a $N$-body code work?}
+\begin{itemize}
+\item Numerical force calculation uses \textit{TreePM algorithm}
+\item Density field is divided in grid (cells) in order to ease force calculation.
+\item Given a potential $\Phi$ of particle-particle (particle-mesh) interaction.
+\item Fourier Transform is applied in order to calculate force interaction.
+\item Inverse Fourier Transform: given a force interaction, calculate $\Phi$.
+\end{itemize}
+\begin{figure}
+\centering
+  \includegraphics[width=0.45\textwidth, height=0.4\textwidth]{./Figuras/BHAlgorithm}
+  \includegraphics[width=0.4\textwidth]{./Figuras/PM}
+  \label{fig 2.1}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{GADGET code}
+\begin{itemize}
+\item (GAlaxies with Dark matter and Gas intEracT), free source code.
+\item Cosmological Simulations use $N$-body theory for dark matter and SPH for gas interaction.
+\item For SFDM a modification of Gadget is used: \textbf{Axion-Gadget}
+\item \url{https://wwwmpa.mpa-garching.mpg.de/~volker/gadget/}{\\ \textbf{GADGET-code}}
+\item \url{https://github.com/liambx/Axion-Gadget}{\\ \textbf{Axion-Gadget}}
+\end{itemize}
+\begin{figure}
+ \centering
+  \includegraphics[width=0.6\textwidth]{./Figuras/Gadget}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Axion-Gadget}
+The main change to the code is in the ForceTree code, where gravitational potential $\Phi$ is changed with the quantum potential (pressure)
+\begin{equation}
+Q 
+=
+-\frac{\hbar^{2}}{2m^{2}_{\chi}}\frac{\vec{\nabla}^{2}\sqrt{\rho}}{\sqrt{\rho}}.\label{eqn 3.7}
+\end{equation}
+as described in SFDM theory. Particle interaction is not relativistic inside the simulation, d'Alambertian operator $\Box$ is then replaced by the Laplacian operator $\nabla$.
+
+The quantum pressure effect is described by a Hamiltonian without gravity terms
+\begin{equation}
+H = \int \frac{\hbar^{2}}{2 m_{\chi}} |\vec{\nabla}\Psi|^{2}d^{3}x
+  = \int \frac{\rho}{2} |\vec{v}|^{2}d^{3}x + \int \frac{\hbar^{2}}{2 m_{\chi}} (\vec{\nabla}\sqrt{\rho})^{2}d^{3}x.\label{eqn 3.8}
+\end{equation}
+
+\end{frame}
+
+%La naturaleza de FDM se describe mediante las ecuaciones de Schr\"odinger-Poisson
+%\begin{equation}
+%i\hbar \frac{d \Psi}{dt} 
+%=,
+%-\frac{\hbar^{2}}{2m_{\chi}} \vec{\nabla}^{2}\Psi + m_{\chi}V\Psi,\label{eqn 3.1}
+%\end{equation}
+%y
+%\begin{equation}
+%\vec{\nabla}^{2}V = 4\pi G m_{\chi}|\Psi|^{2},%\label{eqn 3.2}
+%\end{equation}
+%la funci\'on de onda se escribe como
+%\begin{equation}
+%\Psi = \sqrt{\frac{\rho}{m_{\chi}}}\exp(\frac{iS}%{\hbar})\label{eqn 3.3}
+%\end{equation}
+%en t\'erminos de la densidad de n\'umero $\frac{\rho}{m_{\chi}}$, se define igualmente el momento lineal de la materia oscura como
+%\begin{equation}
+%\vec{\nabla}S = m_{\chi}\vec{v}.\label{eqn 3.4}
+%\end{equation}
+%\end{frame}
+
+%\begin{frame}
+%Al introducir la funci\'on de onda $\Psi$ en la ecuaci\'on (\ref{eqn 3.1}) y resolviendo las ecuaciones de Schr\"odinger-Poisson, se obtiene la ecuaci\'on de continuidad
+%\begin{equation}
+%\frac{d\rho}{dt} + \vec{\nabla}\cdot(\rho\vec{v}) = 0,\label{eqn 3.5}
+%\end{equation}
+%y la ecuaci\'on de conservaci\'on de momento
+%\begin{equation}
+%\frac{d\vec{v}}{dt} + (\vec{v}\cdot\vec{\nabla})%\vec{v} 
+%=
+%-\vec{\nabla}(Q + V).\label{eqn 3.6}
+%\end{equation}
+%donde se define el potencial cu\'antico $Q$
+%\begin{equation}
+%Q 
+%=
+%-\frac{\hbar^{2}}{2m^{2}_{\chi}}\frac{\vec{\nabla}^{2}\sqrt{\rho}}{\sqrt{\rho}}.\label{eqn 3.7}
+%\end{equation}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+Kinetic energy is discretized with the following sum
+\begin{equation}
+T = \int \frac{\rho}{2} |\vec{v}|^{2}d^{3}x = \sum_{j} \frac{1}{2} m_{j} \left(\frac{d q_{j}}{dt}\right)^{2}, \label{eqn 3.9}
+\end{equation}
+$j$ index to identify each particle. The Potential energy is described by
+\begin{equation}
+K_{p} = \int \frac{\hbar^{2}}{2 m_{\chi}} (\vec{\nabla}\sqrt{\rho})^{2}d^{3}x. \label{eqn 3.10}
+\end{equation}
+%Note que el término de la energía potencial $K_{p}$ no está discretizado aún. Esto se realizará más adelante.
+And the Lagrangian of the system will be
+\begin{equation}
+L = T - K_{p}
+  =
+\sum_{j} \frac{1}{2} m_{j} \left(\frac{d q_{j}}{dt}\right)^{2}
+-
+ \int \frac{\hbar^{2}}{2 m_{\chi}} (\vec{\nabla}\sqrt{\rho})^{2}d^{3}x,\label{eqn 3.11}  
+\end{equation}
+Euler-Lagrange equations wiil have the form
+\begin{equation}
+\frac{d}{dt}\frac{\partial L}{\partial \dot{q}_{j}} - \frac{\partial L }{\partial q_{j}} = 0 
+\Rightarrow 
+m_{j} \ddot{q}_{j} = - \frac{\partial K_{p}}{\partial q_{j}}.\label{eqn 3.12}
+\end{equation}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{wrapfigure}{r}{0.25\textwidth}
+\centering
+\includegraphics[width=0.30\textwidth, height=0.40\textwidth]{./Figuras/Density}
+\end{wrapfigure}
+For a particle-particle interaction, number density of each particle is described with delta functions
+\begin{equation}
+\rho(\vec{r})
+=
+\sum_{i}m_{i}\delta(\vec{r}-\vec{r}_{i}).\label{eqn 3.13}
+\end{equation}
+where
+\begin{equation}
+\delta (\vec{r}-\vec{r}_{i}) = 
+\frac{2\sqrt{2}}{\lambda ^{3} \pi ^{3/2}} \exp \left(-\frac{2|\vec{r}-\vec{r}_{i}|^{2}}{\lambda ^{2}}\right).\label{eqn 3.14}
+\end{equation}
+Thus, $(\vec{\nabla}\sqrt{\rho})^{2}$ term will be written as
+\begin{equation}
+\left[\vec{\nabla}\sqrt{\rho (\vec{r})}\right]^{2} 
+=
+\frac{4}{\lambda^{4}\rho(\vec{r})}
+\left[
+\sum_{i} m_{i}\delta(\vec{r}-\vec{r}_{i})(\vec{r}-\vec{r}_{i})
+\right]^{2}. \label{eqn 3.15}
+\end{equation}
+with density
+\begin{equation}
+\rho(\vec{r})
+=
+\sum_{j}\sum_{i}m_{i}\delta(\vec{r}-\vec{r}_{j}),\label{eqn 3.16}
+\end{equation} 
+where $j$ denotes each mesh clustering.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+Thus, $\vec{\nabla}\sqrt{\rho}$ will be rewritten as
+\begin{equation}
+\left[\vec{\nabla}\sqrt{\rho (\vec{r})}\right]^{2} \simeq 
+\frac{4}{\lambda^{4}}
+\left[
+\sum_{i}m_{i}\delta(\vec{r}-\vec{r}_{j})(\vec{r}-\vec{r}_{j})
+\right]^{2}
+\left[
+\sum_{j}m_{j}\delta(\vec{r}-\vec{r}_{j})
+\right]^{-1}. \label{eqn 3.17}
+\end{equation}
+Potential energy can be discretized by integrating eq. (\ref{eqn 3.10})
+\begin{equation}
+\int\left[\vec{\nabla}\sqrt{\rho (\vec{r})}\right]^{2}  \simeq 
+\int \footnotesize{\frac{4 d^{3}x}{\lambda^{4}}
+\left[
+\sum_{j} m_{j}\delta(\vec{r}-\vec{r}_{j})(\vec{r}-\vec{r}_{j})
+\right]^{2}
+\left[
+\sum_{j}m_{j}\delta(\vec{r}-\vec{r}_{j})
+\right]^{-1}}\label{eqn 3.18}
+\end{equation}
+%\begin{equation}
+%\simeq
+%\footnotesize{4\lambda ^{-4} 
+%\sum_{j}m_{j}\delta(\vec{r}-\vec{r}_{j})(\vec{r}-\vec{r}_{j})^{2}\Delta V_{j}%B_{j},}\label{eqn 3.19}
+%\end{equation}
+\begin{equation}
+\simeq
+\footnotesize{4\lambda^{-4}
+\sum_{j}m_{j}
+\frac{\Delta V_{j}B_{j}}{\lambda^{3}\pi^{3/2}}
+\exp\left[-\frac{(\vec{r}-\vec{r}_{j})^{2}}{\lambda^{2}}\right]
+(\vec{r}-\vec{r}_{j})^{2}.} \label{eqn 3.20}
+\end{equation}
+ $V_{j}$ and $B_{j}$ are an effective volume and correction factor for the $j$-th particle.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+Finally, equation of motion (\ref{eqn 3.12}) is rearranged as 
+\begin{equation}
+\footnotesize{\sum_{j}m_{j}\ddot{q}_{j}
+=
+\frac{4\hbar^{2}}{m_{\chi}^{2}\lambda^{4}}
+m_{j}\Delta V_{j}B_{j}
+\exp\left[
+-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}}\right]
+(1-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}})
+(\vec{r}-\vec{r}_{j}).}\label{eqn 3.22}
+\end{equation}
+Acceleration of particles due to quantum pressure inside the simulation is described by the equation
+\begin{equation}
+\footnotesize{\ddot{\vec{r}}
+=
+\frac{4M\hbar^{2}}{M_{0}m_{\chi}^{2}\lambda^{4}}
+\sum_{j}B_{j}
+\exp\left[
+-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}}\right]
+(1-\frac{2|\vec{r}-\vec{r}_{j}|^{2}}{\lambda^{2}})
+(\vec{r}_{j}-\vec{r}).}\label{eqn 3.23}
+\end{equation}
+Quantum pressure is a short range interaction, and becomes attractive (repulsive) if the distance between particles is greater (lower) than $\lambda/\sqrt{2}$.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\includemedia[width=0.6\linewidth,height=0.6\linewidth,activate=pageopen,
+%passcontext,
+%transparent,
+%addresource=/home/jazhiel/Tesis_Jazhiel/Video/LCDM2M.mp4,
+%flashvars={source=/home/jazhiel/Tesis_Jazhiel/Video/LCDM2M.mp4}
+%]{\includegraphics[width=0.6\linewidth]{./Figuras/xy_00081_image}}{VPlayer.swf}
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Observational data}
+\centering
+\includegraphics[width=0.5\textwidth]{./Figuras/cmb1}
+\includegraphics[width=0.5\textwidth]{./Figuras/BBCosmology}
+\includegraphics[width=0.4\textwidth]{./Figuras/materia-energia}
+\end{frame}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Results}
+\begin{table}{\footnotesize}%
+Initial Conditions
+\label{Tabla 4.1}\centering%
+\begin{tabular}{llcc}
+\toprule%
+&Description&Symbol&Value\\\toprule%
+Density& Dark matter&$\Omega_{0}$&0.268\\
+($z=0$)&Dark energy&$\Omega_{\Lambda}$&0.683\\
+&Baryonic matter &$\Omega_{b}$&0.049\\\midrule
+Simulation&Boxsize&$L$&[50 Mpc, 5 Mpc]\\\
+&No. of particles&$N$&$2^{22}\sim$4 Million\\\midrule
+Redshift&Initial&$z_{init}$&23\\
+&Final&$z_{f}$&0\\\midrule
+Other quantities&Hubble parameter&$h$&0.7\\
+&($h= H_{0}/100 \; \textup{Mpc}\cdot \textup{km}\cdot s^{-1}$)\\
+&Mass power spectrum &$\sigma_{8}$&0.8\\
+&normalization \\\bottomrule
+\end{tabular}
+\end{table}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+Aditional parameters
+\begin{table}[]%
+\label{Tabla 4.2}\centering%
+\begin{tabular}{llcc}
+\toprule%
+&Description&Quantity&Units\\\toprule%
+Unit system&Length(cm)&$3.08\times10^{21}$&1 kpc\\
+&Mass (g)&$1.989\times10^{43}$&$10^{10}$ $M_{\odot}$\\
+&Velocity (cm/s)&$10^{5}$&1 km/s\\\midrule
+Softening length&$\Lambda$CDM($\epsilon$)&0.89&kpc\\
+&SFDM($\epsilon$)&0.89& kpc, pc\\\midrule
+SFDM&FdmAxionMass ($M_{\chi}$)&$2.5\times10^{-22}$&eV\\
+&FdmKernelLambda ($\lambda_{M}$)&1.41&kpc, pc\\\bottomrule
+
+\end{tabular}
+
+\end{table}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{figure}
+\centering
+\includegraphics[width=1.0\textwidth]{./Figuras/SFDM_new1_151_kpc}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{figure}
+\includegraphics[width=0.8\textwidth]{./Figuras/masses_LCDM2M}
+\caption{\footnotesize{Perfil de masas de halos de materia oscura, simulaci\'on de $\Lambda$CDM}}
+\end{figure}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{zoom a 5 Mpc}
+%\centering
+%$\Lambda$CDM
+%\includegraphics[width=0.6\textwidth]{./Figuras/LCDM_093}\\
+%SFDM
+%\centering
+%\includegraphics[width=0.6\textwidth]{./Figuras/sfdm_10_22_eV}\\ $m\sim 10^{-22}eV$
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Espectros de masas de halos de materia oscura}
+%\begin{figure}
+%\includegraphics[width=0.45\textwidth]{./Figuras/masses_LCDM_1_81}
+%\includegraphics[width=0.45\textwidth]{./Figuras/masses_SFDM_1_81}
+%\end{figure}
+%\centering
+%$\Lambda$CDM \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; SFDM
+%\end{frame}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\centering
+%$\Lambda$CDM
+%\includegraphics[width=0.6\textwidth]{./Figuras/LCDM_093}\\%
+%SFDM
+%\centering
+%\includegraphics[width=0.6\textwidth]{./Figuras/SFDM_10_23_eV}\\ $m\sim 10^{-23}eV$
+%\end{frame}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\begin{figure}
+%%\includegraphics[width=0.45\textwidth]{./Figuras/masses_LCDM_1_81}
+%\includegraphics[width=0.45\textwidth]{./Figuras/masses_SFDM_1_81_10_23_eV}
+%\end{figure}
+%\centering
+%$\Lambda$CDM \;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; SFDM
+%\end{frame}
+%\begin{frame}
+%Diferencia de im\'agenes \\
+%\centering
+
+%$\Lambda$CDM
+%\includegraphics[width=0.6\textwidth]{./Figuras/LCDM_093}\\
+%SFDM
+%\includegraphics[width=0.6\textwidth]{./Figuras/SFDM}\\
+
+%$m\sim 10^{-23}eV$
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Conclusiones y perspectivas}
+\begin{itemize}
+\setlength\itemsep{2em}
+ \item Simulaciones num\'ericas permiten visualizar grandes sectores espaciales adem\'as de dar constricciones a condiciones iniciales.
+ \item $\Lambda$CDM a\'un tiene problemas en escalas gal\'acticas.
+ \item Teor\'ia lineal de perturbaciones para campo escalar aproxima de buena manera el colapso gravitacional de la materia oscura.
+ \item SFDM es una buena alternativa para resolver ciertos problemas de CDM.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{itemize}
+\setlength\itemsep{2em}
+\item Crear condiciones iniciales mejor adaptadas a observaciones (CAMB, CosmoMC, etc.)
+\item Utilizar clusters computacionales con mayor procesamiento (Ya instalado en ABACUS)
+\item Emplear teor\'ia de perturbaciones no lineal a segundo orden (2LPT) para simulaciones con $z>100$
+\item Revisar y modificar el c\'odigo en busca de posibles errores.
+\item Utilizar otros m\'etodos para simular $N$-cuerpos (RAMSES, \textcolor{blue}{AX-GADGET} , CONCEPT, etc.)
+\item Entrar a la maestr\'ia
+\end{itemize}
+\end{frame}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\centering
+\Huge THANKS!\\
+%\includegraphics[width=0.6\textwidth]{./Figuras/PS1}
+\end{frame}
+%\begin{frame}
+%\begin{figure}[htpb]
+%\centering
+%\subfigure[]{\includegraphics[width=0.3\textwidth]{./Figuras/movie_xy_00000}}
+%\subfigure[]{\includegraphics[width=0.3\textwidth]{./Figuras/movie_xy_00030}}
+%\subfigure[]{\includegraphics[width=0.3\textwidth]{./Figuras/movie_xy_00101}}
+%\caption{\footnotesize{Evoluci\'on de dos galaxias espirales colisionando para %formar una sola. En la figura las partículas azules representan el halo de materia %oscura, las partículas rojas representan el disco estelar.}} \label{fig 3.3}
+%\end{figure}
+%\end{frame}
+\end{document}
